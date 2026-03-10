@@ -3,7 +3,7 @@ import { Icon } from '../ui/Icon';
 
 export const Footer = () => {
     return (
-        <footer className="bg-gradient-to-r from-[#5714d7] to-[#7929c8] text-white px-6 py-8">
+        <footer className="bg-gradient-to-r from-[#5714d7] to-[#7929c8] text-white px-20 py-8">
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
 
                 <div className="flex gap-4 items-center">
@@ -15,8 +15,13 @@ export const Footer = () => {
                     </Link>
                 </div>
 
-                <div className="text-center">
-                    <p className="text-sm font-light">
+                <div className="flex flex-col items-center text-center">
+                    <img
+                        src="/img/logo-mcecelulares.png"
+                        alt="Logo MCe Celulares"
+                        className="h-12 w-auto mb-2 object-contain"
+                    />
+                    <p className="text-sm">
                         © {new Date().getFullYear()} Todos os direitos reservados
                     </p>
                 </div>

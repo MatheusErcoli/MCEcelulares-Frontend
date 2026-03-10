@@ -13,7 +13,7 @@ export const CategoryCard = ({ name, icon }: CategoryProps) => {
             text={name}
             icon={icon}
             onClick={() => { }}
-            className="flex gap-5 flex-col items-center justify-center w-32 h-40 bg-[#E5E7EB] rounded-[30px] shadow-sm hover:bg-gray-300 transition-colors text-gray-700 text-2xl"
+            className="flex gap-5 m-[12px] mt-[50px] px-[20px] flex-col font-semibold items-center justify-center w-32 h-40 bg-[#E5E7EB] rounded-[30px] shadow-sm hover:bg-gray-300 transition-colors text-gray-700 text-2xl"
         />
     );
 }

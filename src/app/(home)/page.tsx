@@ -69,7 +69,6 @@ const products = [
 const Home = () => {
   return (
     <>
-      <h2 className="font-bold font text-4xl m-[20px]">Categorias</h2>
       <CategoryList/>
       <h2 className="font-bold font text-4xl m-[20px]">Em destaque</h2>
       <ProductsCarousel products={products}/>
