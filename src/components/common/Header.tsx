@@ -4,12 +4,10 @@ import Image from "next/image";
 
 export const Header = () => {
     return (
-        <header className="bg-gradient-to-r from-[#5714d7] to-[#7929c8] text-white px-6 py-4 flex items-center justify-between">
+        <header className="bg-linear-to-r from-[#5714d7] to-[#7929c8] text-white px-6 py-4 flex items-center justify-between">
 
             <div className="flex-1">
-                <Link href="/" className="text-xl font-bold italic">
-                    <Image src="/img/logo-mcecelulares.png" alt="MCe Celulares" width={180} height={80} className="w-auto " />
-                </Link>
+                <Link href="/" className="text-xl font-bold italic"><Image src="/img/logo-mcecelulares.png" alt="w-auto" width={150} height={16}/></Link>
             </div>
 
             <nav className="flex items-center gap-8">

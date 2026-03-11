@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 type ProductCarouselProps = {
     products: ProductType[];
 }
+
 type ProductType = {
     id: string | number
     name: string;
