@@ -26,7 +26,7 @@ export const Header = () => {
             </nav>
 
             <div className="flex-1 flex justify-end">
-                <Link href="perfil" className="flex items-center gap-2 transition-transform">
+                <Link href="login" className="flex items-center gap-2 transition-transform">
                     Perfil <Icon name="faCircleUser" className="w-4" size="2xl"/>
                 </Link>
             </div>
