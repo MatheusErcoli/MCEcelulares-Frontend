@@ -12,23 +12,22 @@ export const Pagination = ({totalPosts, postPerPage, setCurrentPage, currentPage
         pages.push(i);
     }
 
-    // Função que muda a página e rola a tela para o topo
     const handlePageClick = (page: number) => {
         setCurrentPage(page);
         window.scrollTo({
             top: 0,
-            behavior: 'smooth' // Adiciona o efeito de rolagem suave
+            behavior: 'smooth'
         });
     };
 
     return (
-        <div className="flex justify-center gap-2 mt-8 mb-8"> {/* Adicionei mb-8 para dar um respiro no final da página */}
+        <div className="flex justify-center gap-2 mt-8 mb-8">
             {
                 pages.map((page, index)=> {
                     return (
                         <button 
                             key={index} 
-                            onClick={() => handlePageClick(page)} // Chamando a nova função aqui
+                            onClick={() => handlePageClick(page)} 
                             className={`px-4 py-2 border rounded-md transition-colors font-medium ${
                                 page === currentPage 
                                     ? 'bg-purple-700 text-white border-purple-700 hover:bg-purple-500' 

@@ -11,7 +11,6 @@ export const CategoryList = () => {
         <CategoryCard name="Acessórios" icon="faPlug"/>
         <CategoryCard name="Celulares" icon="faMobileScreenButton"/>
         <CategoryCard name="Consoles" icon="faGamepad"/>
-        <CategoryCard name="Todos" icon="faInfinity"/>
     </div>
     );
 }

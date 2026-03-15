@@ -15,13 +15,10 @@ export const ProductCard = ({ name, price, image }: ProductCardProps) => {
     };
 
     return (
-        // 1. max-w-[280px] deixa o card mais estreito
-        // 2. p-[1px] deixa a borda do gradiente mais fininha
         <div className="w-full max-w-[280px] p-[1px] m-[10px] bg-gradient-to-r from-[#5714d7] to-[#7929c8] rounded-3xl  transition-transform hover:scale-105">
             
             <div className="bg-white rounded-[23px] overflow-hidden flex flex-col h-full">
                 
-                {/* 3. p-5 diminui o respiro em volta da imagem */}
                 <div className="bg-[#E5E7EB] p-5 flex items-center justify-center relative aspect-[3/2] bg-product-pattern bg-repeat bg-center">
                     <img
                         src={image}
@@ -30,7 +27,6 @@ export const ProductCard = ({ name, price, image }: ProductCardProps) => {
                     />
                 </div>
 
-                {/* 3. p-4 diminui o espaço branco em volta dos textos */}
                 <div className="bg-white p-4 flex flex-col items-center">
                     <h3 className="text-xl font-bold text-black text-center mt-2 leading-tight">
                         {name}
@@ -43,7 +39,6 @@ export const ProductCard = ({ name, price, image }: ProductCardProps) => {
                     <Button
                         text="Adicionar"
                         icon="faCartShopping"
-                        className="w-full text-base flex items-center justify-center gap-2 bg-gradient-to-r from-[#5714d7] to-[#7929c8] text-white p-2.5 rounded-full hover:opacity-90 transition-opacity"
                         onClick={irParaCarrinho}
                     />
                 </div>
