@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Icon } from '../ui/Icon';
+import { AllIcons } from "../ui/Icon";
 
 export const Footer = () => {
     return (
@@ -27,8 +28,8 @@ export const Footer = () => {
                 </div>
 
                 <div className="text-right flex flex-col items-end text-sm">
-                    <p className="font-semibold uppercase">Rua Minas Gerais</p>
-                    <p>Centro, Corbélia - PR</p>
+                    <p className="font-semibold uppercase"><Icon name='faSearchLocation'/> Rua Minas Gerais - 37</p>
+                    <p>85420-000 / Centro, Corbélia - PR </p>
                     <Link
                         href="tel:45999457149"
                         className="mt-2 decoration-1 underline-offset-4 hover:text-gray-200"

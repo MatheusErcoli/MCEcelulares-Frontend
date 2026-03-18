@@ -24,3 +24,10 @@
 .slick-disabled:before {
     opacity: 0.2 !important;
 }
+
+.bg-image-padrao {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Isso cria um efeito de Parallax bem legal */
+}
