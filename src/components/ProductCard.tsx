@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { Button } from "../ui/Button";
+import { Button } from "./Button";
 
 interface ProductCardProps {
     name: string;

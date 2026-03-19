@@ -1,76 +1,89 @@
 "use client";
 
-import { useState, FormEvent } from "react";
-import { Button } from "@/src/components/ui/Button";
+import { useState } from "react";
+import { Button } from "@/src/components/Button";
+import { signupAction } from "@/src/actions/auth";
+import { useRouter } from "next/navigation";
 
 export const SignupForm = () => {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [isSuccess, setIsSuccess] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
-    const handleSubmit = (event: FormEvent) => {
-        event.preventDefault(); 
-        
-        console.log("Dados capturados:", { name, email, password, confirmPassword });
+    async function handleSignup(formData: FormData) {
+        setError(null);
 
-        setIsSuccess(true);
-        setName("");
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
+        if (formData.get("senha") !== formData.get("confirmarSenha")) {
+            setError("As senhas não coincidem.");
+            return;
+        }
 
-        setTimeout(() => setIsSuccess(false), 3000);
-    };
+        const result = await signupAction(formData);
+
+        if (result.success) {
+            router.push("/login");
+        } else {
+            setError(result.error);
+        }
+    }
 
     return (
-        <form className="space-y-5" onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Nome"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-full bg-gray-200 px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50"
-                required
-            />
-            
-            <input
-                type="email"
-                placeholder="E-mail"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-full bg-gray-200 px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50"
-                required
-            />
-
-            <input
-                type="password"
-                placeholder="Criar Senha"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-full bg-gray-200 px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50"
-                required
-            />
-
-            <input
-                type="password"
-                placeholder="Repetir Senha"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full rounded-full bg-gray-200 px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50"
-                required
-            />
-            
-            <Button 
-                text="CADASTRAR"
-            />
-
-            {isSuccess && (
-                <p className="text-center font-medium text-green-600 animate-bounce">
-                    Cadastro realizado com sucesso!
+        <form action={handleSignup} className="space-y-5">
+            {error && (
+                <p className="text-center font-medium text-red-600 animate-pulse">
+                    {error}
                 </p>
             )}
+
+            <input
+                name="nome"
+                type="text"
+                placeholder="Nome Completo"
+                className="w-full rounded-full bg-gray-200 px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50"
+                required
+            />
+
+            <input
+                name="email"
+                type="email"
+                placeholder="E-mail"
+                className="w-full rounded-full bg-gray-200 px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50"
+                required
+            />
+
+            <div className="flex gap-4">
+                <input
+                    name="cpf"
+                    type="text"
+                    placeholder="CPF (apenas números)"
+                    className="w-1/2 rounded-full bg-gray-200 px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50"
+                    required
+                />
+                <input
+                    name="telefone"
+                    type="tel"
+                    placeholder="Telefone"
+                    className="w-1/2 rounded-full bg-gray-200 px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50"
+                    required
+                />
+            </div>
+
+            <input
+                name="senha"
+                type="password"
+                placeholder="Criar Senha"
+                className="w-full rounded-full bg-gray-200 px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50"
+                required
+            />
+
+            <input
+                name="confirmarSenha"
+                type="password"
+                placeholder="Repetir Senha"
+                className="w-full rounded-full bg-gray-200 px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50"
+                required
+            />
+
+            <Button text="CADASTRAR" />
         </form>
     );
 };

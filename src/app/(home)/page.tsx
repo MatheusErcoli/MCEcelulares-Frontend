@@ -1,5 +1,5 @@
-import { ProductCard } from "@/src/components/common/ProductCard";
-import { Button } from "@/src/components/ui/Button";
+import { ProductCard } from "@/src/components/ProductCard";
+import { Button } from "@/src/components/Button";
 import { ProductsCarousel } from "./components/ProductsCarousel";
 import { CategoryList } from "./components/CategoryList";
 

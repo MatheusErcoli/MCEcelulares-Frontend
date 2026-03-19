@@ -1,31 +1,31 @@
-import { Icon } from "@/src/components/ui/Icon";
+import { Icon } from "@/src/components/Icon";
 import Link from "next/link";
 import { ReactNode } from "react";
 
 interface SignCardProps {
   title: string;
-  children: ReactNode; 
+  children: ReactNode;
   backHref?: string;
 }
 
 export const SignCard = ({ title, children, backHref = "/" }: SignCardProps) => {
   return (
-    <div 
+    <div
       className="flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat p-4"
       style={{ backgroundImage: "url('/img/login-background.png')" }}
     >
       <div className="relative w-full max-w-sm overflow-hidden rounded-[40px] bg-white shadow-2xl">
-        
-        <Link 
-          href={backHref} 
+
+        <Link
+          href={backHref}
           className="absolute right-6 top-4 z-50 flex flex-row-reverse items-center gap-1 text-white transition-all hover:opacity-80"
         >
           <div className="flex h-5 w-5 m-0 items-center justify-center">
-             <Icon 
-               name="faRightFromBracket" 
-               className="text-white" 
-               size="md"
-             />
+            <Icon
+              name="faRightFromBracket"
+              className="text-white"
+              size="md"
+            />
           </div>
           <span className="text-md font-medium">Voltar</span>
         </Link>

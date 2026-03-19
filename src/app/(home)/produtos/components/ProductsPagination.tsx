@@ -1,6 +1,6 @@
 'use client';
 
-import { ProductCard } from "@/src/components/common/ProductCard";
+import { ProductCard } from "@/src/components/ProductCard";
 import { useState } from "react";
 import { Pagination } from "./Pagination";
 

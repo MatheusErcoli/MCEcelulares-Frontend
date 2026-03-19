@@ -1,5 +1,5 @@
-import { Icon } from "./Icon";
-import { AllIcons } from "./Icon";
+import { AllIcons, Icon } from "./Icon";
+
 
 type ButtonProps = {
     text: string;

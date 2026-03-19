@@ -1,6 +1,6 @@
 'use client'
 
-import { ProductCard } from "@/src/components/common/ProductCard";
+import { ProductCard } from "@/src/components/ProductCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

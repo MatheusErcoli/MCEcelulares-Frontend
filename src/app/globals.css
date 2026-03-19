@@ -1,4 +1,14 @@
-@import "tailwindcss";
+@import "tailwindcss";@layer 
+
+base {
+  button, 
+  [role="button"],
+  a, 
+  input[type="submit"],
+  select {
+    cursor: pointer;
+  }
+}
 
 .meu-gradiente-roxo {
     background-image: linear-gradient(to right, #5714d7, #7929c8);

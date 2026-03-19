@@ -1,8 +1,8 @@
-import { AllIcons } from "@/src/components/ui/Icon";
-import { Button } from "@/src/components/ui/Button";
+import { AllIcons } from "@/src/components/Icon";
+import { Button } from "@/src/components/Button";
 
 type CategoryProps = {
-    name:string;
+    name: string;
     icon: keyof typeof AllIcons;
 }
 

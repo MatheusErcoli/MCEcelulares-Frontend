@@ -4,7 +4,7 @@ import "./globals.css";
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <html>
-      <body>
+      <body className="bg-[url('/img/home-background.png')] bg-fixed bg-top bg-repeat-y bg-[size:100%_auto]">
         {children}
       </body>
     </html>

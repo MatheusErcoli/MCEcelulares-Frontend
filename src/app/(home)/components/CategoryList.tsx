@@ -4,7 +4,7 @@ import { CategoryCard } from "./CategoryCard";
 
 export const CategoryList = () => {
     return (
-    <div className="flex flex-wrap gap-4 justify-center p-6">
+    <div className="flex flex-wrap gap-5 justify-center p-6 pb-15">
         <CategoryCard name="Fones" icon="faHeadphones"/>
         <CategoryCard name="Televisão" icon="faTv"/>
         <CategoryCard name="Teclados" icon="faKeyboard"/>
