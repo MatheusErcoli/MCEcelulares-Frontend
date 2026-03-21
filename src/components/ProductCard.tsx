@@ -1,24 +1,47 @@
+"use client"; // Obrigatório para usar hooks de contexto e router
+
 import { useRouter } from "next/navigation";
 import { Button } from "./Button";
+import { useCart } from "../contexts/CartContext"; // Importe o seu hook global
+import { useState } from "react";
 
 interface ProductCardProps {
+    id: number; // Adicionei o ID, pois o banco precisa dele
     name: string;
     price: number;
     image: string;
 }
 
-export const ProductCard = ({ name, price, image }: ProductCardProps) => {
+export const ProductCard = ({ id, name, price, image }: ProductCardProps) => {
     const router = useRouter();
+    const { addToCart } = useCart(); // Puxa a função do Contexto
+    const [isAdding, setIsAdding] = useState(false);
 
-    const irParaCarrinho = () => {
-        router.push("/carrinho");
+    const handleAdicionar = async () => {
+        setIsAdding(true);
+
+        // 1. Chama a lógica global (que fala com o cart.ts e o Backend)
+        const result = await addToCart(id, price);
+
+        if (result.success) {
+            // Opcional: Você pode apenas avisar ou redirecionar
+            // alert("Produto adicionado!"); 
+            router.push("/carrinho");
+        } else {
+            alert(result.error || "Erro ao adicionar produto");
+            // Se o erro for "Faça login", você poderia mandar para /login
+            if (result.error?.includes("login")) {
+                router.push("/login");
+            }
+        }
+
+        setIsAdding(false);
     };
 
     return (
-        <div className="w-full max-w-[280px] p-[1px] m-[10px] bg-gradient-to-r from-[#5714d7] to-[#7929c8] rounded-3xl  transition-transform hover:scale-105">
-            
+        <div className="w-full max-w-[280px] p-[1px] m-[10px] bg-gradient-to-r from-[#5714d7] to-[#7929c8] rounded-3xl transition-transform hover:scale-105">
             <div className="bg-white rounded-[23px] overflow-hidden flex flex-col h-full">
-                
+
                 <div className="bg-[#E5E7EB] p-5 flex items-center justify-center relative aspect-[3/2] bg-product-pattern bg-repeat bg-center">
                     <img
                         src={image}
@@ -33,13 +56,14 @@ export const ProductCard = ({ name, price, image }: ProductCardProps) => {
                     </h3>
 
                     <p className="text-lg font-semibold bg-gradient-to-r from-[#5714d7] to-[#7929c8] bg-clip-text text-transparent mt-1 mb-4">
-                        {price}
+                        R$ {price.toFixed(2)}
                     </p>
 
+                    {/* O botão agora chama a função lógica */}
                     <Button
-                        text="Adicionar"
+                        text={isAdding ? "Adicionando..." : "Adicionar"}
                         icon="faCartShopping"
-                        onClick={irParaCarrinho}
+                        onClick={handleAdicionar}
                     />
                 </div>
             </div>
