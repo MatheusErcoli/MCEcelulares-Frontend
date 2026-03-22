@@ -1,4 +1,3 @@
-// src/actions/sendEmail.ts
 "use server";
 
 import { Resend } from "resend";
@@ -8,7 +7,6 @@ import { headers } from "next/headers";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Inicialização fora da função para melhor performance
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
@@ -23,14 +21,12 @@ export const sendEmailAction = async (formData: FormData) => {
     const headerList = await headers();
     const ip = headerList.get("x-forwarded-for") ?? "127.0.0.1";
 
-    // PROTEÇÃO CONTRA SPAM
     try {
         const { success } = await ratelimit.limit(ip);
         if (!success) {
             return { success: false, error: "Limite de envio atingido. Tente em 10 minutos." };
         }
     } catch (e) {
-        // Se o Upstash falhar por erro de rede/chave, logamos no terminal mas deixamos o e-mail passar
         console.error("Erro no Upstash (Rate Limit):", e);
     }
 

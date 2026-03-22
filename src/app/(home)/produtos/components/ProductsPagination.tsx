@@ -1,15 +1,15 @@
 'use client';
 
-import { ProductCard } from "@/src/components/ProductCard";
 import { useState } from "react";
 import { Pagination } from "./Pagination";
+import { ProductCard } from "@/src/components/ProductCard";
 
 type ProductsPaginationProps = {
     products: ProductType[];
 }
 
 type ProductType = {
-    id: string | number
+    id: number
     name: string;
     price: number;
     image: string;
@@ -30,6 +30,7 @@ const ProductsPagination = ({ products }: ProductsPaginationProps) => {
                 {currentPost.map((p, index) => (
                     <ProductCard
                         key={`${p.id}-${index}`}
+                        id={p.id as number}
                         name={p.name}
                         image={p.image}
                         price={p.price}

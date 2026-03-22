@@ -1,10 +1,9 @@
-// src/components/ContactPage/ContactFormCard.tsx
 "use client";
 
-import { useRef } from "react"; // Adicionado para limpar o form
+import { useRef } from "react";
 import { sendEmailAction } from "@/src/actions/sendEmail";
 import { Icon } from "@/src/components/Icon";
-import { Button } from "@/src/components/Button"; // Importando seu componente
+import { Button } from "@/src/components/Button";
 
 export const ContactFormCard = () => {
     const formRef = useRef<HTMLFormElement>(null);
@@ -13,13 +12,12 @@ export const ContactFormCard = () => {
         const result = await sendEmailAction(formData);
         if (result.success) {
             alert("Mensagem enviada com sucesso!");
-            formRef.current?.reset(); // Limpa o formulário após o sucesso
+            formRef.current?.reset();
         } else {
             alert("Erro: " + (result.error || "Ocorreu um erro desconhecido"));
         }
     };
 
-    // Classe padrão para os inputs igual ao FormLogin
     const inputStyle = "w-full rounded-full bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#7929c8]/50 border-none";
 
     return (
@@ -53,7 +51,6 @@ export const ContactFormCard = () => {
                 ></textarea>
             </div>
 
-            {/* Utilizando o seu componente Button customizado */}
             <Button
                 text="Enviar Mensagem"
                 icon="faEnvelope"

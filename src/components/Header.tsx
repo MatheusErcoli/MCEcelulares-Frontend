@@ -24,7 +24,7 @@ export const Header = async () => {
                 <Link href="/produtos" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                     Produtos <Icon name="faBox" className="w-4" size="lg"/>
                 </Link>
-                <Link href="/carrinho" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <Link href={isLogged ? "/carrinho" : "/login"} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                     Carrinho <Icon name="faCartShopping" className="w-4" size="lg"/>
                 </Link>
                 <Link href="/contato" className="flex items-center gap-2 hover:opacity-80 transition-opacity">

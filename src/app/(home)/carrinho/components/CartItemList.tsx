@@ -6,7 +6,7 @@ import { useCart } from "@/src/contexts/CartContext";
 import { getCartItemsAction } from "@/src/actions/cart";
 
 export const CartItemList = () => {
-    const { cartId } = useCart();
+    const { cartId, removeFromCart } = useCart();
     const [items, setItems] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -15,32 +15,41 @@ export const CartItemList = () => {
             if (cartId) {
                 setLoading(true);
                 const result = await getCartItemsAction(cartId);
-                if (result.success) {
-                    setItems(result.items);
-                }
+                if (result.success) setItems(result.items);
                 setLoading(false);
             }
         }
-
         loadItems();
-    }, [cartId]); // Recarrega se o cartId mudar
+    }, [cartId]);
 
-    if (loading) {
-        return <div className="lg:col-span-2 text-center py-10">Carregando seu carrinho...</div>;
-    }
+    const handleRemove = async (id_item_carrinho: number) => {
+        
+        const result = await removeFromCart(id_item_carrinho);
+        if (result.success) {
+            setItems(prev => prev.filter(item => item.id_item_carrinho !== id_item_carrinho));
+        } else {
+            alert("Erro ao remover item.");
+        }
+    };
+
+    if (loading) return <div className="lg:col-span-2 text-center py-20 font-medium">Carregando produtos...</div>;
 
     if (items.length === 0) {
         return (
-            <div className="lg:col-span-2 bg-white p-10 rounded-3xl shadow-sm text-center">
-                <p className="text-gray-500 text-xl font-medium">Seu carrinho está vazio.</p>
+            <div className="lg:col-span-2 bg-white p-16 rounded-[40px] text-center border-2 border-dashed border-gray-200">
+                <p className="text-gray-400 text-xl font-semibold">Seu carrinho está vazio.</p>
             </div>
         );
     }
 
     return (
-        <div className="lg:col-span-2 flex flex-col gap-4">
+        <div className="lg:col-span-2 flex flex-col gap-5">
             {items.map((item) => (
-                <CartItemCard key={item.id} item={item} />
+                <CartItemCard 
+                    key={item.id_item_carrinho} 
+                    item={item} 
+                    onRemove={handleRemove}
+                />
             ))}
         </div>
     );

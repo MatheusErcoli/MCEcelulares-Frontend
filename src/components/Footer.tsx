@@ -1,10 +1,8 @@
-// src/components/Footer.tsx (ou o caminho correto do seu arquivo)
 import Link from 'next/link';
 import Image from 'next/image';
 import { Icon } from './Icon';
 
 export const Footer = () => {
-    // Link do Google Maps para o endereço fornecido
     const googleMapsUrl = "https://maps.app.goo.gl/noykfqR7HGqMM55DA";
 
     return (
@@ -27,7 +25,6 @@ export const Footer = () => {
                     </p>
                 </div>
 
-                {/* Seção de Endereço transformada em Link */}
                 <Link 
                     href={googleMapsUrl} 
                     target="_blank" 

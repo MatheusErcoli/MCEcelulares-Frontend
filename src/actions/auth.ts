@@ -22,7 +22,6 @@ export async function loginAction(formData: FormData) {
 
     const cookieStore = await cookies();
     
-    // Mantemos o cookie para o Header continuar funcionando via Servidor
     cookieStore.set("auth_token", data.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -30,7 +29,6 @@ export async function loginAction(formData: FormData) {
       path: "/",
     });
 
-    // Retornamos o token explicitamente para o cliente salvar no LocalStorage
     return { success: true, token: data.token }; 
   } catch (error) {
     return { success: false, error: "Servidor indisponível no momento." };
@@ -74,5 +72,4 @@ export async function signupAction(formData: FormData) {
 export async function logoutAction() {
   const cookieStore = await cookies();
   cookieStore.delete("auth_token");
-  // O redirecionamento será feito no cliente para podermos limpar o LocalStorage também
 }

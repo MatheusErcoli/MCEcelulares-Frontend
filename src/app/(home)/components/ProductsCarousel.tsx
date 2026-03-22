@@ -30,7 +30,7 @@ export const ProductsCarousel = ({ products }: ProductCarouselProps) => {
             <div className="m-0 p-0">
                 <Slider {...settings}>
                     {products.map((p) => (
-                        <ProductCard key={p.id || p.name} name={p.name} image={p.image} price={p.price} />
+                        <ProductCard key={p.id || p.name} id={Number(p.id)} name={p.name} image={p.image} price={p.price} />
                     ))}
                 </Slider>
             </div>

@@ -1,4 +1,3 @@
-// src/components/ContactPage/SocialLinksCard.tsx
 import Link from "next/link";
 import { Icon } from "@/src/components/Icon";
 import { Button } from "@/src/components/Button";
@@ -16,9 +15,7 @@ export const SocialLinksCard = () => {
                 </p>
             </div>
 
-            {/* Botões de Ação */}
             <div className="w-full flex flex-col gap-6">
-                {/* Botão WhatsApp utilizando Link do Next.js e Componente Button */}
                 <Link href="https://wa.me/5545999457149" target="_blank" className="w-full">
                     <Button
                         text="WhatsApp"
@@ -27,7 +24,6 @@ export const SocialLinksCard = () => {
                     />
                 </Link>
 
-                {/* Botão Instagram utilizando Link do Next.js e Componente Button */}
                 <Link href="https://instagram.com/seu_perfil" target="_blank" className="w-full">
                     <Button
                         text="Instagram"

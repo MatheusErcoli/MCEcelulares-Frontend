@@ -1,12 +1,12 @@
-"use client"; // Obrigatório para usar hooks de contexto e router
+"use client";
 
 import { useRouter } from "next/navigation";
 import { Button } from "./Button";
-import { useCart } from "../contexts/CartContext"; // Importe o seu hook global
+import { useCart } from "../contexts/CartContext";
 import { useState } from "react";
 
 interface ProductCardProps {
-    id: number; // Adicionei o ID, pois o banco precisa dele
+    id: number;
     name: string;
     price: number;
     image: string;
@@ -14,22 +14,18 @@ interface ProductCardProps {
 
 export const ProductCard = ({ id, name, price, image }: ProductCardProps) => {
     const router = useRouter();
-    const { addToCart } = useCart(); // Puxa a função do Contexto
+    const { addToCart } = useCart();
     const [isAdding, setIsAdding] = useState(false);
 
     const handleAdicionar = async () => {
         setIsAdding(true);
 
-        // 1. Chama a lógica global (que fala com o cart.ts e o Backend)
         const result = await addToCart(id, price);
 
         if (result.success) {
-            // Opcional: Você pode apenas avisar ou redirecionar
-            // alert("Produto adicionado!"); 
             router.push("/carrinho");
         } else {
             alert(result.error || "Erro ao adicionar produto");
-            // Se o erro for "Faça login", você poderia mandar para /login
             if (result.error?.includes("login")) {
                 router.push("/login");
             }
@@ -59,7 +55,6 @@ export const ProductCard = ({ id, name, price, image }: ProductCardProps) => {
                         R$ {price.toFixed(2)}
                     </p>
 
-                    {/* O botão agora chama a função lógica */}
                     <Button
                         text={isAdding ? "Adicionando..." : "Adicionar"}
                         icon="faCartShopping"

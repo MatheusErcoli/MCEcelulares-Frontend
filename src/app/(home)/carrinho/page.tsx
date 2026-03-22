@@ -2,13 +2,6 @@ import { CartItem } from "./components/CartItemCard";
 import { CartItemList } from "./components/CartItemList";
 import { SubtotalCard } from "./components/SubtotalCard";
 
-const initialCartItems: CartItem[] = [
-    { id: 1, name: "PlayStation 5", price: 4000.00, quantity: 1, imageUrl: "/img/products/ps5.png" },
-    { id: 2, name: "PlayStation 1", price: 4000.00, quantity: 1, imageUrl: "/img/products/ps1.png" },
-    { id: 3, name: "PlayStation 2", price: 4000.00, quantity: 1, imageUrl: "/img/products/ps2.png" },
-    { id: 4, name: "PlayStation 3", price: 4000.00, quantity: 1, imageUrl: "/img/products/ps3.png" },
-];
-
 const Carrinho = () => {
     return (
         <main className="min-h-screen md:p-12">

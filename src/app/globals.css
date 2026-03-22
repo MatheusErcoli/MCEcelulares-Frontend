@@ -39,5 +39,5 @@ base {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed; /* Isso cria um efeito de Parallax bem legal */
+    background-attachment: fixed;
 }

@@ -14,7 +14,7 @@ export const SignCard = ({ title, children, backHref = "/" }: SignCardProps) => 
       className="flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat p-4"
       style={{ backgroundImage: "url('/img/login-background.png')" }}
     >
-      <div className="relative w-full max-w-sm overflow-hidden rounded-[40px] bg-white shadow-2xl">
+      <div className="relative w-110 overflow-hidden rounded-[40px] bg-white shadow-2xl">
 
         <Link
           href={backHref}
