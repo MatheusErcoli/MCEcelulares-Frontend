@@ -1,13 +1,23 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import { cookies } from "next/headers";
+import { useEffect, useState } from "react";
 import { LogoutButton } from "./LogoutButton";
 import { Icon } from "./Icon";
 
-export const Header = async () => {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("auth_token");
-    const isLogged = !!token; 
+export const Header = () => {
+    const [isLogged, setIsLogged] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+        
+        const token = localStorage.getItem("auth_token");
+        if (token) {
+            setIsLogged(true);
+        }
+    }, []);
 
     return (
         <header className="bg-linear-to-r from-[#5714d7] to-[#7929c8] text-white px-6 py-4 flex items-center justify-between">
@@ -24,7 +34,7 @@ export const Header = async () => {
                 <Link href="/produtos" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                     Produtos <Icon name="faBox" className="w-4" size="lg"/>
                 </Link>
-                <Link href={isLogged ? "/carrinho" : "/login"} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <Link href={isMounted && isLogged ? "/carrinho" : "/login"} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                     Carrinho <Icon name="faCartShopping" className="w-4" size="lg"/>
                 </Link>
                 <Link href="/contato" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
@@ -33,7 +43,9 @@ export const Header = async () => {
             </nav>
 
             <div className="flex-1 flex justify-end items-center gap-4">
-                {isLogged ? (
+                {!isMounted ? (
+                     <div className="w-32 h-10"></div>
+                ) : isLogged ? (
                     <div className="flex items-center gap-2">
                         <Link href="/perfil" className="flex items-center gap-2 transition-transform group hover:text-gray-200">
                             <span className="text-sm font-medium">Minha Conta</span>

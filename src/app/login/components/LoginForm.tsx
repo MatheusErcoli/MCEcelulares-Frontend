@@ -18,7 +18,12 @@ export default function LoginForm() {
     if (result.success && result.token) {
       localStorage.setItem("auth_token", result.token);
 
-      document.cookie = `auth_token=${result.token}; path=/; max-age=86400;`;
+      if (result.usuario) {
+          const userId = result.usuario.id_usuario || result.usuario.id;
+          if (userId) {
+              localStorage.setItem("id_usuario", userId.toString());
+          }
+      }
 
       window.location.href = "/";
     } else {
@@ -53,7 +58,7 @@ export default function LoginForm() {
           required
         />
 
-        <Button text={isLoading ? "ENTRANDO..." : "ENTRAR"} />
+        <Button text={isLoading ? "ENTRANDO..." : "ENTRAR"} type="submit" />
       </form>
 
       <div className="mt-6 text-center text-sm text-gray-600">

@@ -1,8 +1,5 @@
 "use server";
 
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-
 export async function loginAction(formData: FormData) {
   const email = formData.get("email");
   const senha = formData.get("senha");
@@ -20,16 +17,11 @@ export async function loginAction(formData: FormData) {
       return { success: false, error: data.message || "Falha no login" };
     }
 
-    const cookieStore = await cookies();
-    
-    cookieStore.set("auth_token", data.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 24,
-      path: "/",
-    });
-
-    return { success: true, token: data.token }; 
+    return { 
+      success: true, 
+      token: data.token, 
+      usuario: data.usuario 
+    }; 
   } catch (error) {
     return { success: false, error: "Servidor indisponível no momento." };
   }
@@ -60,16 +52,15 @@ export async function signupAction(formData: FormData) {
     const data = await response.json();
 
     if (!response.ok) {
-      return { success: false, error: data.message || "Erro ao realizar cadastro" };
+      return { success: false, error: data.message || "Falha ao criar conta" };
     }
 
     return { success: true };
   } catch (error) {
-    return { success: false, error: "Falha na conexão com o servidor." };
+    return { success: false, error: "Erro ao conectar com o servidor." };
   }
 }
 
 export async function logoutAction() {
-  const cookieStore = await cookies();
-  cookieStore.delete("auth_token");
+  return { success: true };
 }
