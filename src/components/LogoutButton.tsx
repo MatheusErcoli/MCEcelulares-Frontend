@@ -1,8 +1,6 @@
 "use client";
 
-import { logoutAction } from "@/src/actions/auth";
 import { Icon } from "./Icon"; 
-import { useRouter } from "next/navigation";
 
 export function LogoutButton() {
 
@@ -22,4 +20,4 @@ export function LogoutButton() {
             Sair <Icon name="faRightFromBracket" className="w-3" />
         </button>
     );
-}
+}1

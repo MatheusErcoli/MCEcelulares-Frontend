@@ -10,10 +10,10 @@ export const Footer = () => {
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
 
                 <div className="flex-1 flex gap-4 items-center justify-center md:justify-start w-full">
-                    <Link href="https://wa.me/554599457149" className="bg-white p-2 rounded-full hover:scale-110 transition-transform" target='_blank' rel="noopener noreferrer">
+                    <Link href="https://wa.me/554599457149" className="bg-white p-2 rounded-full hover:bg-gray-300 transition-colors" target='_blank' rel="noopener noreferrer">
                         <Icon name="faWhatsapp" className="text-[#25D366] text-xl w-6 h-6" />
                     </Link>
-                    <Link href="https://www.instagram.com/mcecelulares" className="bg-white p-2 rounded-full hover:scale-110 transition-transform" target='_blank' rel="noopener noreferrer">
+                    <Link href="https://www.instagram.com/mcecelulares" className="bg-white p-2 rounded-full hover:bg-gray-300 transition-colors" target='_blank' rel="noopener noreferrer">
                         <Icon name="faInstagram" className="text-[#E4405F] text-xl w-6 h-6" />
                     </Link>
                 </div>
@@ -29,7 +29,7 @@ export const Footer = () => {
                     href={googleMapsUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="flex-1 w-full text-center md:text-right flex flex-col items-center md:items-end text-sm hover:text-gray-200 transition-colors"
+                    className="flex-1 w-full text-center md:text-right flex flex-col items-center md:items-end text-sm hover:text-gray-300 transition-colors"
                 >
                     <p className="font-semibold uppercase flex items-center gap-2 justify-center md:justify-end">
                         <Icon name='faSearchLocation' className="w-4"/> Rua Minas Gerais - 37

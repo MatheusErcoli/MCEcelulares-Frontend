@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { sendEmailAction } from "@/src/actions/sendEmail";
 import { Icon } from "@/src/components/Icon";
 import { Button } from "@/src/components/Button";
+import { InputForm } from "./InputForm";
 
 export const ContactFormCard = () => {
     const formRef = useRef<HTMLFormElement>(null);
@@ -32,13 +33,13 @@ export const ContactFormCard = () => {
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input type="text" name="nome" required placeholder="Nome Completo" className={inputStyle} />
-                <input type="tel" name="telefone" required placeholder="Telefone: (99) 99999-9999" className={inputStyle} />
+                <InputForm name="nome" type="text" placeholder="Nome Completo" required={true}/>
+                <InputForm name="telefone" type="tel" placeholder="Telefone: (99) 99999-9999" required={true}/>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input type="email" name="email" required placeholder="Seu melhor e-mail" className={inputStyle} />
-                <input type="text" name="assunto" required placeholder="Assunto do contato" className={inputStyle} />
+                <InputForm name="email" type="email" placeholder="E-mail" required={true}/>
+                <InputForm name="assunto" type="text" placeholder="Assunto" required={true}/>
             </div>
 
             <div className="flex flex-col gap-2">

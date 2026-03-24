@@ -14,7 +14,7 @@ export async function loginAction(formData: FormData) {
     const data = await response.json();
 
     if (!response.ok) {
-      return { success: false, error: data.message || "Falha no login" };
+      return { success: false, error: data.message};
     }
 
     return { 
@@ -52,15 +52,11 @@ export async function signupAction(formData: FormData) {
     const data = await response.json();
 
     if (!response.ok) {
-      return { success: false, error: data.message || "Falha ao criar conta" };
+      return { success: false, error: data.message};
     }
 
     return { success: true };
   } catch (error) {
-    return { success: false, error: "Erro ao conectar com o servidor." };
+    return { success: false, error: "Servidor indisponível no momento." };
   }
-}
-
-export async function logoutAction() {
-  return { success: true };
 }

@@ -4,13 +4,12 @@ import { useState } from "react";
 import { loginAction } from "@/src/actions/auth";
 import { Button } from "@/src/components/Button";
 import Link from "next/link";
+import { Input } from "@/src/components/Input";
 
 export default function LoginForm() {
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (formData: FormData) => {
-    setIsLoading(true);
     setError(null);
 
     const result = await loginAction(formData);
@@ -19,7 +18,7 @@ export default function LoginForm() {
       localStorage.setItem("auth_token", result.token);
 
       if (result.usuario) {
-          const userId = result.usuario.id_usuario || result.usuario.id;
+          const userId = result.usuario.id_usuario;
           if (userId) {
               localStorage.setItem("id_usuario", userId.toString());
           }
@@ -27,8 +26,7 @@ export default function LoginForm() {
 
       window.location.href = "/";
     } else {
-      setError(result.error || "Ocorreu um erro ao fazer login.");
-      setIsLoading(false);
+      setError(result.error);
     }
   };
 
@@ -42,23 +40,10 @@ export default function LoginForm() {
           </p>
         )}
 
-        <input
-          name="email"
-          type="email"
-          placeholder="E-mail"
-          className="w-full rounded-full bg-gray-200 px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50"
-          required
-        />
+        <Input name="email" type="email" placeholder="E-mail" required={true}/>
+        <Input name="senha" type="password" placeholder="Senha" required={true}/>
 
-        <input
-          name="senha"
-          type="password"
-          placeholder="Senha"
-          className="w-full rounded-full bg-gray-200 px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50"
-          required
-        />
-
-        <Button text={isLoading ? "ENTRANDO..." : "ENTRAR"} type="submit" />
+        <Button text="Entrar" type="submit" />
       </form>
 
       <div className="mt-6 text-center text-sm text-gray-600">
