@@ -1,45 +1,54 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Pagination } from "./Pagination";
 import { ProductCard } from "@/src/components/ProductCard";
+import { getPaginatedProducts } from "@/src/actions/products";
 
-type ProductsPaginationProps = {
-    products: ProductType[];
-}
+const ProductsPagination = () => {
+    const [products, setProducts] = useState<ProductType[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const [totalItems, setTotalItems] = useState(0);
+    
+    const [error, setError] = useState<string | null>(null);
 
-type ProductType = {
-    id: number
-    name: string;
-    price: number;
-    image: string;
-}
+    const postsPerPage = 20;
 
-const ProductsPagination = ({ products }: ProductsPaginationProps) => {
-    const [currentPage, setCurrentPage] = useState(1)
-    const [postsPerPage, setPostsPerPage] = useState(20)
+    const loadProducts = async (page: number) => {
+        setError(null);
 
-    const lastPointedIndex = currentPage * postsPerPage;
-    const firstPostIndex = lastPointedIndex - postsPerPage;
-    const currentPost = products.slice(firstPostIndex, lastPointedIndex)
+        const response = await getPaginatedProducts(page, postsPerPage);
+
+        if (!response.success) {
+            setError(response.error);
+        } else if (response.data) {
+            setProducts(response.data.data); 
+            setTotalPages(response.data.totalPages);
+            setTotalItems(response.data.total);
+        }
+
+    };
+
+    useEffect(() => {
+        loadProducts(currentPage);
+    }, [currentPage]);
 
     return (
         <div className="container mx-auto pt-20 pb-5 px-30">
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-                {currentPost.map((p, index) => (
-                    <ProductCard
-                        key={`${p.id}-${index}`}
-                        id={p.id as number}
-                        name={p.name}
-                        image={p.image}
-                        price={p.price}
-                    />
+        {error && (
+          <p className="text-center font-medium text-red-600 animate-pulse">
+            {error}
+          </p>
+        )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {products.map((p) => (
+                    <ProductCard product={p}/>
                 ))}
             </div>
 
             <Pagination
-                totalPosts={products.length}
+                totalPosts={totalItems} 
                 postPerPage={postsPerPage}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}

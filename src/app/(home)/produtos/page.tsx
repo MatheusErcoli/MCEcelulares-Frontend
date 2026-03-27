@@ -185,7 +185,7 @@ const products = [
 const Page = () => {
     return (
         <>
-        <ProductsPagination products={products} />
+        <ProductsPagination />
         </>
     );
 }

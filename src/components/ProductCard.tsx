@@ -6,13 +6,10 @@ import { useCart } from "../contexts/CartContext";
 import { useState } from "react";
 
 interface ProductCardProps {
-    id: number;
-    name: string;
-    price: number;
-    image: string;
+    product: ProductType
 }
 
-export const ProductCard = ({ id, name, price, image }: ProductCardProps) => {
+export const ProductCard = ({ product }: ProductCardProps) => {
     const router = useRouter();
     const { addToCart } = useCart();
     const [isAdding, setIsAdding] = useState(false);
@@ -20,12 +17,12 @@ export const ProductCard = ({ id, name, price, image }: ProductCardProps) => {
     const handleAdicionar = async () => {
         setIsAdding(true);
 
-        const result = await addToCart(id, price);
+        const result = await addToCart(product.id_produto, product.preco);
 
         if (result.success) {
             router.push("/carrinho");
         } else {
-            alert(result.error || "Erro ao adicionar produto");
+            alert(result.error || "Erro ao adicionar product");
             if (result.error?.includes("login")) {
                 router.push("/login");
             }
@@ -40,19 +37,19 @@ export const ProductCard = ({ id, name, price, image }: ProductCardProps) => {
 
                 <div className="bg-[#E5E7EB] p-5 flex items-center justify-center relative aspect-[3/2] bg-product-pattern bg-repeat bg-center">
                     <img
-                        src={image}
-                        alt={name}
+                        src={product.imagem}
+                        alt={product.nome}
                         className="object-contain max-h-full max-w-[200px]"
                     />
                 </div>
 
                 <div className="bg-white p-4 flex flex-col items-center">
                     <h3 className="text-xl font-bold text-black text-center mt-2 leading-tight">
-                        {name}
+                        {product.nome}
                     </h3>
 
                     <p className="text-lg font-semibold bg-gradient-to-r from-[#5714d7] to-[#7929c8] bg-clip-text text-transparent mt-1 mb-4">
-                        R$ {price.toFixed(2)}
+                        R$ {product.preco.toFixed(2)}
                     </p>
 
                     <Button

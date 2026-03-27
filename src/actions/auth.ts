@@ -20,7 +20,7 @@ export async function loginAction(formData: FormData) {
     return { 
       success: true, 
       token: data.token, 
-      usuario: data.usuario 
+      usuario: data.usuario as User
     }; 
   } catch (error) {
     return { success: false, error: "Servidor indisponível no momento." };

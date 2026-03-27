@@ -34,12 +34,18 @@ export const Header = () => {
                 <Link href="/produtos" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                     Produtos <Icon name="faBox" className="w-4" size="lg"/>
                 </Link>
-                <Link href="/carrinho" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    Carrinho <Icon name="faCartShopping" className="w-4" size="lg"/>
-                </Link>
-                <Link href="/contato" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    Contato <Icon name="faPhone" className="w-4" size="lg"/>
-                </Link>
+                {isLogged && (
+                <>
+                    <Link href="/carrinho" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                        Carrinho <Icon name="faCartShopping" className="w-4" size="lg"/>
+                    </Link>
+                    <Link href="/pedidos" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                        Pedidos <Icon name="faBoxOpen" className="w-4" size="lg"/>
+                    </Link>
+                    <Link href="/contato" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                        Contato <Icon name="faPhone" className="w-4" size="lg"/>
+                    </Link>
+                </>)}
             </nav>
 
             <div className="flex-1 flex justify-end items-center gap-4">

@@ -36,16 +36,16 @@ export const SignupForm = () => {
                 </p>
             )}
 
-            <Input name="nome" type="text" placeholder="Nome Completo" required={true}/>
-            <Input name="email" type="email" placeholder="E-mail" required={true}/>
+            <Input name="nome" type="text" placeholder="Nome Completo" required={true} minLength={3} maxLength={100}/>
+            <Input name="email" type="email" placeholder="E-mail" required={true} pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Digite um e-mail válido (ex: usuario@dominio.com)"/>
 
 
             <div className="flex gap-4">
-                <Input name="cpf" type="text" placeholder="CPF" required={true}/>
-                <Input name="telefone" type="tel" placeholder="Telefone" required={true}/>
+                <Input name="cpf" type="text" placeholder="CPF" required={true} pattern="(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})" title="CPF deve ter 11 números ou o formato 000.000.000-00"/>
+                <Input name="telefone" type="tel" placeholder="Telefone" required={true} minLength={10} maxLength={15}/>
             </div>
             
-            <Input name="senha" type="password" placeholder="Criar Senha" required={true}/>
+            <Input name="senha" type="password" placeholder="Criar Senha" required={true} minLength={8} pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}" title="A senha deve ter no mínimo 8 caracteres, incluir letra maiúscula, minúscula, número e caractere especial."/>
             <Input name="confirmarSenha" type="password" placeholder="Repetir Senha" required={true}/>
 
 

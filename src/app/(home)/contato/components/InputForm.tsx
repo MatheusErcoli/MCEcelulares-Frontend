@@ -1,4 +1,6 @@
-type InputFormProps = {
+import { InputHTMLAttributes } from "react";
+
+interface InputFormProps extends InputHTMLAttributes<HTMLInputElement>{
     name: string,
     type: string,
     placeholder: string,

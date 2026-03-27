@@ -40,8 +40,8 @@ export default function LoginForm() {
           </p>
         )}
 
-        <Input name="email" type="email" placeholder="E-mail" required={true}/>
-        <Input name="senha" type="password" placeholder="Senha" required={true}/>
+        <Input name="email" type="email" placeholder="E-mail" required={true} pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Digite um e-mail válido (ex: usuario@dominio.com)"/>
+        <Input name="senha" type="password" placeholder="Senha" required={true} minLength={8} pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}" title="A senha deve ter no mínimo 8 caracteres, incluir letra maiúscula, minúscula, número e caractere especial."/>
 
         <Button text="Entrar" type="submit" />
       </form>

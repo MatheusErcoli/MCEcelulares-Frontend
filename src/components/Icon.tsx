@@ -1,14 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as SolidIcons from '@fortawesome/free-solid-svg-icons';
 import * as BrandIcons from '@fortawesome/free-brands-svg-icons';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
 
 export const AllIcons = { ...SolidIcons, ...BrandIcons };
 
 type IconProps = {
   name: keyof typeof AllIcons;
   className?: string;
-  size?: any;
+  size?: SizeProp;
 }
 
 export const Icon = ({ name, className, size }: IconProps) => {
