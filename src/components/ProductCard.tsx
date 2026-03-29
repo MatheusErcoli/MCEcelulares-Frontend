@@ -32,10 +32,9 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     };
 
     return (
-        <div className="w-full max-w-[280px] p-[1px] m-[10px] bg-gradient-to-r from-[#5714d7] to-[#7929c8] rounded-3xl transition-transform hover:scale-105">
-            <div className="bg-white rounded-[23px] overflow-hidden flex flex-col h-full">
+            <div className="bg-white rounded-[23px] overflow-hidden flex flex-col h-full border-2 p-[1px] m-[10px] border-purple-800">
 
-                <div className="bg-[#E5E7EB] p-5 flex items-center justify-center relative aspect-[3/2] bg-product-pattern bg-repeat bg-center">
+                <div className="bg-[#E5E7EB] p-5 flex items-center justify-center relative aspect-[3/2] bg-product-pattern bg-repeat bg-center shrink-0">
                     <img
                         src={product.imagem}
                         alt={product.nome}
@@ -43,22 +42,27 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                     />
                 </div>
 
-                <div className="bg-white p-4 flex flex-col items-center">
-                    <h3 className="text-xl font-bold text-black text-center mt-2 leading-tight">
-                        {product.nome}
-                    </h3>
+                <div className="bg-white p-4 flex flex-col flex-grow justify-between items-center w-full">
 
-                    <p className="text-lg font-semibold bg-gradient-to-r from-[#5714d7] to-[#7929c8] bg-clip-text text-transparent mt-1 mb-4">
-                        R$ {product.preco.toFixed(2)}
-                    </p>
+                    <div className="w-full flex flex-col items-center">
+                        <h3 className="text-xl font-bold text-black text-center mt-2 leading-tight line-clamp-2 min-h-[56px] w-full">
+                            {product.nome}
+                        </h3>
 
-                    <Button
-                        text={isAdding ? "Adicionando..." : "Adicionar"}
-                        icon="faCartShopping"
-                        onClick={handleAdicionar}
-                    />
+                        <p className="text-lg font-semibold bg-gradient-to-r from-[#5714d7] to-[#7929c8] bg-clip-text text-transparent mt-1 mb-2">
+                            R${product.preco}
+                        </p>
+                    </div>
+
+                    <div className="w-full mt-auto">
+                        <Button
+                            text={isAdding ? "Adicionando..." : "Adicionar"}
+                            icon="faCartShopping"
+                            onClick={handleAdicionar}
+                        />
+                    </div>
+
                 </div>
             </div>
-        </div>
     );
 };

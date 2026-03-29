@@ -1,28 +1,33 @@
 import { ProductsCarousel } from "./components/ProductsCarousel";
 import { CategoryList } from "./components/CategoryList";
-import { getProductsAction } from "@/src/actions/products";
+import { getFeaturedProducts } from "@/src/actions/products";
 
 export default async function Home() {
-    const products = await getProductsAction();
+
+    let featuredProducts: ProductType[] = []
+    const data = await getFeaturedProducts();
+
+    if (data.featuredProducts) {
+        featuredProducts = data.featuredProducts
+    }
 
     return (
         <>
             <CategoryList />
-            
-            <h2 className="font-bold font text-4xl m-[20px] pl-40">Em destaque</h2>
-            
-            {products.length > 0 ? (
-                <ProductsCarousel products={products} />
-            ) : (
-                <p className="pl-40 text-gray-500 mb-10">Nenhum produto disponível no momento.</p>
+
+            {featuredProducts.length > 0 && (
+                <>
+                    <h2 className="font-bold font text-4xl m-[20px] pl-40">Destaques</h2>
+                    <ProductsCarousel products={featuredProducts} />
+                </>
             )}
 
-            <h2 className="font-bold font text-4xl m-[20px] pl-40">Mais vendidos</h2>
-            
-            {products.length > 0 ? (
-                <ProductsCarousel products={products} />
-            ) : (
-                <p className="pl-40 text-gray-500 mb-10">Nenhum produto disponível no momento.</p>
+
+            {featuredProducts.length > 0 && (
+                <>
+                    <h2 className="font-bold font text-4xl m-[20px] pl-40">Mais pedidos</h2>
+                    <ProductsCarousel products={featuredProducts} />
+                </>
             )}
         </>
     );

@@ -22,10 +22,10 @@ const ProductsPagination = () => {
 
         if (!response.success) {
             setError(response.error);
-        } else if (response.data) {
-            setProducts(response.data.data); 
-            setTotalPages(response.data.totalPages);
-            setTotalItems(response.data.total);
+        } else {
+            setProducts(response.products); 
+            setTotalPages(response.totalPages);
+            setTotalItems(response.total);
         }
 
     };
@@ -43,7 +43,7 @@ const ProductsPagination = () => {
         )}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {products.map((p) => (
-                    <ProductCard product={p}/>
+                    <ProductCard key={p.id_produto} product={p}/>
                 ))}
             </div>
 
