@@ -8,7 +8,7 @@ export function LogoutButton() {
         localStorage.removeItem("auth_token");
         localStorage.removeItem("id_usuario");
         
-        window.location.reload();
+        window.location.href = "/";
     };
 
     return (

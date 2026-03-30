@@ -1,14 +1,14 @@
 import { ReactNode } from "react";
 import "./globals.css";
-import { CartProvider } from "../contexts/CartContext";
+import { AuthProvider } from "../contexts/AuthContext";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <html>
       <body className="bg-[url('/img/home-background.png')] bg-fixed bg-top bg-repeat-y bg-[size:100%_auto]">
-        <CartProvider>
+        <AuthProvider>
           {children}
-        </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

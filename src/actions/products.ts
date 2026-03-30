@@ -14,7 +14,7 @@ export async function getAllProducts() {
         };
 
     } catch (error) {
-        return { success: false, error: "Erro ao buscar paginação de produtos" };
+        return { success: false, error: "Erro ao buscar produtos" };
     }
 }
 
@@ -51,6 +51,6 @@ export async function getFeaturedProducts() {
         return { success: true, featuredProducts:data.data as ProductType[] };
 
     } catch (error) {
-        return { success: false, error: "Erro ao buscar paginação de produtos em destaque" };
+        return { success: false, error: "Erro ao buscar produtos em destaque" };
     }
 }
