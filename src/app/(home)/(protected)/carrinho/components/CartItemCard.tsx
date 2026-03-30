@@ -1,43 +1,52 @@
 'use client'
 
 import { Button } from "@/src/components/Button";
-import { useUpdateCart } from "@/src/hooks/useUpdateCart";
+import { useDeleteItem } from "@/src/hooks/cart/useDeleteItem";
+import { useUpdateItemQuantity } from "@/src/hooks/cart/useUpdateItemQuantity";
 
-// 1. Adicionamos a tipagem da propriedade que vem do pai
 interface CartItemCardProps {
     item: CartItemType;
-    onUpdate: () => void; 
+    onUpdate: () => void;
 }
 
 export const CartItemCard = ({ item, onUpdate }: CartItemCardProps) => {
-    const { addToCart } = useUpdateCart();
+    const { execute: alterar, isLoading: alterando } = useUpdateItemQuantity();
+    const { execute: remover, isLoading: removendo } = useDeleteItem();
 
-    // 2. Usamos async/await para aguardar a requisição terminar
-    const handleAdd = async () => {
-        await addToCart({
-            id_produto: item.id_produto,
-            preco: item.preco_unitario,
-            quantidade: 1
-        });
-        // 3. O banco salvou? Avisamos o pai para buscar os dados de novo!
-        onUpdate(); 
-    };
-
-    const handleMinus = async () => {
-        await addToCart({
-            id_produto: item.id_produto,
-            preco: item.preco_unitario,
-            quantidade: -1
-        });
+    const handleUpdate = async (quantidade: number) => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("Você precisa estar logado para alterar itens no carrinho.");
+            return;
+        }
+        const res = await alterar(
+            item.id_item_carrinho,
+            quantidade,
+            token
+        );
+        if (res.success) {
+            console.log("Item alterado com sucesso!");
+        } else {
+            alert("Erro ao alterar item no carrinho.");
+        }
         onUpdate();
     };
-    
+
     const handleDelete = async () => {
-        await addToCart({
-            id_produto: item.id_produto,
-            preco: item.preco_unitario,
-            quantidade: -item.quantidade
-        });
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("Você precisa estar logado para remover itens do carrinho.");
+            return;
+        }
+        const res = await remover(
+            item.id_item_carrinho,
+            token
+        );
+        if (res.success) {
+            console.log("Item alterado com sucesso!");
+        } else {
+            alert("Erro ao alterar item no carrinho.");
+        }
         onUpdate();
     };
 
@@ -64,7 +73,8 @@ export const CartItemCard = ({ item, onUpdate }: CartItemCardProps) => {
                     <Button
                         icon="faPlus"
                         className="text-[#5714d7] hover:opacity-75 transition-opacity"
-                        onClick={handleAdd}
+                        onClick={() => handleUpdate(1)}
+                        disabled={alterando}
                     />
                     <span className="font-bold text-black">
                         {item.quantidade}
@@ -72,7 +82,9 @@ export const CartItemCard = ({ item, onUpdate }: CartItemCardProps) => {
                     <Button
                         icon="faMinus"
                         className="text-[#5714d7] hover:opacity-75 transition-opacity"
-                        onClick={handleMinus}
+                        onClick={() => handleUpdate(-1)}
+
+                        disabled={alterando}
                     />
                 </div>
 
@@ -82,7 +94,9 @@ export const CartItemCard = ({ item, onUpdate }: CartItemCardProps) => {
                 <Button
                     icon="faTrash"
                     className="text-[#ff5c8a] hover:opacity-75 transition-opacity"
-                    onClick={handleDelete}
+                    onClick={() => handleDelete}
+
+                    disabled={removendo}
                 />
             </div>
         </div>

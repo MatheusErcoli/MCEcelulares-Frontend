@@ -1,4 +1,4 @@
-export async function loginAction(formData: FormData) {
+export async function loginAPI(formData: FormData) {
   const email = formData.get("email");
   const senha = formData.get("senha");
 
@@ -25,7 +25,7 @@ export async function loginAction(formData: FormData) {
   }
 }
 
-export async function signupAction(formData: FormData) {
+export async function signupAPI(formData: FormData) {
   const nome = formData.get("nome");
   const email = formData.get("email");
   const senha = formData.get("senha");

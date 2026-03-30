@@ -1,32 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import { loginAction } from "@/src/actions/auth";
 import { Button } from "@/src/components/Button";
 import Link from "next/link";
 import { Input } from "@/src/components/Input";
+import { useLogin } from "@/src/hooks/auth/useLogin";
 
 export default function LoginForm() {
-  const [error, setError] = useState<string | null>(null);
+  const { login, loading, error } = useLogin();
 
   const handleLogin = async (formData: FormData) => {
-    setError(null);
+    const result = await login(formData);
 
-    const result = await loginAction(formData);
-
-    if (result.success && result.token) {
+    if (result && result.token) {
       localStorage.setItem("auth_token", result.token);
 
-      if (result.usuario) {
-          const userId = result.usuario.id_usuario;
-          if (userId) {
-              localStorage.setItem("id_usuario", userId.toString());
-          }
+      if (result.usuario && result.usuario.id_usuario) {
+        localStorage.setItem("id_usuario", result.usuario.id_usuario.toString());
       }
 
       window.location.href = "/";
-    } else {
-      setError(result.error);
     }
   };
 
@@ -40,10 +32,30 @@ export default function LoginForm() {
           </p>
         )}
 
-        <Input name="email" type="email" placeholder="E-mail" required={true} pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Digite um e-mail válido (ex: usuario@dominio.com)"/>
-        <Input name="senha" type="password" placeholder="Senha" required={true} minLength={8} pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}" title="A senha deve ter no mínimo 8 caracteres, incluir letra maiúscula, minúscula, número e caractere especial."/>
+        <Input 
+          name="email" 
+          type="email" 
+          placeholder="E-mail" 
+          required={true} 
+          pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" 
+          title="Digite um e-mail válido (ex: usuario@dominio.com)"
+        />
+        
+        <Input 
+          name="senha" 
+          type="password" 
+          placeholder="Senha" 
+          required={true} 
+          minLength={8} 
+          pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}" 
+          title="A senha deve ter no mínimo 8 caracteres, incluir letra maiúscula, minúscula, número e caractere especial."
+        />
 
-        <Button text="Entrar" type="submit" />
+        <Button 
+          text={loading ? "Entrando..." : "Entrar"} 
+          type="submit" 
+          disabled={loading}
+        />
       </form>
 
       <div className="mt-6 text-center text-sm text-gray-600">

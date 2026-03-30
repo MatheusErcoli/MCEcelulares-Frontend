@@ -1,52 +1,45 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getActiveCartByUser } from "@/src/actions/cart";
+import { useEffect, useCallback } from "react";
 import { CartItemCard } from "./CartItemCard";
-import { SubtotalCard } from "./SubtotalCard"; // Importando o subtotal aqui dentro
-import { useAuth } from "@/src/contexts/AuthContext";
+import { SubtotalCard } from "./SubtotalCard";
+import { useGetCompleteCart } from "@/src/hooks/cart/useGetCompleteCart";
 
 export const CartItemList = () => {
-  const [itens, setItens] = useState<CartItemType[]>([]);
-  const [carregando, setCarregando] = useState(true);
-  const { token, user } = useAuth();
+  const { execute: fetchCart, isLoading, error, cart } = useGetCompleteCart();
 
-  // Função de busca (Refetch)
-  async function buscarCarrinho() {
-    try {
-      if (token && user) {
-        const dadosDoCarrinho = await getActiveCartByUser(user.id, token);
-
-        if (dadosDoCarrinho && dadosDoCarrinho.cart) {
-          setItens(dadosDoCarrinho.cart.itens || []);
-        }
-      }
-    } catch (error) {
-      console.error("Erro ao buscar os itens do carrinho:", error);
-    } finally {
-      setCarregando(false);
+  const loadCart = useCallback(async () => {
+    const id_usuario = Number(localStorage.getItem("id_usuario"));
+    const token = localStorage.getItem("token");
+    if (!id_usuario || !token) {
+      console.warn("Usuário não logado. Redirecionando ou mostrando mensagem...");
+      return;
     }
-  }
+    await fetchCart(id_usuario, token);
+  }, [fetchCart]);
 
   useEffect(() => {
-    buscarCarrinho();
-  }, [token, user]);
+    loadCart();
+  }, [loadCart]);
 
-  if (carregando) {
-    return <p>Carregando seu carrinho...</p>;
-  }
-
-  // 1. A MÁGICA DO CÁLCULO: Percorre a lista e soma (quantidade * preco)
-  const subtotal = itens.reduce((acumulador, item) => {
-    const preco = Number(item.preco_unitario);
-    return acumulador + preco * item.quantidade;
+  const itens = cart?.itens || [];
+  
+  const subtotal = itens.reduce((acc: number, item: any) => {
+    const preco = Number(item.preco_unitario || item.produto?.preco || 0);
+    return acc + (item.quantidade * preco);
   }, 0);
 
+  if (isLoading && !cart) {
+    return <p className="text-center text-gray-500 py-10">Carregando sua sacola...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500 py-10">Erro: {error}</p>;
+  }
+
   return (
-    // Mantendo a mesma grid que estava na sua page.tsx original!
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
       
-      {/* LADO ESQUERDO: LISTA DE ITENS */}
       <div className="lg:col-span-2 flex flex-col gap-5">
         {itens.length === 0 ? (
           <div className="bg-white p-16 rounded-[40px] text-center border-2 border-dashed border-gray-200">
@@ -55,11 +48,11 @@ export const CartItemList = () => {
             </p>
           </div>
         ) : (
-          itens.map((item, index) => (
+          itens.map((item: any, index: number) => (
             <CartItemCard
-              key={item.id_item_carrinho || index}
+              key={item.id_item_carrinho}
               item={item}
-              onUpdate={buscarCarrinho}
+              onUpdate={loadCart} 
             />
           ))
         )}
