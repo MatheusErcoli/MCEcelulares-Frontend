@@ -24,14 +24,14 @@ export async function getCompleteCartAPI(id_usuario: number, token: string) {
   return data;
 }
 
-export async function addItemAPI(id_usuario: number, id_produto: number, preco_unitario: number, token: string) {
-  const response = await fetch(`${API_URL}/carrinho/item`, {
+export async function addItemAPI(id_carrinho: number, id_produto: number, preco_unitario: number, token: string) {
+  const response = await fetch(`${API_URL}/itemcarrinho`, {
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-    body: JSON.stringify({ id_usuario, id_produto, preco_unitario })
+    body: JSON.stringify({ id_carrinho, id_produto, preco_unitario })
   });
   const data = await response.json();
   if (!response.ok) throw new Error(data.message || 'Erro ao adicionar item');
@@ -39,7 +39,7 @@ export async function addItemAPI(id_usuario: number, id_produto: number, preco_u
 }
 
 export async function updateItemQuantityAPI(id_item_carrinho: number, quantidade: number, token: string) {
-  const response = await fetch(`${API_URL}/item-carrinho/${id_item_carrinho}`, {
+  const response = await fetch(`${API_URL}/itemcarrinho/${id_item_carrinho}`, {
     method: 'PUT',
     headers: { 
       'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export async function updateItemQuantityAPI(id_item_carrinho: number, quantidade
 }
 
 export async function deleteItemAPI(id_item_carrinho: number, token: string) {
-  const response = await fetch(`${API_URL}/item-carrinho/${id_item_carrinho}`, {
+  const response = await fetch(`${API_URL}/itemcarrinho/${id_item_carrinho}`, {
     method: 'DELETE',
     headers: { 'Authorization': `Bearer ${token}` }
   });

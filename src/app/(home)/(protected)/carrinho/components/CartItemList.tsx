@@ -10,7 +10,7 @@ export const CartItemList = () => {
 
   const loadCart = useCallback(async () => {
     const id_usuario = Number(localStorage.getItem("id_usuario"));
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("auth_token");
     if (!id_usuario || !token) {
       console.warn("Usuário não logado. Redirecionando ou mostrando mensagem...");
       return;

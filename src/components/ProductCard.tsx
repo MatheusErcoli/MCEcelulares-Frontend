@@ -19,7 +19,8 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   const handleAdd = async () => {
     const id_usuario = Number(localStorage.getItem("id_usuario"));
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("auth_token");
+    console.log("Meu token é:", token);
 
     if (!id_usuario || !token) {
       alert("Você precisa estar logado para adicionar itens ao carrinho.");
@@ -42,7 +43,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <div className="bg-white rounded-[23px] overflow-hidden flex flex-col border-2 p-[1px] m-[10px] border-purple-800">
-      
+
       <div className="bg-[#E5E7EB] p-5 flex items-center justify-center relative aspect-[3/2] bg-product-pattern bg-repeat bg-center shrink-0">
         <img
           src={product.imagem}
