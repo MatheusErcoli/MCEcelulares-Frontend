@@ -54,7 +54,7 @@ export const Header = () => {
                 ) : isLogged ? (
                     <div className="flex items-center gap-2">
                         <Link href="/perfil" className="flex items-center gap-2 transition-transform group hover:text-gray-200">
-                            <span className="text-sm font-medium">Conta</span>
+                            <span className="text-sm font-medium">Perfil</span>
                             <Icon name="faCircleUser" className="w-5 text-white group-hover:text-gray-200" size="2xl" />
                         </Link>
 

@@ -1,6 +1,6 @@
-@import "tailwindcss";@layer 
+@import "tailwindcss";
 
-base {
+@layer base {
   button, 
   [role="button"],
   a, 

@@ -1,25 +1,29 @@
 import { getMarcasAPI } from '@/src/actions/marca';
 import { useState, useCallback } from 'react';
-
+ 
+interface Marca {
+  id_marca: number;
+  nome: string;
+}
+ 
 export function useGetMarcas() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [marcas, setMarcas] = useState<Marca[]>([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [marcas, setMarcas] = useState<CategoriaType[]>([]);
-
-  const execute = useCallback(async () => {
-    setIsLoading(true);
+ 
+  const execute = useCallback(async (id_categoria?: number) => {
+    setLoading(true);
     setError(null);
     try {
-      const data = await getMarcasAPI();
+      const data = await getMarcasAPI(id_categoria);
       setMarcas(data);
-      setIsLoading(false);
-      return { success: true, data };
     } catch (err: any) {
-      setError(err.message);
-      setIsLoading(false);
-      return { success: false };
+      setError(err.message || 'Erro ao buscar marcas');
+      setMarcas([]);
+    } finally {
+      setLoading(false);
     }
   }, []);
-
-  return { execute, isLoading, error, marcas };
+ 
+  return { execute, marcas, loading, error };
 }
