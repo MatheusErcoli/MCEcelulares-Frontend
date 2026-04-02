@@ -20,7 +20,7 @@ export function useLogin() {
 
     return {
       token: result.token,
-      usuario: result.usuario as User,
+      usuario: result.usuario as UsuarioType,
     };
   };
 

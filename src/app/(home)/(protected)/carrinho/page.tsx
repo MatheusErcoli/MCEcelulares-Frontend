@@ -1,4 +1,4 @@
-import { CartItemList } from "./components/CartItemList";
+import { CarrinhoList } from "./components/CarrinhoList";
 
 const Carrinho = () => {
     return (
@@ -7,9 +7,7 @@ const Carrinho = () => {
                 
                 <h1 className="text-4xl font-bold mb-10">Meu Carrinho</h1>
 
-                {/* A mágica acontece toda aqui dentro agora! */}
-                <CartItemList />
-                
+                <CarrinhoList />
             </div>
         </main>
     );

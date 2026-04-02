@@ -1,4 +1,4 @@
-type ProductType = {
+type ProdutoType = {
   id_produto: number;
   nome: string;
   preco: number;
@@ -13,18 +13,30 @@ type PaginatedResponse<T> = {
   data: T[];
 };
 
-type CartType = {
+type CarrinhoType = {
   id_carrinho: number;
   id_usuario: number;
   data_criacao: Date;
   ativo: boolean;
 }
 
-type CartItemType = {
+type ItemCarrinhoType = {
   id_item_carrinho: number;
   id_carrinho: number;
   id_produto: number;
   preco_unitario: number;
   quantidade: number;
-  produto: ProductType;
+  produto: ProdutoType;
+}
+
+type CategoriaType = {
+  id_categoria: number;
+  nome: string;
+  descricao: string | null;
+  ativo: boolean;
+}
+
+type MarcaType = {
+  id_marca: number;
+  nome: string;
 }

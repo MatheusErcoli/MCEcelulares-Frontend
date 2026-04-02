@@ -1,6 +1,6 @@
 const API_URL = 'http://localhost:3000'; 
 
-export async function initCartAPI(id_usuario: number, token: string) {
+export async function createCarrinhoAPI(id_usuario: number, token: string) {
   const response = await fetch(`${API_URL}/carrinho`, {
     method: 'POST',
     headers: { 
@@ -14,7 +14,7 @@ export async function initCartAPI(id_usuario: number, token: string) {
   return data;
 }
 
-export async function getCompleteCartAPI(id_usuario: number, token: string) {
+export async function getCarrinhoAPI(id_usuario: number, token: string) {
   const response = await fetch(`${API_URL}/carrinho/${id_usuario}`, {
     method: 'GET',
     headers: { 'Authorization': `Bearer ${token}` }
@@ -24,7 +24,7 @@ export async function getCompleteCartAPI(id_usuario: number, token: string) {
   return data;
 }
 
-export async function addItemAPI(id_carrinho: number, id_produto: number, preco_unitario: number, token: string) {
+export async function createItemCarrinhoAPI(id_carrinho: number, id_produto: number, preco_unitario: number, token: string) {
   const response = await fetch(`${API_URL}/itemcarrinho`, {
     method: 'POST',
     headers: { 
@@ -38,7 +38,7 @@ export async function addItemAPI(id_carrinho: number, id_produto: number, preco_
   return data;
 }
 
-export async function updateItemQuantityAPI(id_item_carrinho: number, quantidade: number, token: string) {
+export async function updateItemCarrinhoAPI(id_item_carrinho: number, quantidade: number, token: string) {
   const response = await fetch(`${API_URL}/itemcarrinho/${id_item_carrinho}`, {
     method: 'PUT',
     headers: { 
@@ -52,11 +52,12 @@ export async function updateItemQuantityAPI(id_item_carrinho: number, quantidade
   return data;
 }
 
-export async function deleteItemAPI(id_item_carrinho: number, token: string) {
+export async function deleteItemCarrinhoAPI(id_item_carrinho: number, token: string) {
   const response = await fetch(`${API_URL}/itemcarrinho/${id_item_carrinho}`, {
     method: 'DELETE',
     headers: { 'Authorization': `Bearer ${token}` }
   });
+  if (response.status === 204) return;
   const data = await response.json();
   if (!response.ok) throw new Error(data.message || 'Erro ao deletar item');
   return data;

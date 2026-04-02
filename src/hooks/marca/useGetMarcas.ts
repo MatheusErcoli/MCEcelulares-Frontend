@@ -1,17 +1,17 @@
-import { getCompleteCartAPI } from '@/src/actions/cart';
+import { getMarcasAPI } from '@/src/actions/marca';
 import { useState, useCallback } from 'react';
 
-export function useGetCompleteCart() {
+export function useGetMarcas() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [cart, setCart] = useState<any>(null);
+  const [marcas, setMarcas] = useState<CategoriaType[]>([]);
 
-  const execute = useCallback(async (id_usuario: number, token: string) => {
+  const execute = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await getCompleteCartAPI(id_usuario, token);
-      setCart(data);
+      const data = await getMarcasAPI();
+      setMarcas(data);
       setIsLoading(false);
       return { success: true, data };
     } catch (err: any) {
@@ -21,5 +21,5 @@ export function useGetCompleteCart() {
     }
   }, []);
 
-  return { execute, isLoading, error, cart };
+  return { execute, isLoading, error, marcas };
 }

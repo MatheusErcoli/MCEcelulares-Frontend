@@ -1,35 +1,35 @@
 "use client";
 
 import { useEffect, useCallback } from "react";
-import { CartItemCard } from "./CartItemCard";
 import { SubtotalCard } from "./SubtotalCard";
-import { useGetCompleteCart } from "@/src/hooks/cart/useGetCompleteCart";
+import { useGetCarrinho } from "@/src/hooks/cart/useGetCarrinho";
+import { ItemCarrinhoCard } from "./ItemCarrinhoCard";
 
-export const CartItemList = () => {
-  const { execute: fetchCart, isLoading, error, cart } = useGetCompleteCart();
+export const CarrinhoList = () => {
+  const { execute: fetchCarrinho, isLoading, error, carrinho } = useGetCarrinho();
 
-  const loadCart = useCallback(async () => {
+  const loadCarrinho = useCallback(async () => {
     const id_usuario = Number(localStorage.getItem("id_usuario"));
     const token = localStorage.getItem("auth_token");
     if (!id_usuario || !token) {
       console.warn("Usuário não logado. Redirecionando ou mostrando mensagem...");
       return;
     }
-    await fetchCart(id_usuario, token);
-  }, [fetchCart]);
+    await fetchCarrinho(id_usuario, token);
+  }, [fetchCarrinho]);
 
   useEffect(() => {
-    loadCart();
-  }, [loadCart]);
+    loadCarrinho();
+  }, [loadCarrinho]);
 
-  const itens = cart?.itens || [];
+  const itens = carrinho?.itens || [];
   
   const subtotal = itens.reduce((acc: number, item: any) => {
     const preco = Number(item.preco_unitario || item.produto?.preco || 0);
     return acc + (item.quantidade * preco);
   }, 0);
 
-  if (isLoading && !cart) {
+  if (isLoading && !carrinho) {
     return <p className="text-center text-gray-500 py-10">Carregando sua sacola...</p>;
   }
 
@@ -49,10 +49,10 @@ export const CartItemList = () => {
           </div>
         ) : (
           itens.map((item: any, index: number) => (
-            <CartItemCard
+            <ItemCarrinhoCard
               key={item.id_item_carrinho}
               item={item}
-              onUpdate={loadCart} 
+              onUpdate={loadCarrinho} 
             />
           ))
         )}

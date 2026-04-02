@@ -1,15 +1,15 @@
 'use client'
 
-import { ProductCard } from "@/src/components/ProductCard";
+import { ProdutoCard } from "@/src/components/ProdutoCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-type ProductCarouselProps = {
-    products: ProductType[];
+type ProdutoCarouselProps = {
+    produtos: ProdutoType[];
 }
 
-export const ProductsCarousel = ({ products }: ProductCarouselProps) => {
+export const ProdutoCarousel = ({ produtos }: ProdutoCarouselProps) => {
     const settings = {
         dots: true,
         infinite: true,
@@ -22,8 +22,8 @@ export const ProductsCarousel = ({ products }: ProductCarouselProps) => {
         <div className="w-full max-w-7xl m-auto px-12 pb-15">
             <div className="m-0 p-0">
                 <Slider {...settings}>
-                    {products.map((p) => (
-                        <ProductCard key={p.id_produto} product={p} />
+                    {produtos.map((p) => (
+                        <ProdutoCard key={p.id_produto} product={p} />
                     ))}
                 </Slider>
             </div>

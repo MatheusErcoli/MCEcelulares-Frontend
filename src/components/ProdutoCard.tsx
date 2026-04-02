@@ -1,21 +1,14 @@
 "use client";
 
-import { useAddItem } from "../hooks/cart/useAddItem";
+import { useCreateItemCarrinho } from "../hooks/cart/useCreateItemCarrinho";
 import { Button } from "./Button";
 
-interface ProductType {
-  id_produto: number;
-  nome: string;
-  preco: number;
-  imagem: string;
+interface ProdutoCardProps {
+  product: ProdutoType;
 }
 
-interface ProductCardProps {
-  product: ProductType;
-}
-
-export const ProductCard = ({ product }: ProductCardProps) => {
-  const { execute, isAdding } = useAddItem();
+export const ProdutoCard = ({ product }: ProdutoCardProps) => {
+  const { execute, isLoading } = useCreateItemCarrinho();
 
   const handleAdd = async () => {
     const id_usuario = Number(localStorage.getItem("id_usuario"));
@@ -64,10 +57,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
         <div className="w-full mt-auto">
           <Button
-            text={isAdding ? "Processando..." : "Adicionar"}
+            text={isLoading ? "Processando..." : "Adicionar"}
             icon="faCartShopping"
             onClick={handleAdd}
-            disabled={isAdding}
+            disabled={isLoading}
           />
         </div>
       </div>

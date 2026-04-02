@@ -18,7 +18,7 @@ export async function loginAPI(formData: FormData) {
     return { 
       success: true, 
       token: data.token, 
-      usuario: data.usuario as User
+      usuario: data.usuario as UsuarioType
     }; 
   } catch (error) {
     return { success: false, error: "Servidor indisponível no momento." };

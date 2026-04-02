@@ -5,8 +5,8 @@ import { createContext, useState, useEffect, useContext } from 'react';
 interface AuthContextData {
   isAuthenticated: boolean;
   isLoading: boolean;
-  token: string | null; // Adicionado!
-  user: { id: number } | null; // Adicionado simplificado (só o ID que precisamos)
+  token: string | null;
+  user: { id: number } | null;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);

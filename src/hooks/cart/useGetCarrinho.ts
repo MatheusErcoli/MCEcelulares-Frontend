@@ -1,15 +1,17 @@
-import { initCartAPI } from '@/src/actions/cart';
+import { getCarrinhoAPI } from '@/src/actions/carrinho';
 import { useState, useCallback } from 'react';
 
-export function useInitCart() {
+export function useGetCarrinho() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [carrinho, setCarrinho] = useState<any>(null);
 
   const execute = useCallback(async (id_usuario: number, token: string) => {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await initCartAPI(id_usuario, token);
+      const data = await getCarrinhoAPI(id_usuario, token);
+      setCarrinho(data);
       setIsLoading(false);
       return { success: true, data };
     } catch (err: any) {
@@ -19,5 +21,5 @@ export function useInitCart() {
     }
   }, []);
 
-  return { execute, isLoading, error };
+  return { execute, isLoading, error, carrinho };
 }

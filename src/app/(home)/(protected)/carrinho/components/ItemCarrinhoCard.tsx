@@ -1,17 +1,17 @@
 'use client'
 
 import { Button } from "@/src/components/Button";
-import { useDeleteItem } from "@/src/hooks/cart/useDeleteItem";
-import { useUpdateItemQuantity } from "@/src/hooks/cart/useUpdateItemQuantity";
+import { useDeleteItemCarrinho } from "@/src/hooks/cart/useDeleteItemCarrinho";
+import { useUpdateItemCarrinho } from "@/src/hooks/cart/useUpdateItemCarrinho";
 
 interface CartItemCardProps {
-    item: CartItemType;
+    item: ItemCarrinhoType;
     onUpdate: () => void;
 }
 
-export const CartItemCard = ({ item, onUpdate }: CartItemCardProps) => {
-    const { execute: alterar, isLoading: alterando } = useUpdateItemQuantity();
-    const { execute: remover, isLoading: removendo } = useDeleteItem();
+export const ItemCarrinhoCard = ({ item, onUpdate }: CartItemCardProps) => {
+    const { execute: alterar, isLoading: alterando } = useUpdateItemCarrinho();
+    const { execute: remover, isLoading: removendo } = useDeleteItemCarrinho();
 
     const handleUpdate = async (quantidade: number) => {
         const token = localStorage.getItem("auth_token");
@@ -33,7 +33,6 @@ export const CartItemCard = ({ item, onUpdate }: CartItemCardProps) => {
     };
 
     const handleDelete = async () => {
-        // Usando o mesmo nome de token do handleUpdate
         const token = localStorage.getItem("auth_token");
         if (!token) {
             alert("Você precisa estar logado para remover itens do carrinho.");
@@ -47,7 +46,7 @@ export const CartItemCard = ({ item, onUpdate }: CartItemCardProps) => {
 
         if (res.success) {
             console.log("Item removido com sucesso!");
-            onUpdate(); // <--- IMPORTANTE: Isto faz a lista atualizar na tela!
+            onUpdate();
         } else {
             alert("Erro ao remover item do carrinho.");
         }
@@ -76,7 +75,7 @@ export const CartItemCard = ({ item, onUpdate }: CartItemCardProps) => {
                 <div className="flex items-center gap-4">
                     <Button
                         icon="faPlus"
-                        className="text-[#5714d7] hover:opacity-75 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="text-[#5714d7] hover:opacity-75 transition-opacity disabled:opacity-50"
                         onClick={() => handleUpdate(1)}
                         disabled={alterando}
                     />
@@ -84,11 +83,8 @@ export const CartItemCard = ({ item, onUpdate }: CartItemCardProps) => {
                         {item.quantidade}
                     </span>
                     <Button
-                        icon="faMinus"
-                        // Adicionadas as classes disabled:text-gray-400 e disabled:cursor-not-allowed
-                        className="text-[#5714d7] hover:opacity-75 transition-opacity disabled:text-gray-400 disabled:hover:opacity-100 disabled:cursor-not-allowed"
+                        icon="faMinus"className={item.quantidade > 1 ? "text-[#5714d7] hover:opacity-0 disabled:opacity-1" : "text-gray-400"}
                         onClick={() => handleUpdate(-1)}
-                        // O botão agora desativa se estiver carregando a API OU se a quantidade for 1 (ou menor)
                         disabled={alterando || item.quantidade <= 1}
                     />
                 </div>

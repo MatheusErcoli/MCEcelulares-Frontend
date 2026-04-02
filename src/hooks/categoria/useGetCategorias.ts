@@ -1,16 +1,19 @@
-import { deleteItemAPI } from '@/src/actions/cart';
+import { getCategoriasAPI } from '@/src/actions/categoria';
 import { useState, useCallback } from 'react';
-export function useDeleteItem() {
+
+export function useGetCategorias() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [categorias, setCategorias] = useState<CategoriaType[]>([]);
 
-  const execute = useCallback(async (id_item_carrinho: number, token: string) => {
+  const execute = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
-      await deleteItemAPI(id_item_carrinho, token);
+      const data = await getCategoriasAPI();
+      setCategorias(data);
       setIsLoading(false);
-      return { success: true };
+      return { success: true, data };
     } catch (err: any) {
       setError(err.message);
       setIsLoading(false);
@@ -18,5 +21,5 @@ export function useDeleteItem() {
     }
   }, []);
 
-  return { execute, isLoading, error };
+  return { execute, isLoading, error, categorias };
 }

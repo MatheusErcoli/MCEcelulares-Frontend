@@ -24,7 +24,7 @@ export const SignCard = ({ title, children, backHref = "/" }: SignCardProps) => 
             <Icon
               name="faRightFromBracket"
               className="text-white"
-              size="md"
+              size="lg"
             />
           </div>
           <span className="text-md font-medium">Voltar</span>

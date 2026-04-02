@@ -1,4 +1,4 @@
-type User = {
+type UsuarioType = {
     id_usuario: number;
     nome: string;
     email: string;
