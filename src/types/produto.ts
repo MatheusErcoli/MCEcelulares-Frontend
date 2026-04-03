@@ -1,8 +1,16 @@
 type ProdutoType = {
   id_produto: number;
   nome: string;
+  descricao: string;
   preco: number;
   imagem: string;
+  estoque: number;
+  destaque: boolean;
+  ativo: boolean;
+  id_marca: number;
+  id_categoria: number;
+  marca?: MarcaType;
+  categoria?: CategoriaType;
 }
 
 type PaginatedResponse<T> = {

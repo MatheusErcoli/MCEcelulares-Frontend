@@ -2,8 +2,8 @@
 
 import { Button } from "@/src/components/Button";
 import Link from "next/link";
-import { Input } from "@/src/components/Input";
 import { useLogin } from "@/src/hooks/auth/useLogin";
+import { InputGray } from "@/src/components/InputGray";
 
 export default function LoginForm() {
   const { login, loading, error } = useLogin();
@@ -32,28 +32,28 @@ export default function LoginForm() {
           </p>
         )}
 
-        <Input 
-          name="email" 
-          type="email" 
-          placeholder="E-mail" 
-          required={true} 
-          pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" 
+        <InputGray
+          name="email"
+          type="email"
+          placeholder="E-mail"
+          required={true}
+          pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
           title="Digite um e-mail válido (ex: usuario@dominio.com)"
         />
-        
-        <Input 
-          name="senha" 
-          type="password" 
-          placeholder="Senha" 
-          required={true} 
-          minLength={8} 
-          pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}" 
+
+        <InputGray
+          name="senha"
+          type="password"
+          placeholder="Senha"
+          required={true}
+          minLength={8}
+          pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}"
           title="A senha deve ter no mínimo 8 caracteres, incluir letra maiúscula, minúscula, número e caractere especial."
         />
 
-        <Button 
-          text={loading ? "Entrando..." : "Entrar"} 
-          type="submit" 
+        <Button
+          text={loading ? "Entrando..." : "Entrar"}
+          type="submit"
           disabled={loading}
         />
       </form>

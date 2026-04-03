@@ -1,8 +1,8 @@
 'use client'
 
 import { Button } from "@/src/components/Button";
-import { useDeleteItemCarrinho } from "@/src/hooks/cart/useDeleteItemCarrinho";
-import { useUpdateItemCarrinho } from "@/src/hooks/cart/useUpdateItemCarrinho";
+import { useDeleteItemCarrinho } from "@/src/hooks/carrinho/useDeleteItemCarrinho";
+import { useUpdateItemCarrinho } from "@/src/hooks/carrinho/useUpdateItemCarrinho";
 
 interface CartItemCardProps {
     item: ItemCarrinhoType;
@@ -83,7 +83,7 @@ export const ItemCarrinhoCard = ({ item, onUpdate }: CartItemCardProps) => {
                         {item.quantidade}
                     </span>
                     <Button
-                        icon="faMinus"className={item.quantidade > 1 ? "text-[#5714d7] hover:opacity-0 disabled:opacity-1" : "text-gray-400"}
+                        icon="faMinus" className={item.quantidade > 1 ? "text-[#5714d7] hover:opacity-0 disabled:opacity-1" : "text-gray-400"}
                         onClick={() => handleUpdate(-1)}
                         disabled={alterando || item.quantidade <= 1}
                     />

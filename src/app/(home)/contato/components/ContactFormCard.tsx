@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { sendEmailAction } from "@/src/actions/sendEmail";
 import { Icon } from "@/src/components/Icon";
 import { Button } from "@/src/components/Button";
-import { InputForm } from "./InputForm";
+import { InputWhite } from "@/src/components/InputWhite";
 
 export const ContactFormCard = () => {
     const formRef = useRef<HTMLFormElement>(null);
@@ -19,8 +19,6 @@ export const ContactFormCard = () => {
         }
     };
 
-    const inputStyle = "w-full rounded-full bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#7929c8]/50 border-none";
-
     return (
         <form
             ref={formRef}
@@ -33,13 +31,13 @@ export const ContactFormCard = () => {
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <InputForm name="nome" type="text" placeholder="Nome Completo" required={true} minLength={3} maxLength={100} title="O nome deve ter entre 3 e 100 caracteres."/>
-                <InputForm name="telefone" type="tel" placeholder="Telefone: (99) 99999-9999" required={true} pattern="\d{15}" title="O telefome deve ter 15 digitos."/>
+                <InputWhite name="nome" type="text" placeholder="Nome Completo" required={true} minLength={3} maxLength={100} title="O nome deve ter entre 3 e 100 caracteres."/>
+                <InputWhite name="telefone" type="tel" placeholder="Telefone: (99) 99999-9999" required={true} pattern="\d{15}" title="O telefome deve ter 15 digitos."/>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <InputForm name="email" type="email" placeholder="E-mail" required={true} pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Digite um e-mail válido (ex: usuario@dominio.com)"/>
-                <InputForm name="assunto" type="text" placeholder="Assunto" required={true} minLength={5} maxLength={30} title="O assunto deve ter entre 5 e 50 caracteres."/>
+                <InputWhite name="email" type="email" placeholder="E-mail" required={true} pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Digite um e-mail válido (ex: usuario@dominio.com)"/>
+                <InputWhite name="assunto" type="text" placeholder="Assunto" required={true} minLength={5} maxLength={30} title="O assunto deve ter entre 5 e 50 caracteres."/>
             </div>
 
             <div className="flex flex-col gap-2">

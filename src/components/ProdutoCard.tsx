@@ -1,6 +1,7 @@
 "use client";
 
-import { useCreateItemCarrinho } from "../hooks/cart/useCreateItemCarrinho";
+import { useRouter } from "next/navigation";
+import { useCreateItemCarrinho } from "../hooks/carrinho/useCreateItemCarrinho";
 import { Button } from "./Button";
 
 interface ProdutoCardProps {
@@ -8,6 +9,7 @@ interface ProdutoCardProps {
 }
 
 export const ProdutoCard = ({ product }: ProdutoCardProps) => {
+  const router = useRouter();
   const { execute, isLoading } = useCreateItemCarrinho();
 
   const handleAdd = async () => {
@@ -37,7 +39,9 @@ export const ProdutoCard = ({ product }: ProdutoCardProps) => {
   return (
     <div className="bg-white rounded-[23px] overflow-hidden flex flex-col border-2 p-[1px] m-[10px] border-purple-800">
 
-      <div className="bg-[#E5E7EB] p-5 flex items-center justify-center relative aspect-[3/2] bg-product-pattern bg-repeat bg-center shrink-0">
+      <div
+        onClick={() => router.push(`/produtos/detalhes?id=${product.id_produto}`)}
+        className="bg-[#E5E7EB] p-5 flex items-center justify-center relative aspect-[3/2] bg-product-pattern bg-repeat bg-center shrink-0 cursor-pointer">
         <img
           src={product.imagem}
           alt={product.nome}

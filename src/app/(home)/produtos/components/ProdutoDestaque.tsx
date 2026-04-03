@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { ProdutoCarousel } from "../../components/ProdutoCarousel";
-import { useGetProdutos } from "@/src/hooks/products/useGetProdutos";
+import { useGetProdutos } from "@/src/hooks/produto/useGetProdutos";
 
 type ProdutoDestaqueProps = {
     title: string;

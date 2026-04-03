@@ -53,8 +53,8 @@ export const Header = () => {
                     <div className="w-32 h-10"></div>
                 ) : isLogged ? (
                     <div className="flex items-center gap-2">
-                        <Link href="/perfil" className="flex items-center gap-2 transition-transform group hover:text-gray-200">
-                            <span className="text-sm font-medium">Perfil</span>
+                        <Link href="/conta" className="flex items-center gap-2 transition-transform group hover:text-gray-200">
+                            <span className="text-sm font-medium">Conta</span>
                             <Icon name="faCircleUser" className="w-5 text-white group-hover:text-gray-200" size="2xl" />
                         </Link>
 

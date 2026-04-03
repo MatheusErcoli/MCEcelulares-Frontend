@@ -38,7 +38,7 @@ export const MarcaDropdown = ({ id_categoria }: MarcaDropdownProps) => {
     <select
       value={selectedMarca}
       onChange={handleChange}
-      disabled={loading || marcas.length === 0}
+      disabled={!id_categoria || loading || marcas.length === 0}
       className="
         appearance-none cursor-pointer
         bg-gray-100 hover:bg-gray-200

@@ -2,7 +2,7 @@
 
 import { useEffect, useCallback } from "react";
 import { SubtotalCard } from "./SubtotalCard";
-import { useGetCarrinho } from "@/src/hooks/cart/useGetCarrinho";
+import { useGetCarrinho } from "@/src/hooks/carrinho/useGetCarrinho";
 import { ItemCarrinhoCard } from "./ItemCarrinhoCard";
 
 export const CarrinhoList = () => {
@@ -23,7 +23,7 @@ export const CarrinhoList = () => {
   }, [loadCarrinho]);
 
   const itens = carrinho?.itens || [];
-  
+
   const subtotal = itens.reduce((acc: number, item: any) => {
     const preco = Number(item.preco_unitario || item.produto?.preco || 0);
     return acc + (item.quantidade * preco);
@@ -39,7 +39,7 @@ export const CarrinhoList = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-      
+
       <div className="lg:col-span-2 flex flex-col gap-5">
         {itens.length === 0 ? (
           <div className="bg-white p-16 rounded-[40px] text-center border-2 border-dashed border-gray-200">
@@ -52,7 +52,7 @@ export const CarrinhoList = () => {
             <ItemCarrinhoCard
               key={item.id_item_carrinho}
               item={item}
-              onUpdate={loadCarrinho} 
+              onUpdate={loadCarrinho}
             />
           ))
         )}

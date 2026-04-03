@@ -1,6 +1,6 @@
 import { InputHTMLAttributes } from "react";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
+interface InputFormProps extends InputHTMLAttributes<HTMLInputElement>{
     name: string,
     type: string,
     placeholder: string,
@@ -8,7 +8,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
     required:boolean
 }
 
-export const Input = ({name, type, placeholder, className="w-full rounded-full bg-gray-200 px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50", required}: InputProps) => {
+export const InputWhite = ({name, type, placeholder, className="w-full rounded-full bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#6211f1]/50", required}: InputFormProps) => {
     return (
         <input
             name={name}

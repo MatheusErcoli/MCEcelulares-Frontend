@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Pagination } from "./Pagination";
-import { useGetProdutos } from "@/src/hooks/products/useGetProdutos";
+import { useGetProdutos } from "@/src/hooks/produto/useGetProdutos";
 import { ProdutoCard } from "@/src/components/ProdutoCard";
 import { CategoriaDropdown } from "./CategoriaDropdown";
 import { MarcaDropdown } from "./MarcaDropdown";
