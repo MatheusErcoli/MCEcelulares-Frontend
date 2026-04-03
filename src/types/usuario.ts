@@ -20,4 +20,5 @@ type EnderecoType = {
   cidade: string;
   estado: string;
   cep: string;
+  ativo: boolean;
 }

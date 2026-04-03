@@ -1,7 +1,9 @@
+import { fetchWithAuth } from "../lib/fetchWithAuth";
+
 const API_URL = 'http://localhost:3000'; 
 
 export async function createCarrinhoAPI(id_usuario: number, token: string) {
-  const response = await fetch(`${API_URL}/carrinho`, {
+  const response = await fetchWithAuth(`${API_URL}/carrinho`, {
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',
@@ -15,7 +17,7 @@ export async function createCarrinhoAPI(id_usuario: number, token: string) {
 }
 
 export async function getCarrinhoAPI(id_usuario: number, token: string) {
-  const response = await fetch(`${API_URL}/carrinho/${id_usuario}`, {
+  const response = await fetchWithAuth(`${API_URL}/carrinho/${id_usuario}`, {
     method: 'GET',
     headers: { 'Authorization': `Bearer ${token}` }
   });
@@ -25,7 +27,7 @@ export async function getCarrinhoAPI(id_usuario: number, token: string) {
 }
 
 export async function createItemCarrinhoAPI(id_carrinho: number, id_produto: number, preco_unitario: number, token: string) {
-  const response = await fetch(`${API_URL}/itemcarrinho`, {
+  const response = await fetchWithAuth(`${API_URL}/itemcarrinho`, {
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',
@@ -39,7 +41,7 @@ export async function createItemCarrinhoAPI(id_carrinho: number, id_produto: num
 }
 
 export async function updateItemCarrinhoAPI(id_item_carrinho: number, quantidade: number, token: string) {
-  const response = await fetch(`${API_URL}/itemcarrinho/${id_item_carrinho}`, {
+  const response = await fetchWithAuth(`${API_URL}/itemcarrinho/${id_item_carrinho}`, {
     method: 'PUT',
     headers: { 
       'Content-Type': 'application/json',
@@ -53,7 +55,7 @@ export async function updateItemCarrinhoAPI(id_item_carrinho: number, quantidade
 }
 
 export async function deleteItemCarrinhoAPI(id_item_carrinho: number, token: string) {
-  const response = await fetch(`${API_URL}/itemcarrinho/${id_item_carrinho}`, {
+  const response = await fetchWithAuth(`${API_URL}/itemcarrinho/${id_item_carrinho}`, {
     method: 'DELETE',
     headers: { 'Authorization': `Bearer ${token}` }
   });
