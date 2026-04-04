@@ -18,7 +18,7 @@ export const SignCard = ({ title, children, backHref = "/" }: SignCardProps) => 
 
         <Link
           href={backHref}
-          className="absolute right-6 top-4 z-50 flex flex-row-reverse items-center gap-1 text-white transition-all hover:opacity-80"
+          className="absolute right-6 top-3 z-50 flex flex-row-reverse items-center gap-1 text-white transition-all hover:opacity-80"
         >
           <div className="flex h-5 w-5 m-0 items-center justify-center">
             <Icon
@@ -30,12 +30,12 @@ export const SignCard = ({ title, children, backHref = "/" }: SignCardProps) => 
           <span className="text-md font-medium">Voltar</span>
         </Link>
 
-        <div className="flex flex-col items-center bg-linear-to-r from-[#5714d7] to-[#7929c8] pb-5 pt-16">
+        <div className="flex flex-col items-center bg-linear-to-r from-[#5714d7] to-[#7929c8] pb-5 pt-12">
           <img src="/img/logo-mcecelulares.png" alt="Logo" className="h-20 w-auto object-contain" />
           <h2 className="mt-4 text-xl font-semibold text-white">{title}</h2>
         </div>
 
-        <div className="px-10 pb-5 pt-8">
+        <div className="px-10 pb-3 pt-5">
           {children}
         </div>
       </div>

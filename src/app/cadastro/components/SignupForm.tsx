@@ -5,6 +5,7 @@ import { Button } from "@/src/components/Button";
 import { useRouter } from "next/navigation";
 import { InputGray } from "@/src/components/InputGray";
 import { useSignup } from "@/src/hooks/auth/useSignup";
+import Link from "next/link";
 
 export const SignupForm = () => {
     const [validationError, setValidationError] = useState<string | null>(null);
@@ -54,6 +55,15 @@ export const SignupForm = () => {
                 type="submit"
                 disabled={loading}
             />
+
+            <div className="text-center">
+                <p className="text-gray-600">
+                    Já tem uma conta?{" "}
+                    <Link href="/login" className="font-bold text-[#5714d7] hover:underline">
+                        Faça Login
+                    </Link>
+                </p>
+            </div>
         </form>
     );
 };

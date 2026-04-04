@@ -32,24 +32,26 @@ export default function LoginForm() {
           </p>
         )}
 
-        <InputGray
-          name="email"
-          type="email"
-          placeholder="E-mail"
-          required={true}
-          pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
-          title="Digite um e-mail válido (ex: usuario@dominio.com)"
-        />
-
-        <InputGray
-          name="senha"
-          type="password"
-          placeholder="Senha"
-          required={true}
-          minLength={8}
-          pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}"
-          title="A senha deve ter no mínimo 8 caracteres, incluir letra maiúscula, minúscula, número e caractere especial."
-        />
+<div className="space-y-5">
+          <InputGray
+            name="email"
+            type="email"
+            placeholder="E-mail"
+            required={true}
+            pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+            title="Digite um e-mail válido (ex: usuario@dominio.com)"
+          />
+  
+          <InputGray
+            name="senha"
+            type="password"
+            placeholder="Senha"
+            required={true}
+            minLength={8}
+            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}"
+            title="A senha deve ter no mínimo 8 caracteres, incluir letra maiúscula, minúscula, número e caractere especial."
+          />
+</div>
 
         <Button
           text={loading ? "Entrando..." : "Entrar"}
@@ -58,7 +60,7 @@ export default function LoginForm() {
         />
       </form>
 
-      <div className="mt-6 text-center text-sm text-gray-600">
+      <div className="text-center text-sm mt-6 text-gray-600">
         Não tem uma conta?{" "}
         <Link href="/cadastro" className="text-[#7929c8] font-bold hover:underline">
           Cadastre-se aqui
