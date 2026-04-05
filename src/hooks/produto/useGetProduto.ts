@@ -2,24 +2,29 @@ import { getProdutoAPI } from '@/src/actions/produto';
 import { useState, useCallback } from 'react';
 
 export function useGetProduto() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [produto, setProduto] = useState<ProdutoType | null>(null);
 
   const execute = useCallback(async (id_produto: number) => {
-    setIsLoading(true);
+    setLoading(true);
     setError(null);
     try {
-      const data = await getProdutoAPI(id_produto);
-      setProduto(data);
-      setIsLoading(false);
-      return { success: true, data };
-    } catch (err: any) {
-      setError(err.message);
-      setIsLoading(false);
+      const data = await getProdutoAPI({id_produto});
+
+      if (!data.success) throw new Error(data.error);
+
+      setProduto(data.produto);
+      return { 
+        success: true,
+        message: data.message };
+    } catch (error) {
+      setError((error as Error).message || "Erro ao buscar detalhes do produto");
       return { success: false };
+    } finally {
+      setLoading(false);
     }
   }, []);
 
-  return { execute, isLoading, error, produto };
+  return { execute, loading, error, produto };
 }

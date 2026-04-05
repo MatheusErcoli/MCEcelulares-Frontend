@@ -2,24 +2,36 @@ import { getCarrinhoAPI } from '@/src/actions/carrinho';
 import { useState, useCallback } from 'react';
 
 export function useGetCarrinho() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [carrinho, setCarrinho] = useState<any>(null);
+  const [carrinho, setCarrinho] = useState<ItemCarrinhoType[]>([]);
 
-  const execute = useCallback(async (id_usuario: number, token: string) => {
-    setIsLoading(true);
+  const execute = useCallback(async () => {
+    setLoading(true);
     setError(null);
     try {
-      const data = await getCarrinhoAPI(id_usuario, token);
-      setCarrinho(data);
-      setIsLoading(false);
-      return { success: true, data };
-    } catch (err: any) {
-      setError(err.message);
-      setIsLoading(false);
+      const id_usuario = Number(localStorage.getItem('id_usuario'));
+      const token = localStorage.getItem('auth_token');
+
+      if (!id_usuario || !token) throw new Error("Você deve fazer login para usar o carrinho");
+
+      const data = await getCarrinhoAPI(token,{id_usuario} );
+
+      if (!data.success) throw new Error(data.error);
+
+      setCarrinho(data.carrinho.itens);
+
+      return {
+        success: true,
+        message: data.message
+      };
+    } catch (error) {
+      setError((error as Error).message || "Erro ao buscar carrinho");
       return { success: false };
+    } finally {
+      setLoading(false);
     }
   }, []);
 
-  return { execute, isLoading, error, carrinho };
+  return { execute, loading, error, carrinho };
 }

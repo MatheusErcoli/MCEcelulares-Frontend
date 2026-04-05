@@ -7,7 +7,7 @@ type UsuarioType = {
     telefone: string;
     ativo: boolean;
     admin: boolean;
-    enderecos: EnderecoType[];
+    enderecos?: EnderecoType[];
 }
 
 type EnderecoType = {

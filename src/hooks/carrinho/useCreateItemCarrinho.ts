@@ -2,39 +2,51 @@ import { createCarrinhoAPI, createItemCarrinhoAPI } from '@/src/actions/carrinho
 import { useState, useCallback } from 'react';
 
 export function useCreateItemCarrinho() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const execute = useCallback(async (
-    id_usuario: number,
     id_produto: number,
-    preco_unitario: number,
-    token: string
+    preco_unitario: number
   ) => {
-    setIsLoading(true);
+    setLoading(true);
     setError(null);
 
     try {
-      const cartData = await createCarrinhoAPI(id_usuario, token);
 
-      const id_carrinho = cartData.id_carrinho;
+      const id_usuario = Number(localStorage.getItem('id_usuario'));
+      const token = localStorage.getItem('auth_token');
 
-      await createItemCarrinhoAPI(
-        id_usuario,
-        id_produto,
-        preco_unitario,
-        token
+      if (!id_usuario || !token) throw new Error("Você deve fazer login para adicionar itens ao carrinho");
+
+      const dataCarrinho = await createCarrinhoAPI(token, { id_usuario });
+
+      if (!dataCarrinho.success || !dataCarrinho.id_carrinho) {
+        throw new Error(dataCarrinho.error);
+      }
+
+      const dataItemCarrinho = await createItemCarrinhoAPI(
+        token,
+        {
+          id_carrinho: dataCarrinho.id_carrinho,
+          id_produto,
+          preco_unitario
+        }
       );
 
-      setIsLoading(false);
-      return { success: true };
-    } catch (err: any) {
-      console.error("Erro ao adicionar item:", err);
-      setError(err.message || "Erro ao adicionar produto");
-      setIsLoading(false);
+      if (!dataItemCarrinho.success) throw new Error(dataItemCarrinho.error);
+
+      return {
+        success: true,
+        message: dataItemCarrinho.message
+      };
+    } catch (error) {
+      setError((error as Error).message || "Erro ao adicionar item ao carrinho");
       return { success: false };
+    } finally {
+      setLoading(false);
     }
   }, []);
 
-  return { execute, isLoading, error };
+  return { execute, loading, error };
 }

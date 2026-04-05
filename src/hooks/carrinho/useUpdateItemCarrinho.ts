@@ -2,22 +2,32 @@ import { updateItemCarrinhoAPI } from '@/src/actions/carrinho';
 import { useState, useCallback } from 'react';
 
 export function useUpdateItemCarrinho() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const execute = useCallback(async (id_item_carrinho: number, quantidade: number, token: string) => {
-    setIsLoading(true);
+  const execute = useCallback(async (id_item_carrinho: number, quantidade: number) => {
+    setLoading(true);
     setError(null);
     try {
-      await updateItemCarrinhoAPI(id_item_carrinho, quantidade, token);
-      setIsLoading(false);
-      return { success: true };
-    } catch (err: any) {
-      setError(err.message);
-      setIsLoading(false);
+      const token = localStorage.getItem('auth_token');
+
+      if (!token) throw new Error("Você deve fazer login para cadastrar endereço");
+
+      const data = await updateItemCarrinhoAPI(token, {id_item_carrinho, quantidade} );
+
+      if (!data.success) throw new Error(data.error);
+
+      return { 
+        success: true,
+        message: data.message
+      };
+    } catch (error) {
+      setError((error as Error).message || "Erro ao alterar item do carrinho");
       return { success: false };
+    } finally {
+      setLoading(false);
     }
   }, []);
 
-  return { execute, isLoading, error };
+  return { execute, loading, error };
 }

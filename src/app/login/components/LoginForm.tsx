@@ -14,8 +14,8 @@ export default function LoginForm() {
     if (result && result.token) {
       localStorage.setItem("auth_token", result.token);
 
-      if (result.usuario && result.usuario.id_usuario) {
-        localStorage.setItem("id_usuario", result.usuario.id_usuario.toString());
+      if (result && result.id_usuario) {
+        localStorage.setItem("id_usuario", result.id_usuario.toString());
       }
 
       window.location.href = "/";

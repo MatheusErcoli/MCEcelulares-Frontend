@@ -15,11 +15,18 @@ export function useGetMarcas() {
     setLoading(true);
     setError(null);
     try {
-      const data = await getMarcasAPI(id_categoria);
-      setMarcas(data);
-    } catch (err: any) {
-      setError(err.message || 'Erro ao buscar marcas');
-      setMarcas([]);
+      const data = await getMarcasAPI({id_categoria});
+
+      if (!data.success) throw new Error(data.error);
+
+      setMarcas(data.marcas);
+      return { 
+        success: true,
+        message: data.message
+       };
+    } catch (error) {
+      setError((error as Error).message || "Erro ao buscar marcas");
+      return { success: false };
     } finally {
       setLoading(false);
     }

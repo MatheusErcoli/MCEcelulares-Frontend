@@ -1,31 +1,17 @@
-import { ReactNode } from "react";
-import { Button } from "@/src/components/Button";
+"use client";
 
 interface SubtotalCardProps {
-  subtotal: number;
-  totalItens: number;
-  enderecoSelecionado: EnderecoType | null;
-  enderecoSelector: ReactNode;
-  finalizando: boolean;
-  errorPedido: string | null;
-  onFinalizar: () => void;
+  carrinho: ItemCarrinhoType[];
 }
 
-export const SubtotalCard = ({
-  subtotal,
-  totalItens,
-  enderecoSelecionado,
-  enderecoSelector,
-  finalizando,
-  errorPedido,
-  onFinalizar,
-}: SubtotalCardProps) => {
-  const podeFinalizar = totalItens > 0 && enderecoSelecionado !== null && !finalizando;
+export const SubtotalCard = ({ carrinho }: SubtotalCardProps) => {
+  const subtotal = carrinho.reduce(
+    (acc, item) => acc + item.preco_unitario * item.quantidade,
+    0
+  );
 
   return (
     <aside className="bg-[#e5e5e5] p-8 rounded-[40px] flex flex-col gap-6 h-fit sticky top-5">
-
-      {enderecoSelector}
 
       <div className="border-t border-gray-300" />
 
@@ -52,24 +38,7 @@ export const SubtotalCard = ({
         </div>
       </div>
 
-      {!podeFinalizar && totalItens > 0 && !finalizando && (
-        <p className="text-xs text-center text-amber-600 font-medium -mb-3">
-          Selecione um endereço para continuar.
-        </p>
-      )}
-
-      {errorPedido && (
-        <p className="text-xs text-center text-red-500 font-medium -mb-3">
-          {errorPedido}
-        </p>
-      )}
-
-      <Button
-        text={finalizando ? "Processando..." : "Finalizar compra"}
-        disabled={!podeFinalizar}
-        onClick={onFinalizar}
-        className="w-full text-lg font-bold text-white p-4 rounded-full transition-opacity bg-linear-to-r from-[#5714d7] to-[#7929c8] hover:opacity-90 disabled:from-gray-400 disabled:to-gray-400 disabled:cursor-not-allowed"
-      />
+      {/* <Button ... /> */}
     </aside>
   );
 };

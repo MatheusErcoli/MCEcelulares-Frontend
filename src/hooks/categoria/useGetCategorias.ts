@@ -1,29 +1,32 @@
 import { getCategoriasAPI } from '@/src/actions/categoria';
 import { useState, useCallback } from 'react';
 
-interface Categoria {
-  id_categoria: number;
-  nome: string;
-}
-
 export function useGetCategorias() {
-  const [categorias, setCategorias] = useState<Categoria[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [categorias, setCategorias] = useState<CategoriaType[]>([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const execute = useCallback(async () => {
-    setIsLoading(true);
+    setLoading(true);
     setError(null);
     try {
       const data = await getCategoriasAPI();
-      setCategorias(data);
-    } catch (err: any) {
-      setError(err.message || 'Erro ao buscar categorias');
-      setCategorias([]);
+
+      if (!data.success) throw new Error(data.error);
+
+      setCategorias(data.categorias);
+      
+      return {
+        success: true,
+        message: data.message
+      };
+    } catch (error) {
+      setError((error as Error).message || "Erro ao buscar categorias");
+      return { success: false };
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   }, []);
 
-  return { execute, categorias, isLoading, error };
+  return { execute, categorias, loading, error };
 }

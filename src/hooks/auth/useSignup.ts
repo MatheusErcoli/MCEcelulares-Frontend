@@ -1,25 +1,30 @@
 import { signupAPI } from "@/src/actions/auth";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export function useSignup() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const signup = async (formData: FormData) => {
+  const signup = useCallback(async (formData: FormData) => {
     setLoading(true);
     setError(null);
 
-    const result = await signupAPI(formData);
+    try {
+      const data = await signupAPI({formData});
 
-    setLoading(false);
+      if (!data.success) throw new Error(data.error);
 
-    if (!result.success) {
-      setError(result.error);
-      return false;
+      return {
+        succes:true,
+        message: data.message
+      };
+    } catch (error) {
+      setError((error as Error).message || "Erro ao cadastrar usuário");
+      return { success: false };
+    } finally {
+      setLoading(false);
     }
-
-    return true;
-  };
+  },[])
 
   return { signup, loading, error };
 }

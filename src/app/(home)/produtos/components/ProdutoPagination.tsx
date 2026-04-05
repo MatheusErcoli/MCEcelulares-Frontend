@@ -41,7 +41,7 @@ export const ProdutoPagination = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {produtos.map((p) => (
-                    <ProdutoCard key={p.id_produto} product={p} />
+                    <ProdutoCard key={p.id_produto} produto={p} />
                 ))}
             </div>
 

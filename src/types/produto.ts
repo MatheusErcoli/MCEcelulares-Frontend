@@ -21,22 +21,6 @@ type PaginatedResponse<T> = {
   data: T[];
 };
 
-type CarrinhoType = {
-  id_carrinho: number;
-  id_usuario: number;
-  data_criacao: Date;
-  ativo: boolean;
-}
-
-type ItemCarrinhoType = {
-  id_item_carrinho: number;
-  id_carrinho: number;
-  id_produto: number;
-  preco_unitario: number;
-  quantidade: number;
-  produto: ProdutoType;
-}
-
 type CategoriaType = {
   id_categoria: number;
   nome: string;

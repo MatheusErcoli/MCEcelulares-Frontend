@@ -10,46 +10,23 @@ interface CartItemCardProps {
 }
 
 export const ItemCarrinhoCard = ({ item, onUpdate }: CartItemCardProps) => {
-    const { execute: alterar, isLoading: alterando } = useUpdateItemCarrinho();
-    const { execute: remover, isLoading: removendo } = useDeleteItemCarrinho();
+    const { execute: alterar, loading: alterando } = useUpdateItemCarrinho();
+    const { execute: remover, loading: removendo } = useDeleteItemCarrinho();
 
     const handleUpdate = async (quantidade: number) => {
-        const token = localStorage.getItem("auth_token");
-        if (!token) {
-            alert("Você precisa estar logado para alterar itens no carrinho.");
-            return;
-        }
         const res = await alterar(
             item.id_item_carrinho,
-            quantidade,
-            token
+            quantidade
         );
-        if (res.success) {
-            console.log("Item alterado com sucesso!");
-        } else {
-            alert("Erro ao alterar item no carrinho.");
-        }
-        onUpdate();
+        if (res.success) onUpdate();
     };
 
     const handleDelete = async () => {
-        const token = localStorage.getItem("auth_token");
-        if (!token) {
-            alert("Você precisa estar logado para remover itens do carrinho.");
-            return;
-        }
-
         const res = await remover(
-            item.id_item_carrinho,
-            token
+            item.id_item_carrinho
         );
 
-        if (res.success) {
-            console.log("Item removido com sucesso!");
-            onUpdate();
-        } else {
-            alert("Erro ao remover item do carrinho.");
-        }
+        if (res.success) onUpdate()
     };
 
     return (
@@ -83,7 +60,7 @@ export const ItemCarrinhoCard = ({ item, onUpdate }: CartItemCardProps) => {
                         {item.quantidade}
                     </span>
                     <Button
-                        icon="faMinus" className={item.quantidade > 1 ? "text-[#5714d7] hover:opacity-0 disabled:opacity-1" : "text-gray-400"}
+                        icon="faMinus" className={item.quantidade > 1 ? "text-[#5714d7] hover:opacity-75 disabled:opacity-1" : "text-gray-400"}
                         onClick={() => handleUpdate(-1)}
                         disabled={alterando || item.quantidade <= 1}
                     />

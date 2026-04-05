@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from "react";
-import { ProdutoCarousel } from "../../components/ProdutoCarousel";
+import { ProdutoCarousel } from "./ProdutoCarousel";
 import { useGetProdutos } from "@/src/hooks/produto/useGetProdutos";
 
 type ProdutoDestaqueProps = {

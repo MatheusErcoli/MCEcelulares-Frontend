@@ -1,5 +1,5 @@
 import { CategoriaList } from "./components/CategoriaList";
-import { ProdutoDestaque } from "./produtos/components/ProdutoDestaque";
+import { ProdutoDestaque } from "./components/ProdutoDestaque";
 
 export default async function Home() {
     return (

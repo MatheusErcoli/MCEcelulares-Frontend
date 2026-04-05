@@ -1,23 +1,37 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Icon } from '@/src/components/Icon';
 import { Button } from '@/src/components/Button';
+import { useGetEnderecos } from '@/src/hooks/endereco/useGetEndereco';
 
 interface EnderecoSelectorProps {
-  enderecos: EnderecoType[];
-  selectedId: number | null;
-  onSelect: (id: number) => void;
-  isLoading: boolean;
+  onSelect: (endereco: EnderecoType) => void;
 }
 
-export const EnderecoSelector = ({
-  enderecos,
-  selectedId,
-  onSelect,
-  isLoading,
-}: EnderecoSelectorProps) => {
-  if (isLoading) {
+export const EnderecoSelector = ({ onSelect }: EnderecoSelectorProps) => {
+  const { execute: fetchEnderecos, loading, enderecos } = useGetEnderecos();
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetchEnderecos();
+  }, [fetchEnderecos]);
+
+  useEffect(() => {
+    if (enderecos.length > 0 && selectedId === null) {
+      const primeiro = enderecos[0];
+      setSelectedId(primeiro.id_endereco);
+      onSelect(primeiro);
+    }
+  }, [enderecos, selectedId, onSelect]);
+
+  const handleSelect = (endereco: EnderecoType) => {
+    setSelectedId(endereco.id_endereco);
+    onSelect(endereco);
+  };
+
+  if (loading) {
     return (
       <div className="bg-white rounded-[30px] p-6">
         <p className="text-gray-400 animate-pulse text-sm">Carregando endereços...</p>
@@ -55,7 +69,7 @@ export const EnderecoSelector = ({
             return (
               <button
                 key={e.id_endereco}
-                onClick={() => onSelect(e.id_endereco)}
+                onClick={() => handleSelect(e)}
                 className={`w-full text-left rounded-[24px] p-4 border-2 transition-all flex items-start gap-3 cursor-pointer ${
                   isSelected
                     ? 'border-purple-600 bg-purple-50'
