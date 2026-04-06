@@ -10,24 +10,8 @@ interface CartItemCardProps {
 }
 
 export const ItemCarrinhoCard = ({ item, onUpdate }: CartItemCardProps) => {
-    const { execute: alterar, loading: alterando } = useUpdateItemCarrinho();
-    const { execute: remover, loading: removendo } = useDeleteItemCarrinho();
-
-    const handleUpdate = async (quantidade: number) => {
-        const res = await alterar(
-            item.id_item_carrinho,
-            quantidade
-        );
-        if (res.success) onUpdate();
-    };
-
-    const handleDelete = async () => {
-        const res = await remover(
-            item.id_item_carrinho
-        );
-
-        if (res.success) onUpdate()
-    };
+    const { execute: update, loading: alterando} = useUpdateItemCarrinho();
+    const { execute: remove, loading: removendo} = useDeleteItemCarrinho();
 
     return (
         <div className="bg-white p-4 rounded-[50px] text-xl flex items-center justify-between shadow-sm border border-gray-100 max-w-4xl">
@@ -53,7 +37,7 @@ export const ItemCarrinhoCard = ({ item, onUpdate }: CartItemCardProps) => {
                     <Button
                         icon="faPlus"
                         className="text-[#5714d7] hover:opacity-75 transition-opacity disabled:opacity-50"
-                        onClick={() => handleUpdate(1)}
+                        onClick={() => update(item.id_item_carrinho, 1).then(res => res.success && onUpdate())}
                         disabled={alterando}
                     />
                     <span className="font-bold text-black">
@@ -61,7 +45,7 @@ export const ItemCarrinhoCard = ({ item, onUpdate }: CartItemCardProps) => {
                     </span>
                     <Button
                         icon="faMinus" className={item.quantidade > 1 ? "text-[#5714d7] hover:opacity-75 disabled:opacity-1" : "text-gray-400"}
-                        onClick={() => handleUpdate(-1)}
+                        onClick={() => update(item.id_item_carrinho, -1).then(res => res.success && onUpdate())}
                         disabled={alterando || item.quantidade <= 1}
                     />
                 </div>
@@ -72,7 +56,7 @@ export const ItemCarrinhoCard = ({ item, onUpdate }: CartItemCardProps) => {
                 <Button
                     icon="faTrash"
                     className="text-[#ff5c8a] hover:opacity-75 transition-opacity"
-                    onClick={handleDelete}
+                    onClick={() => remove(item.id_item_carrinho).then(res => res.success && onUpdate())}
 
                     disabled={removendo}
                 />

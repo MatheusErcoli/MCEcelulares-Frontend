@@ -1,40 +1,75 @@
-'use client'
+'use client';
 
-import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useEffect, useContext, ReactNode, useCallback } from 'react';
+
+interface User {
+  id: number;
+  nome: string;
+}
 
 interface AuthContextData {
   isAuthenticated: boolean;
   isLoading: boolean;
   token: string | null;
-  user: { id: number } | null;
+  user: User | null;
+  login: (token: string, id: number, nome: string) => void;
+  logout: () => void;
+  updateNome: (nome: string) => void;
+}
+
+interface AuthProviderProps {
+  children: ReactNode;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  
   const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<{ id: number } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const savedToken = localStorage.getItem('auth_token');
+    const savedUserId = localStorage.getItem('id_usuario');
+    const savedNome = localStorage.getItem('nome_usuario');
 
     if (savedToken) {
       setIsAuthenticated(true);
       setToken(savedToken);
-    } else {
-      setIsAuthenticated(false);
-      setToken(null);
-      setUser(null);
+      setUser(savedUserId ? { id: Number(savedUserId), nome: savedNome ?? '' } : null);
     }
 
     setIsLoading(false);
   }, []);
 
+  const login = useCallback((token: string, id: number, nome: string) => {
+    localStorage.setItem('auth_token', token);
+    localStorage.setItem('id_usuario', String(id));
+    localStorage.setItem('nome_usuario', nome);
+
+    setToken(token);
+    setUser({ id, nome });
+    setIsAuthenticated(true);
+  }, []);
+
+  const logout = useCallback(() => {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('id_usuario');
+    localStorage.removeItem('nome_usuario');
+
+    setToken(null);
+    setUser(null);
+    setIsAuthenticated(false);
+  }, []);
+
+  const updateNome = useCallback((nome: string) => {
+    localStorage.setItem('nome_usuario', nome);
+    setUser((prev) => prev ? { ...prev, nome } : prev);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading, token, user }}>
+    <AuthContext.Provider value={{ isAuthenticated, isLoading, token, user, login, logout, updateNome }}>
       {children}
     </AuthContext.Provider>
   );

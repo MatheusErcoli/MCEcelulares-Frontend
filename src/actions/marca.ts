@@ -11,8 +11,7 @@ export async function getMarcasAPI(
 
     return {
       success: true,
-      marcas: data,
-      message: "Marcas encontradas com sucesso"
+      marcas: data
     };
   } catch (error) {
     return {

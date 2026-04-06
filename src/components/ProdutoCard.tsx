@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useAuth } from "../contexts/AuthContext";
 import { useCreateItemCarrinho } from "../hooks/carrinho/useCreateItemCarrinho";
 import { Button } from "./Button";
 
@@ -10,15 +11,14 @@ interface ProdutoCardProps {
 
 export const ProdutoCard = ({ produto }: ProdutoCardProps) => {
   const router = useRouter();
-  const { execute, loading } = useCreateItemCarrinho();
+  const { isAuthenticated } = useAuth();
+  const { execute, loading, error } = useCreateItemCarrinho();
 
   const handleAdd = async () => {
+    if (!isAuthenticated) return router.push("/login");
 
-    const res = await execute(
-      produto.id_produto,
-      Number(produto.preco)
-    );
-    
+    const res = await execute(produto.id_produto, Number(produto.preco));
+    if (res.success) router.push("/carrinho");
   };
 
   return (
@@ -26,7 +26,8 @@ export const ProdutoCard = ({ produto }: ProdutoCardProps) => {
 
       <div
         onClick={() => router.push(`/produtos/detalhes?id=${produto.id_produto}`)}
-        className="bg-[#E5E7EB] p-5 flex items-center justify-center relative aspect-[3/2] bg-produto-pattern bg-repeat bg-center shrink-0 cursor-pointer">
+        className="bg-[#E5E7EB] p-5 flex items-center justify-center relative aspect-[3/2] bg-produto-pattern bg-repeat bg-center shrink-0 cursor-pointer"
+      >
         <img
           src={produto.imagem}
           alt={produto.nome}
@@ -43,6 +44,10 @@ export const ProdutoCard = ({ produto }: ProdutoCardProps) => {
             R${produto.preco}
           </p>
         </div>
+
+        {error && (
+          <p className="text-red-500 text-xs text-center font-medium mb-2">{error}</p>
+        )}
 
         <div className="w-full mt-auto">
           <Button

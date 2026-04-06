@@ -1,32 +1,33 @@
 import { loginAPI } from "@/src/actions/auth";
+import { useAuth } from "@/src/contexts/AuthContext";
 import { useCallback, useState } from "react";
 
-export function useLogin() {
+export const useLogin = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { login } = useAuth();
 
-  const login = useCallback(async (formData: FormData) => {
-
+  const execute = useCallback(async (formData: FormData) => {
     setLoading(true);
     setError(null);
     try {
-      const data = await loginAPI({formData});
-      
+      const email = formData.get("email") as string;
+      const senha = formData.get("senha") as string;
+
+      const data = await loginAPI({ email, senha });
+
       if (!data.success) throw new Error(data.error);
 
-      return {
-        succes:true,
-        token: data.token,
-        id_usuario: data.id_usuario,
-        message: data.message
-      };
+      login(data.token!, data.id_usuario!, data.nome!);
+
+      return { success: true };
     } catch (error) {
       setError((error as Error).message || "Erro ao fazer login");
       return { success: false };
     } finally {
       setLoading(false);
     }
-  },[])
+  }, [login]);
 
-  return { login, loading, error };
-}
+  return { execute, loading, error };
+};

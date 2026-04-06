@@ -17,8 +17,7 @@ export function useGetCategorias() {
       setCategorias(data.categorias);
       
       return {
-        success: true,
-        message: data.message
+        success: true
       };
     } catch (error) {
       setError((error as Error).message || "Erro ao buscar categorias");

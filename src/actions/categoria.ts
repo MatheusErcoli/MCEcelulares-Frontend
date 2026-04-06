@@ -9,8 +9,7 @@ export async function getCategoriasAPI() {
 
     return {
       success: true,
-      categorias: data,
-      message: "Categorias encontradas com sucesso" 
+      categorias: data
     };
   } catch (error) {
     return {

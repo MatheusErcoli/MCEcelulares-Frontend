@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { useAuth } from '@/src/contexts/AuthContext';
 import { useGetProduto } from '@/src/hooks/produto/useGetProduto';
 import { useCreateItemCarrinho } from '@/src/hooks/carrinho/useCreateItemCarrinho';
 import { Button } from '@/src/components/Button';
@@ -11,32 +12,22 @@ export const ProdutoDetails = () => {
     const router = useRouter();
     const id = Number(searchParams.get('id'));
 
-    const { execute: buscarProduto, produto, isLoading, error } = useGetProduto();
-    const { execute: adicionarAoCarrinho, isLoading: adicionando } = useCreateItemCarrinho();
+    const { isAuthenticated } = useAuth();
+    const { execute: buscarProduto, produto, loading, error } = useGetProduto();
+    const { execute: adicionarAoCarrinho, loading: adicionando, error: erroCarrinho } = useCreateItemCarrinho();
 
     useEffect(() => {
-        if (id) buscarProduto(id);
+        buscarProduto(id);
     }, [id]);
 
     const handleAdd = async () => {
-        const id_usuario = Number(localStorage.getItem('id_usuario'));
-        const token = localStorage.getItem('auth_token');
+        if (!isAuthenticated) return router.push('/login');
 
-        if (!id_usuario || !token) {
-            alert('Você precisa estar logado para adicionar itens ao carrinho.');
-            return;
-        }
-
-        const res = await adicionarAoCarrinho(id_usuario, produto!.id_produto, produto!.preco, token);
-
-        if (res.success) {
-            router.push('/carrinho');
-        } else {
-            alert('Erro ao adicionar item ao carrinho.');
-        }
+        const res = await adicionarAoCarrinho(produto!.id_produto, produto!.preco);
+        if (res.success) router.push('/carrinho');
     };
 
-    if (isLoading) return (
+    if (loading) return (
         <div className="flex items-center justify-center h-screen">
             <p className="text-gray-500 text-xl animate-pulse">Carregando...</p>
         </div>
@@ -83,6 +74,10 @@ export const ProdutoDetails = () => {
                 <p className="text-4xl font-bold text-purple-800">
                     R${Number(produto.preco).toFixed(2).replace('.', ',')}
                 </p>
+
+                {erroCarrinho && (
+                    <p className="text-red-500 text-sm font-medium">{erroCarrinho}</p>
+                )}
 
                 <div className="max-w-xs">
                     <Button

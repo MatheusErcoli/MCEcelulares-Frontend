@@ -2,10 +2,7 @@ import { fetchWithAuth } from "../lib/fetchWithAuth";
 
 const API_URL = 'http://localhost:3000';
 
-export async function createCarrinhoAPI(
-  token: string,
-  body: { id_usuario: number }
-) {
+export async function createCarrinhoAPI(token: string) {
   try {
     const response = await fetchWithAuth(`${API_URL}/carrinho`, {
       method: 'POST',
@@ -13,7 +10,6 @@ export async function createCarrinhoAPI(
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify(body)
     });
 
     const data = await response.json();
@@ -22,14 +18,13 @@ export async function createCarrinhoAPI(
 
     return {
       success: true,
-      id_carrinho: data.id_carrinho,
-      message: "Carrinho criado com sucesso"
+      id_carrinho: data.id_carrinho
     };
   } catch (error) {
     return {
       success: false,
       error: (error as Error).message || "Servidor indisponível no momento."
-    }
+    };
   }
 }
 
@@ -44,12 +39,11 @@ export async function getCarrinhoAPI(
     });
     const data = await response.json();
 
-    if (!response.ok) throw new Error(data.message);
+    if (!response.ok) throw new Error("Carrinho não encontrado");
 
     return {
       success: true,
-      carrinho: data,
-      message: "Carrinho encontrado com sucesso"
+      carrinho: data
     };
   } catch (error) {
     return {
@@ -80,8 +74,7 @@ export async function createItemCarrinhoAPI(
     return {
       success: true,
       id_produto: data.id_produto,
-      preco_unitario: data.preco_unitario,
-      message: "Item adicionado ao carrinho com sucesso"
+      preco_unitario: data.preco_unitario
     };
 
   } catch (error) {
@@ -112,8 +105,7 @@ export async function updateItemCarrinhoAPI(
     return {
       success: true,
       id_produto: data.id_produto,
-      preco_unitario: data.preco_unitario,
-      message: "Item do carrinho alterado com sucesso"
+      preco_unitario: data.preco_unitario
     };
 
   } catch (error) {
@@ -139,8 +131,7 @@ export async function deleteItemCarrinhoAPI(
     if (!response.ok) throw new Error(data.message);
 
     return {
-      success: true,
-      message: "Carrinho excluído com sucesso"
+      success: true
     };
   } catch (error) {
     return {

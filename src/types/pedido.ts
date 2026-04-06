@@ -1,11 +1,24 @@
+type ItemPedidoType = {
+    id_item_pedido: number;
+    id_pedido: number;
+    id_produto: number;
+    quantidade: number;
+    preco_unitario: number;
+    produto?: ProdutoType;
+}
+
 type PedidoType = {
     id_pedido: number;
     id_usuario: number;
     id_endereco: number;
-    data: Date;
     valor_total: number;
-    ativo: boolean;
     status: string;
+    ativo: boolean;
+    createdAt: string;
+    updatedAt: string;
+    usuario?: UsuarioType;
+    endereco?: EnderecoType;
+    itens: ItemPedidoType[];
 }
 
 type CarrinhoType = {

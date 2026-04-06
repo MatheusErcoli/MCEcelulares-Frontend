@@ -1,25 +1,18 @@
 "use client";
 
-import { Button } from "@/src/components/Button";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLogin } from "@/src/hooks/auth/useLogin";
+import { Button } from "@/src/components/Button";
 import { InputGray } from "@/src/components/InputGray";
 
 export default function LoginForm() {
-  const { login, loading, error } = useLogin();
+  const { execute: login, loading, error } = useLogin();
+  const router = useRouter();
 
   const handleLogin = async (formData: FormData) => {
     const result = await login(formData);
-
-    if (result && result.token) {
-      localStorage.setItem("auth_token", result.token);
-
-      if (result && result.id_usuario) {
-        localStorage.setItem("id_usuario", result.id_usuario.toString());
-      }
-
-      window.location.href = "/";
-    }
+    if (result.success) router.push("/");
   };
 
   return (
@@ -32,7 +25,7 @@ export default function LoginForm() {
           </p>
         )}
 
-<div className="space-y-5">
+        <div className="space-y-5">
           <InputGray
             name="email"
             type="email"
@@ -41,7 +34,7 @@ export default function LoginForm() {
             pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
             title="Digite um e-mail válido (ex: usuario@dominio.com)"
           />
-  
+
           <InputGray
             name="senha"
             type="password"
@@ -51,7 +44,7 @@ export default function LoginForm() {
             pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}"
             title="A senha deve ter no mínimo 8 caracteres, incluir letra maiúscula, minúscula, número e caractere especial."
           />
-</div>
+        </div>
 
         <Button
           text={loading ? "Entrando..." : "Entrar"}

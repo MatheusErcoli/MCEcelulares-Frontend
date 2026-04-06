@@ -20,8 +20,7 @@ export function useGetProdutos() {
       setTotal(data.total);
       setProdutos(data.produtos);
       return {
-        success: true,
-        message: data.message
+        success: true
       };
     } catch (error) {
       setError((error as Error).message || "Erro ao finalizar pedido");

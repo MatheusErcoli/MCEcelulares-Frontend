@@ -21,8 +21,7 @@ export function useGetMarcas() {
 
       setMarcas(data.marcas);
       return { 
-        success: true,
-        message: data.message
+        success: true
        };
     } catch (error) {
       setError((error as Error).message || "Erro ao buscar marcas");

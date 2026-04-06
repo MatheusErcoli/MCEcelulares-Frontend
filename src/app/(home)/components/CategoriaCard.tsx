@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from "@/src/components/Button";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type CategoriaProps = {
     id: number;

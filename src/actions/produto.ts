@@ -8,12 +8,11 @@ export async function getProdutoAPI(
 
     const data = await response.json();
 
-    if (!response.ok) throw new Error(data.message || 'Erro ao buscar produto');
+    if (!response.ok) throw new Error(data.message);
 
     return {
       success: true,
-      produto: data,
-      message: "Produto encontrado com sucesso"
+      produto: data
     };
   } catch (error) {
     return {
@@ -31,13 +30,12 @@ export async function getProdutosAPI(
 
     const data = await response.json();
 
-    if (!response.ok) throw new Error(data.message || 'Erro ao buscar produtos paginados');
+    if (!response.ok) throw new Error(data.message);
     return {
       success: true,
       produtos: data.data,
       total: data.total,
-      totalPages: data.totalPages,
-      message: "Produtos encontrados com sucesso"
+      totalPages: data.totalPages
     };
   } catch (error) {
     return {

@@ -3,19 +3,22 @@
 import { useEffect } from "react";
 import { useGetCarrinho } from "@/src/hooks/carrinho/useGetCarrinho";
 import { ItemCarrinhoCard } from "./ItemCarrinhoCard";
-import { SubtotalCard } from "./SubtotalCard";
+import { SubtotalCard } from "../../../../../components/SubtotalCard";
+import { useRouter } from "next/navigation";
+import { Button } from "@/src/components/Button";
 
 export const CarrinhoList = () => {
   const { execute: fetchCarrinho, loading, error, carrinho } = useGetCarrinho();
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/carrinho/checkout");
+  };
 
   useEffect(() => { fetchCarrinho() }, []);
 
   if (loading && !carrinho) {
     return <p className="text-center text-gray-500 py-10">Carregando sua sacola...</p>;
-  }
-
-  if (error) {
-    return <p className="text-center text-red-500 py-10">Erro: {error}</p>;
   }
 
   return (
@@ -38,7 +41,15 @@ export const CarrinhoList = () => {
         )}
       </div>
 
-      <SubtotalCard carrinho={carrinho} />
+      <div className="flex flex-col gap-4">
+        <SubtotalCard carrinho={carrinho} />
+        <Button
+          text="Finalizar pedido"
+          icon="faCircleCheck"
+          onClick={handleClick}
+          disabled={loading || carrinho.length === 0}
+        />
+      </div>
     </div>
   );
 };

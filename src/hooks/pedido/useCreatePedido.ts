@@ -1,41 +1,30 @@
 import { createPedidoAPI } from '@/src/actions/pedido';
+import { useAuth } from '@/src/contexts/AuthContext';
 import { useState, useCallback } from 'react';
 
-export function useCreatePedido() {
+export const useCreatePedido = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { token, user } = useAuth();
 
   const execute = useCallback(async (id_endereco: number, valor_total: number) => {
     setLoading(true);
     setError(null);
-
     try {
-      const id_usuario = Number(localStorage.getItem('id_usuario'));
-      const token = localStorage.getItem('auth_token');
+      if (!token || !user) throw new Error('Você deve fazer login para fazer pedidos');
 
-      if (!id_usuario || !token) throw new Error("Você deve fazer login para fazer pedidos");
-
-      const data = await createPedidoAPI(token, {
-        id_usuario,
-        id_endereco,
-        valor_total: valor_total,
-      });
+      const data = await createPedidoAPI(token, { id_endereco, valor_total });
 
       if (!data.success) throw new Error(data.error);
 
-      return {
-        success: true,
-        message: data.message
-      };
+      return { success: true };
     } catch (error) {
-      setError((error as Error).message || "Erro ao criar pedido");
+      setError((error as Error).message || 'Erro ao criar pedido');
       return { success: false };
     } finally {
       setLoading(false);
     }
-  },
-    []
-  );
+  }, [token, user]);
 
   return { execute, loading, error };
-}
+};

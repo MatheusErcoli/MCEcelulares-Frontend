@@ -1,39 +1,27 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useGetPedidos } from '@/src/hooks/pedido/useGetPedidos';
-import { PedidoCard } from './components/PedidoCard';
+import { Icon } from '@/src/components/Icon';
+import { PedidoList } from './components/PedidoList';
 
-export default function Pedidos() {
-  const { execute, isLoading, error, pedidos } = useGetPedidos();
-
-  useEffect(() => {
-    execute();
-  }, [execute]);
-
+const Pedidos = () => {
   return (
-    <main className="max-w-3xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Meus Pedidos</h1>
+    <main className="min-h-screen md:p-12">
+      <div className="max-w-3xl mx-auto flex flex-col gap-10">
 
-      {isLoading && (
-        <p className="text-center text-gray-400 py-16">Carregando pedidos...</p>
-      )}
+        <h1 className="text-4xl font-bold">Meus Pedidos</h1>
 
-      {error && (
-        <p className="text-center text-red-500 py-16">Erro: {error}</p>
-      )}
+        <section className="bg-gray-200 rounded-[40px] p-10 flex flex-col gap-5">
+          <h2 className="text-2xl font-bold text-zinc-900 flex items-center gap-3">
+            <Icon name="faBoxOpen" className="text-purple-700" />
+            Histórico de pedidos
+          </h2>
 
-      {!isLoading && !error && pedidos.length === 0 && (
-        <div className="bg-white rounded-[40px] p-16 text-center border-2 border-dashed border-gray-200">
-          <p className="text-gray-400 text-xl font-semibold">Você ainda não fez nenhum pedido.</p>
-        </div>
-      )}
+          <PedidoList />
+        </section>
 
-      <div className="flex flex-col gap-4">
-        {pedidos.map((pedido) => (
-          <PedidoCard key={pedido.id_pedido} pedido={pedido} />
-        ))}
       </div>
     </main>
   );
-}
+};
+
+export default Pedidos;

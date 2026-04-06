@@ -4,7 +4,11 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
-export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+}
+
+export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
 
@@ -17,10 +21,10 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
   if (isLoading || !isAuthenticated) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <p>Carregando...</p>
+        <p className="text-gray-400 animate-pulse">Carregando...</p>
       </div>
     );
   }
 
   return <>{children}</>;
-}
+};

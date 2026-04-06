@@ -1,5 +1,7 @@
 import { ProfilePage } from "./components/ProfilePage";
 
-export default function Perfil() {
+const Perfil = () => {
   return <ProfilePage />;
 }
+
+export default Perfil;

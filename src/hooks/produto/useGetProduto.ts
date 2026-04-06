@@ -16,8 +16,7 @@ export function useGetProduto() {
 
       setProduto(data.produto);
       return { 
-        success: true,
-        message: data.message };
+        success: true};
     } catch (error) {
       setError((error as Error).message || "Erro ao buscar detalhes do produto");
       return { success: false };

@@ -2,7 +2,9 @@
 
 import { ProdutoCard } from "@/src/components/ProdutoCard";
 import Slider from "react-slick";
+// @ts-ignore
 import "slick-carousel/slick/slick.css";
+// @ts-ignore
 import "slick-carousel/slick/slick-theme.css";
 
 type ProdutoCarouselProps = {

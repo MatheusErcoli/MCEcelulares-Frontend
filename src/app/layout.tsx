@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+// @ts-ignore
 import "./globals.css";
 import { AuthProvider } from "../contexts/AuthContext";
 

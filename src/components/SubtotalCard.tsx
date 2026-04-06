@@ -37,8 +37,6 @@ export const SubtotalCard = ({ carrinho }: SubtotalCardProps) => {
           </span>
         </div>
       </div>
-
-      {/* <Button ... /> */}
     </aside>
   );
 };
