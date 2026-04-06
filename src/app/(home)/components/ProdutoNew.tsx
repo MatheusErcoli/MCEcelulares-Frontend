@@ -2,16 +2,16 @@
 
 import { ProdutoCarousel } from "./ProdutoCarousel";
 
-type ProdutoDestaqueProps = {
+type ProdutoNewProps = {
     title: string;
 }
 
-export const ProdutoDestaque = ({ title }: ProdutoDestaqueProps) => {
+export const ProdutoNew = ({ title }: ProdutoNewProps) => {
 
     return (
         <>
             <h2 className="font-bold font text-4xl m-[20px] pl-40">{title}</h2>
-            <ProdutoCarousel destaque={true} />
+            <ProdutoCarousel />
         </>
     );
 };

@@ -1,9 +1,14 @@
+import { useRouter } from "next/navigation";
+import { useAuth } from "../contexts/AuthContext";
+
 export async function fetchWithAuth(url: string, options: RequestInit = {}) {
+  const { logout } = useAuth();
+  const router = useRouter();
   const res = await fetch(url, options);
 
   if (res.status === 401) {
-    localStorage.removeItem('auth_token');
-    window.location.href = '/login';
+      logout();
+      router.push("/login");
   }
 
   return res;

@@ -6,12 +6,20 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 // @ts-ignore
 import "slick-carousel/slick/slick-theme.css";
+import { useGetProdutos } from "@/src/hooks/produto/useGetProdutos";
+import { useEffect } from "react";
 
 type ProdutoCarouselProps = {
-    produtos: ProdutoType[];
+    destaque?: boolean
 }
 
-export const ProdutoCarousel = ({ produtos }: ProdutoCarouselProps) => {
+export const ProdutoCarousel = ({destaque}: ProdutoCarouselProps) => {
+    const { execute, produtos, error } = useGetProdutos();
+
+    useEffect(() => {
+        execute(undefined, undefined, undefined, undefined, destaque);
+    }, []);
+
     const settings = {
         dots: true,
         infinite: true,
