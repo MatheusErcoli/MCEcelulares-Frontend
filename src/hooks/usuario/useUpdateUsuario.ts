@@ -9,7 +9,6 @@ export const useUpdateUsuario = () => {
 
   const execute = useCallback(async (dados: { nome?: string; telefone?: string }) => {
     setLoading(true);
-    setError(null);
     try {
       if (!token || !user) throw new Error('Você deve fazer login para atualizar sua conta');
 
@@ -17,6 +16,7 @@ export const useUpdateUsuario = () => {
 
       if (!data.success) throw new Error(data.error);
 
+      setError(null);
       return { success: true };
     } catch (error) {
       setError((error as Error).message || 'Erro ao editar dados da conta');

@@ -1,15 +1,14 @@
 import { createEnderecoAPI } from '@/src/actions/endereco';
 import { useAuth } from '@/src/contexts/AuthContext';
 import { useCallback, useState } from 'react';
+import Swal from 'sweetalert2';
 
 export const useCreateEndereco = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const { token, user } = useAuth();
 
   const execute = useCallback(async (formData: FormData) => {
     setLoading(true);
-    setError(null);
     try {
       if (!token || !user) throw new Error('Você deve fazer login para cadastrar endereço');
 
@@ -24,14 +23,23 @@ export const useCreateEndereco = () => {
       });
 
       if (!data.success) throw new Error(data.error);
+      Swal.fire({
+        icon: "success",
+        title: "Endereço adicionado com sucesso!",
+        text: "Agora faça um pedido para usar este novo endereço.",
+      });
       return { success: true };
     } catch (error) {
-      setError((error as Error).message || 'Erro ao adicionar endereço');
+      Swal.fire({
+        icon: "error",
+        title: "Erro ao cadastrar endereço",
+        text: (error as Error).message || "Não foi possível cadastrar endereço",
+      });
       return { success: false };
     } finally {
       setLoading(false);
     }
   }, [token, user]);
 
-  return { execute, loading, error };
+  return { execute, loading };
 };

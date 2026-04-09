@@ -7,23 +7,17 @@ import { Button } from "@/src/components/Button";
 import { InputGray } from "@/src/components/InputGray";
 
 export default function LoginForm() {
-  const { execute: login, loading, error } = useLogin();
+  const { execute: login, loading } = useLogin();
   const router = useRouter();
 
   const handleLogin = async (formData: FormData) => {
     const result = await login(formData);
-    if (result.success) router.push("/");
+    if (result!.success) router.push("/");
   };
 
   return (
     <>
       <form action={handleLogin} className="space-y-5">
-
-        {error && (
-          <p className="text-center font-medium text-red-600 animate-pulse">
-            {error}
-          </p>
-        )}
 
         <div className="space-y-5">
           <InputGray
@@ -40,9 +34,6 @@ export default function LoginForm() {
             type="password"
             placeholder="Senha"
             required={true}
-            minLength={8}
-            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}"
-            title="A senha deve ter no mínimo 8 caracteres, incluir letra maiúscula, minúscula, número e caractere especial."
           />
         </div>
 

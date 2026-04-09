@@ -10,7 +10,6 @@ export const useGetUsuario = () => {
 
   const execute = useCallback(async () => {
     setLoading(true);
-    setError(null);
     try {
       if (!token || !user) throw new Error('Você deve fazer login para acessar sua conta');
 
@@ -19,6 +18,7 @@ export const useGetUsuario = () => {
       if (!data.success) throw new Error(data.error);
 
       setUsuario(data.usuario);
+      setError(null);
       return { success: true };
     } catch (error) {
       setError((error as Error).message || 'Erro ao acessar conta');

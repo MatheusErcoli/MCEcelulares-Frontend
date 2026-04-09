@@ -5,6 +5,7 @@ import { createContext, useState, useEffect, useContext, ReactNode, useCallback 
 interface User {
   id: number;
   nome: string;
+  admin: boolean;
 }
 
 interface AuthContextData {
@@ -12,7 +13,7 @@ interface AuthContextData {
   isLoading: boolean;
   token: string | null;
   user: User | null;
-  login: (token: string, id: number, nome: string) => void;
+  login: (token: string, id: number, nome: string, admin: boolean) => void;
   logout: () => void;
   updateNome: (nome: string) => void;
 }
@@ -33,23 +34,25 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const savedToken = localStorage.getItem('auth_token');
     const savedUserId = localStorage.getItem('id_usuario');
     const savedNome = localStorage.getItem('nome_usuario');
+    const savedAdmin = localStorage.getItem('admin');
 
     if (savedToken) {
       setIsAuthenticated(true);
       setToken(savedToken);
-      setUser(savedUserId ? { id: Number(savedUserId), nome: savedNome ?? '' } : null);
+      setUser(savedUserId ? { id: Number(savedUserId), nome: savedNome ?? '', admin: savedAdmin === 'true' } : null);
     }
 
     setIsLoading(false);
   }, []);
 
-  const login = useCallback((token: string, id: number, nome: string) => {
+  const login = useCallback((token: string, id: number, nome: string, admin: boolean) => {
     localStorage.setItem('auth_token', token);
     localStorage.setItem('id_usuario', String(id));
     localStorage.setItem('nome_usuario', nome);
+    localStorage.setItem('admin', String(admin));
 
     setToken(token);
-    setUser({ id, nome });
+    setUser({ id, nome, admin });
     setIsAuthenticated(true);
   }, []);
 
@@ -57,6 +60,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('id_usuario');
     localStorage.removeItem('nome_usuario');
+    localStorage.removeItem('admin');
 
     setToken(null);
     setUser(null);

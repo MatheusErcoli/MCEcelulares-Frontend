@@ -8,14 +8,14 @@ export function useGetCategorias() {
 
   const execute = useCallback(async () => {
     setLoading(true);
-    setError(null);
     try {
       const data = await getCategoriasAPI();
 
       if (!data.success) throw new Error(data.error);
 
       setCategorias(data.categorias);
-      
+
+      setError(null);
       return {
         success: true
       };

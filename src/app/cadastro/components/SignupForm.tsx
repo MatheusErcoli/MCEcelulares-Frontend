@@ -8,7 +8,7 @@ import { Button } from "@/src/components/Button";
 import { InputGray } from "@/src/components/InputGray";
 
 export const SignupForm = () => {
-  const { execute: signup, loading, error: apiError } = useSignup();
+  const { execute: signup, loading } = useSignup();
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const router = useRouter();
@@ -24,11 +24,6 @@ export const SignupForm = () => {
 
   return (
     <form action={handleSignup} className="space-y-5">
-      {apiError && (
-        <p className="text-center font-medium text-red-600 animate-pulse text-sm whitespace-pre-line">
-          {apiError}
-        </p>
-      )}
 
       <InputGray name="nome" type="text" placeholder="Nome Completo" required={true} minLength={3} maxLength={100} />
       <InputGray name="email" type="email" placeholder="E-mail" required={true} pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Digite um e-mail válido (ex: usuario@dominio.com)" />

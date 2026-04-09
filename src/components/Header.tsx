@@ -44,11 +44,11 @@ export const Header = () => {
         </Link>
       </nav>
 
-      <div className="flex-1 flex justify-end items-center gap-4">
+      <div className="flex-1 flex justify-end items-center gap-2">
         {isLoading ? (
           <div className="w-32 h-10" />
         ) : isAuthenticated ? (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <Link href="/conta" className="flex items-center gap-2 transition-transform group hover:text-gray-200">
               <span className="text-sm font-medium">
                 {user?.nome ? formatNome(user.nome) : "Conta"}
@@ -57,6 +57,11 @@ export const Header = () => {
             </Link>
 
             <LogoutButton />
+            {user?.admin && <Link href="/admin" className="flex items-center gap-2 transition-transform group hover:text-gray-200">
+              <span className="text-sm font-medium">
+              </span>
+              <Icon name="faUsersGear" className="w-5 text-white group-hover:text-gray-200" size="xl" />
+            </Link>}
           </div>
         ) : (
           <div className="flex items-center gap-3">

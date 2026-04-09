@@ -8,7 +8,7 @@ import { useCreateEndereco } from '@/src/hooks/endereco/useCreateEndereco';
 
 export const EnderecoForm = () => {
     const router = useRouter();
-    const { execute: createEndereco, loading, error } = useCreateEndereco();
+    const { execute: createEndereco, loading } = useCreateEndereco();
 
     const handleSubmit = async (formData: FormData) => {
         const result = await createEndereco(formData);
@@ -25,10 +25,6 @@ export const EnderecoForm = () => {
                     <Icon name="faLocationDot" className="w-8" />
                     Cadastrar endereço
                 </h2>
-
-                {error && (
-                    <p className="text-center font-medium text-red-600 animate-pulse text-sm">{error}</p>
-                )}
 
                 <InputWhite name="endereco" type="text" placeholder="Rua / Avenida" required />
 

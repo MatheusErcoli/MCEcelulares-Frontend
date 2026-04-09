@@ -9,7 +9,6 @@ export const useCreatePedido = () => {
 
   const execute = useCallback(async (id_endereco: number, valor_total: number) => {
     setLoading(true);
-    setError(null);
     try {
       if (!token || !user) throw new Error('Você deve fazer login para fazer pedidos');
 
@@ -17,6 +16,7 @@ export const useCreatePedido = () => {
 
       if (!data.success) throw new Error(data.error);
 
+      setError(null);
       return { success: true };
     } catch (error) {
       setError((error as Error).message || 'Erro ao criar pedido');

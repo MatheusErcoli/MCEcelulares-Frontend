@@ -17,6 +17,7 @@ export async function loginAPI(body: { email: string; senha: string }) {
       id_usuario: data.id_usuario as number,
       nome: data.nome,
       token: data.token as string,
+      admin: data.admin as boolean
     };
   } catch (error) {
     return {

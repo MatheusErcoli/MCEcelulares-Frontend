@@ -10,7 +10,6 @@ export function useGetProdutos() {
 
   const execute = useCallback(async (page?: number, limit?: number, id_categoria?: string, id_marca?: string, destaque?: boolean) => {
     setLoading(true);
-    setError(null);
     try {
       const data = await getProdutosAPI({ page, limit, id_categoria, id_marca, destaque });
 
@@ -19,6 +18,7 @@ export function useGetProdutos() {
       setTotalPages(data.totalPages);
       setTotal(data.total);
       setProdutos(data.produtos);
+      setError(null);
       return {
         success: true
       };

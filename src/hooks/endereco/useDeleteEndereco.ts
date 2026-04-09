@@ -9,7 +9,6 @@ export const useDeleteEndereco = () => {
 
   const execute = useCallback(async (id_endereco: number) => {
     setLoading(true);
-    setError(null);
     try {
       if (!token) throw new Error('Você deve fazer login para remover endereço');
 
@@ -17,6 +16,7 @@ export const useDeleteEndereco = () => {
 
       if (!data.success) throw new Error(data.error);
 
+      setError(null);
       return { success: true };
     } catch (error) {
       setError((error as Error).message || 'Erro ao remover endereço');

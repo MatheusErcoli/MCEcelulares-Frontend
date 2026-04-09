@@ -9,7 +9,6 @@ export const useUpdateItemCarrinho = () => {
 
   const execute = useCallback(async (id_item_carrinho: number, quantidade: number) => {
     setLoading(true);
-    setError(null);
     try {
       if (!token) throw new Error('Você deve fazer login para alterar itens do carrinho');
 
@@ -17,6 +16,7 @@ export const useUpdateItemCarrinho = () => {
 
       if (!data.success) throw new Error(data.error);
 
+      setError(null);
       return { success: true };
     } catch (error) {
       setError((error as Error).message || 'Erro ao alterar item do carrinho');

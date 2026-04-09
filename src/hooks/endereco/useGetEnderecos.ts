@@ -10,7 +10,6 @@ export const useGetEnderecos = () => {
 
   const execute = useCallback(async () => {
     setLoading(true);
-    setError(null);
     try {
       if (!token || !user) throw new Error('Você deve fazer login para buscar endereços');
 
@@ -18,6 +17,7 @@ export const useGetEnderecos = () => {
 
       if (!data.success) throw new Error(data.error);
 
+      setError(null);
       setEnderecos(data.enderecos);
       return { success: true };
     } catch (error) {

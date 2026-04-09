@@ -8,15 +8,16 @@ export function useGetProduto() {
 
   const execute = useCallback(async (id_produto: number) => {
     setLoading(true);
-    setError(null);
     try {
-      const data = await getProdutoAPI({id_produto});
+      const data = await getProdutoAPI({ id_produto });
 
       if (!data.success) throw new Error(data.error);
 
       setProduto(data.produto);
-      return { 
-        success: true};
+      setError(null);
+      return {
+        success: true
+      };
     } catch (error) {
       setError((error as Error).message || "Erro ao buscar detalhes do produto");
       return { success: false };

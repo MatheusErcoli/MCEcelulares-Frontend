@@ -1,4 +1,4 @@
-import { ProtectedRoute } from "@/src/components/ProtectedRoute";
+import { ProtectedRoute } from "@/src/components/guards/ProtectedRoute";
 
 export default function ProtectedLayout({
   children,

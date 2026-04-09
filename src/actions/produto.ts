@@ -1,3 +1,5 @@
+import { fetchWithAuth } from "../lib/fetchWithAuth";
+
 const API_URL = 'http://localhost:3000';
 
 export async function getProdutoAPI(
@@ -36,6 +38,45 @@ export async function getProdutosAPI(
       produtos: data.data,
       total: data.total,
       totalPages: data.totalPages
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: (error as Error).message || "Servidor indisponível no momento."
+    }
+  }
+}
+
+export async function createProdutoAPI(
+  token: string,
+  body: {
+    nome: string,
+    descricao: string,
+    preco: number,
+    estoque: number,
+    imagem: string,
+    destaque: number,
+    ativo: number,
+    id_marca: number,
+    id_categoria: number,
+  }) {
+  try {
+    const response = await fetchWithAuth(`${API_URL}/endereco`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(body)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) throw new Error(data.message);
+
+    return {
+      success: true,
+      prouduto: data
     };
   } catch (error) {
     return {

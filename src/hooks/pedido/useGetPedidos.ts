@@ -10,7 +10,6 @@ export const useGetPedidos = () => {
 
   const execute = useCallback(async () => {
     setLoading(true);
-    setError(null);
     try {
       if (!token || !user) throw new Error('Você deve fazer login para buscar pedidos');
 
@@ -19,6 +18,7 @@ export const useGetPedidos = () => {
       if (!data.success) throw new Error(data.error);
 
       setPedidos(data.pedidos);
+      setError(null);
       return { success: true };
     } catch (error) {
       setError((error as Error).message || 'Erro ao buscar pedidos');
