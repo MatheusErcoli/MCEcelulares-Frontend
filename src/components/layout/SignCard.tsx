@@ -1,4 +1,4 @@
-import { Icon } from "@/src/components/Icon";
+import { Icon } from "@/src/components/layout/Icon";
 import Link from "next/link";
 import { ReactNode } from "react";
 

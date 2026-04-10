@@ -1,9 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import { Icon } from "@/src/components/Icon";
+import { Icon } from "@/src/components/layout/Icon";
 import { Button } from "@/src/components/Button";
-import { InputWhite } from "@/src/components/InputWhite";
+import { InputWhite } from "@/src/components/layout/InputWhite";
 import { useSendEmail } from "@/src/hooks/contato/useSendEmail";
 
 export const ContactFormCard = () => {

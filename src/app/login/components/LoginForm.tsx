@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLogin } from "@/src/hooks/auth/useLogin";
-import { Button } from "@/src/components/Button";
-import { InputGray } from "@/src/components/InputGray";
+import { InputGray } from "@/src/components/layout/InputGray";
+import { Button } from "@/src/components/layout/Button";
 
 export default function LoginForm() {
   const { execute: login, loading } = useLogin();
@@ -12,7 +12,7 @@ export default function LoginForm() {
 
   const handleLogin = async (formData: FormData) => {
     const result = await login(formData);
-    if (result!.success) router.push("/");
+    if (result.success) router.push("/");
   };
 
   return (

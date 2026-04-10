@@ -1,10 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { InputWhite } from '@/src/components/InputWhite';
-import { Button } from '@/src/components/Button';
-import { Icon } from '@/src/components/Icon';
+import { InputWhite } from '@/src/components/layout/InputWhite';
+import { Icon } from '@/src/components/layout/Icon';
 import { useCreateProduto } from '@/src/hooks/produto/useCreateProduto';
+import { Button } from '@/src/components/layout/Button';
 
 export const ProdutoForm = () => {
     const router = useRouter();

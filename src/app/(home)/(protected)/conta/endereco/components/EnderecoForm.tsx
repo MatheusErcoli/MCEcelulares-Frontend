@@ -1,10 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { InputWhite } from '@/src/components/InputWhite';
-import { Button } from '@/src/components/Button';
-import { Icon } from '@/src/components/Icon';
+import { InputWhite } from '@/src/components/layout/InputWhite';
+import { Icon } from '@/src/components/layout/Icon';
 import { useCreateEndereco } from '@/src/hooks/endereco/useCreateEndereco';
+import { Button } from '@/src/components/layout/Button';
 
 export const EnderecoForm = () => {
     const router = useRouter();
@@ -45,8 +45,9 @@ export const EnderecoForm = () => {
                     type="text"
                     placeholder="CEP (somente números)"
                     required
-                    maxLength={8}
-                    pattern="\d{8}"
+                    mask="00000-000"
+                    minLength={9}
+                    pattern="\d{9}"
                     title="CEP deve conter 8 números"
                 />
 

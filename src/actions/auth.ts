@@ -1,8 +1,6 @@
-import { fetchWithAuth } from "../lib/fetchWithAuth";
-
 export async function loginAPI(body: { email: string; senha: string }) {
   try {
-    const response = await fetchWithAuth("http://localhost:3000/auth/login", {
+    const response = await fetch("http://localhost:3000/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),

@@ -1,4 +1,4 @@
-import { SignCard } from "@/src/components/SignCard";
+import { SignCard } from "@/src/components/layout/SignCard";
 import LoginForm from "./components/LoginForm";
 
 export default function Login() {

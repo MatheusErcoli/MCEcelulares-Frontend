@@ -2,10 +2,10 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { Icon } from '@/src/components/Icon';
-import { Button } from '@/src/components/Button';
+import { Icon } from '@/src/components/layout/Icon';
 import { useGetEnderecos } from '@/src/hooks/endereco/useGetEnderecos';
 import { useDeleteEndereco } from '@/src/hooks/endereco/useDeleteEndereco';
+import { Button } from '@/src/components/layout/Button';
 
 export const EnderecoList = () => {
   const { execute: fetchEndereco, loading: loadingEndereco, enderecos } = useGetEnderecos();

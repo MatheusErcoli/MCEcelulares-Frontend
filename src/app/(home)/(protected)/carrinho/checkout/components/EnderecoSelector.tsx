@@ -3,12 +3,12 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Icon } from '@/src/components/Icon';
-import { Button } from '@/src/components/Button';
+import { Icon } from '@/src/components/layout/Icon';
 import { useGetEnderecos } from '@/src/hooks/endereco/useGetEnderecos';
 import { useGetCarrinho } from '@/src/hooks/carrinho/useGetCarrinho';
-import { SubtotalCard } from '@/src/components/SubtotalCard';
+import { SubtotalCard } from '@/src/components/produtos/SubtotalCard';
 import { useCreatePedido } from '@/src/hooks/pedido/useCreatePedido';
+import { Button } from '@/src/components/layout/Button';
 
 export const EnderecoSelector = () => {
   const router = useRouter();

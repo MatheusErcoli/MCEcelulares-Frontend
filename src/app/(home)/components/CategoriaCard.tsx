@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from "@/src/components/Button";
+import { Button } from "@/src/components/layout/Button";
 import { useRouter } from "next/navigation";
 
 type CategoriaProps = {

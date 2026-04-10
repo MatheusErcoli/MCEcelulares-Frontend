@@ -1,4 +1,4 @@
-import { Icon } from '@/src/components/Icon';
+import { Icon } from '@/src/components/layout/Icon';
 
 interface StatCardProps {
   title: string;
@@ -96,8 +96,8 @@ const Admin = () => {
         <div>
           <RecentRow id="1" label="Pedido #101" sub="João Silva • 09/04/2025" badge="Em andamento" value="R$ 1.299,00" />
           <RecentRow id="2" label="Pedido #100" sub="Maria Souza • 08/04/2025" badge="Entregue" value="R$ 749,90" />
-          <RecentRow id="3" label="Pedido #99"  sub="Carlos Lima • 07/04/2025" badge="Cancelado" value="R$ 499,00" />
-          <RecentRow id="4" label="Pedido #98"  sub="Ana Costa • 06/04/2025" badge="Em andamento" value="R$ 2.100,00" />
+          <RecentRow id="3" label="Pedido #99" sub="Carlos Lima • 07/04/2025" badge="Cancelado" value="R$ 499,00" />
+          <RecentRow id="4" label="Pedido #98" sub="Ana Costa • 06/04/2025" badge="Em andamento" value="R$ 2.100,00" />
         </div>
       </section>
 
@@ -138,10 +138,10 @@ const Admin = () => {
           </h2>
           <div className="flex flex-col gap-3">
             {[
-              { label: 'Adicionar Produto',   icon: 'faPlus',  href: '/admin/produtos/novo' },
-              { label: 'Nova Categoria',       icon: 'faTag',   href: '/admin/categorias/novo' },
-              { label: 'Gerenciar Pedidos',    icon: 'faBox',   href: '/admin/pedidos' },
-              { label: 'Ver Usuários',         icon: 'faUsers', href: '/admin/usuarios' },
+              { label: 'Adicionar Produto', icon: 'faPlus', href: '/admin/produtos/novo' },
+              { label: 'Nova Categoria', icon: 'faTag', href: '/admin/categorias/novo' },
+              { label: 'Gerenciar Pedidos', icon: 'faBox', href: '/admin/pedidos' },
+              { label: 'Ver Usuários', icon: 'faUsers', href: '/admin/usuarios' },
             ].map((a, i) => (
               <a
                 key={i}

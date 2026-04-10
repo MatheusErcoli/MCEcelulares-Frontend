@@ -1,16 +1,18 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import { Pagination } from "./Pagination";
+import { useSearchParams } from "next/navigation";
+import { Pagination } from "../layout/Pagination";
 import { useGetProdutos } from "@/src/hooks/produto/useGetProdutos";
-import { ProdutoCard } from "@/src/components/ProdutoCard";
+import { ProdutoCard } from "@/src/components/produtos/ProdutoCard";
 import { CategoriaDropdown } from "./CategoriaDropdown";
 import { MarcaDropdown } from "./MarcaDropdown";
 
 export const ProdutoPagination = () => {
+    const searchParams = useSearchParams();
     const { execute, produtos, totalPages, error } = useGetProdutos();
     const [currentPage, setCurrentPage] = useState(1);
-    const [idCategoria, setIdCategoria] = useState('');
+    const [idCategoria, setIdCategoria] = useState(searchParams.get('id_categoria') ?? '');
     const [idMarca, setIdMarca] = useState('');
 
     const handleCategoriaChange = (value: string) => {

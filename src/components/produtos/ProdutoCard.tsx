@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useAuth } from "../contexts/AuthContext";
-import { useCreateItemCarrinho } from "../hooks/carrinho/useCreateItemCarrinho";
-import { Button } from "./Button";
+import { useAuth } from "../../contexts/AuthContext";
+import { useCreateItemCarrinho } from "../../hooks/carrinho/useCreateItemCarrinho";
+import { Button } from "../layout/Button";
 
 interface ProdutoCardProps {
   produto: ProdutoType;

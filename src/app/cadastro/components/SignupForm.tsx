@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSignup } from "@/src/hooks/auth/useSignup";
-import { Button } from "@/src/components/Button";
-import { InputGray } from "@/src/components/InputGray";
+import { InputGray } from "@/src/components/layout/InputGray";
+import { Button } from "@/src/components/layout/Button";
 
 export const SignupForm = () => {
   const { execute: signup, loading } = useSignup();
@@ -29,8 +29,8 @@ export const SignupForm = () => {
       <InputGray name="email" type="email" placeholder="E-mail" required={true} pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Digite um e-mail válido (ex: usuario@dominio.com)" />
 
       <div className="flex gap-4">
-        <InputGray name="cpf" type="text" placeholder="CPF" required={true} pattern="(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})" title="CPF deve ter 11 números ou o formato 000.000.000-00" />
-        <InputGray name="telefone" type="tel" placeholder="Telefone" required={true} minLength={10} maxLength={15} />
+        <InputGray name="cpf" type="text" placeholder="CPF" required={true} pattern="(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})" title="CPF deve ter 11 números ou o formato 000.000.000-00" mask="000.000.000-00" />
+        <InputGray name="telefone" type="tel" placeholder="Telefone" required={true} minLength={10} maxLength={15} mask="(00) 00000-0000" />
       </div>
 
       <InputGray

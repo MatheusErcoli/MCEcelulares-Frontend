@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from "@/src/components/Button";
+import { Button } from "@/src/components/layout/Button";
 import { useDeleteItemCarrinho } from "@/src/hooks/carrinho/useDeleteItemCarrinho";
 import { useUpdateItemCarrinho } from "@/src/hooks/carrinho/useUpdateItemCarrinho";
 

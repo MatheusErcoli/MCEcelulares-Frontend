@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Icon } from "@/src/components/Icon";
+import { Icon } from "@/src/components/layout/Icon";
 import { Button } from "@/src/components/Button";
 
 export const SocialLinksCard = () => {
