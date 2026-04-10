@@ -1,6 +1,6 @@
 'use client';
 
-import { Icon } from '@/src/components/Icon';
+import { Icon } from '@/src/components/layout/Icon';
 import { PedidoList } from './components/PedidoList';
 
 const Pedidos = () => {

@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useAuth } from "../contexts/AuthContext";
-import { LogoutButton } from "./LogoutButton";
+import { useAuth } from "@/src/contexts/AuthContext";
 import { Icon } from "./Icon";
+import { LogoutButton } from "./LogoutButton";
 
 const MAX_NOME_LENGTH = 12;
 

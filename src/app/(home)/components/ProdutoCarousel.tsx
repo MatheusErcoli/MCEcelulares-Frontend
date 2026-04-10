@@ -1,6 +1,6 @@
 'use client'
 
-import { ProdutoCard } from "@/src/components/ProdutoCard";
+import { ProdutoCard } from "@/src/components/produtos/ProdutoCard";
 import Slider from "react-slick";
 // @ts-ignore
 import "slick-carousel/slick/slick.css";
@@ -13,7 +13,7 @@ type ProdutoCarouselProps = {
     destaque?: boolean
 }
 
-export const ProdutoCarousel = ({destaque}: ProdutoCarouselProps) => {
+export const ProdutoCarousel = ({ destaque }: ProdutoCarouselProps) => {
     const { execute, produtos, error } = useGetProdutos();
 
     useEffect(() => {

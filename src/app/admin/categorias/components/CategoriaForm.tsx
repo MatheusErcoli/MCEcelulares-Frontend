@@ -1,10 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { InputWhite } from '@/src/components/InputWhite';
-import { Button } from '@/src/components/Button';
-import { Icon } from '@/src/components/Icon';
+import { InputWhite } from '@/src/components/layout/InputWhite';
+import { Icon } from '@/src/components/layout/Icon';
 import { useCreateCategoria } from '@/src/hooks/categoria/useCreateCategoria';
+import { Button } from '@/src/components/layout/Button';
 
 export const CategoriaForm = () => {
     const router = useRouter();

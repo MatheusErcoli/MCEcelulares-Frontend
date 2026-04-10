@@ -1,6 +1,6 @@
-import { ProdutoPagination } from "./components/ProdutoPagination";
+import { ProdutoPagination } from "../../../components/produtos/ProdutoPagination";
 
-const Page = () => {
+const Produtos = () => {
     return (
         <>
             <ProdutoPagination />
@@ -8,4 +8,4 @@ const Page = () => {
     );
 }
 
-export default Page;
+export default Produtos;

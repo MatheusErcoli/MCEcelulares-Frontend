@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Icon } from '@/src/components/Icon';
-import { AllIcons } from '@/src/components/Icon';
+import { Icon } from '@/src/components/layout/Icon';
+import { AllIcons } from '@/src/components/layout/Icon';
 
 interface NavItem {
   label: string;
@@ -12,12 +12,12 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: 'Dashboard',   href: '/admin',           icon: 'faChartBar' },
-  { label: 'Produtos',    href: '/admin/produtos',   icon: 'faMobileScreen' },
-  { label: 'Categorias',  href: '/admin/categorias', icon: 'faTag' },
-  { label: 'Marcas',      href: '/admin/marcas',     icon: 'faStar' },
-  { label: 'Pedidos',     href: '/admin/pedidos',    icon: 'faBox' },
-  { label: 'Usuários',    href: '/admin/usuarios',   icon: 'faUsers' },
+  { label: 'Dashboard', href: '/admin', icon: 'faChartBar' },
+  { label: 'Produtos', href: '/admin/produtos', icon: 'faMobileScreen' },
+  { label: 'Categorias', href: '/admin/categorias', icon: 'faTag' },
+  { label: 'Marcas', href: '/admin/marcas', icon: 'faStar' },
+  { label: 'Pedidos', href: '/admin/pedidos', icon: 'faBox' },
+  { label: 'Usuários', href: '/admin/usuarios', icon: 'faUsers' },
 ];
 
 export const AdminSidebar = () => {
@@ -54,18 +54,15 @@ export const AdminSidebar = () => {
             </Link>
           );
         })}
-      </nav>
 
-      {/* Rodapé */}
-      <div className="px-6 py-5 border-t border-white/20">
         <Link
           href="/"
-          className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors"
+          className="border-2 border-white text-white px-5 py-2 rounded-full font-semibold text-sm hover:bg-white hover:text-[#7929c8] transition-all flex items-center gap-2 mt-2"
         >
           <Icon name="faArrowLeft" className="w-3" />
-          Voltar ao site
+          Voltar
         </Link>
-      </div>
+      </nav>
     </aside>
   );
 };

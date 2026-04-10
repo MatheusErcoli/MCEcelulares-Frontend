@@ -17,7 +17,7 @@ export const useLogin = () => {
 
       if (!data.success) throw new Error(data.error);
 
-      login(data.token!, data.id_usuario!, data.nome!,data.admin!);
+      login(data.token!, data.id_usuario!, data.nome!, data.admin!);
 
       return { success: true };
     } catch (error) {
@@ -26,6 +26,7 @@ export const useLogin = () => {
         title: "Erro ao entrar",
         text: (error as Error).message || "Erro ao fazer login",
       });
+      return { success: false };
     } finally {
       setLoading(false);
     }

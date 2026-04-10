@@ -5,9 +5,9 @@ import { useGetUsuario } from '@/src/hooks/usuario/useGetUsuario';
 import { useUpdateUsuario } from '@/src/hooks/usuario/useUpdateUsuario';
 import { useAuth } from '@/src/contexts/AuthContext';
 import { EnderecoList } from './EnderecoList';
-import { Icon } from '@/src/components/Icon';
-import { Button } from '@/src/components/Button';
-import { InputWhite } from '@/src/components/InputWhite';
+import { Icon } from '@/src/components/layout/Icon';
+import { InputWhite } from '@/src/components/layout/InputWhite';
+import { Button } from '@/src/components/layout/Button';
 
 export const ProfilePage = () => {
   const { execute: fetchUsuario, usuario, loading } = useGetUsuario();

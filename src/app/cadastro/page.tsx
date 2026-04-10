@@ -1,4 +1,4 @@
-import { SignCard } from "@/src/components/SignCard";
+import { SignCard } from "@/src/components/layout/SignCard";
 import Link from "next/link";
 import { SignupForm } from "./components/SignupForm";
 

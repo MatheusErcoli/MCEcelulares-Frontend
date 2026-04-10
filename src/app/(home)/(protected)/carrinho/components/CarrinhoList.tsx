@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 import { useGetCarrinho } from "@/src/hooks/carrinho/useGetCarrinho";
 import { ItemCarrinhoCard } from "./ItemCarrinhoCard";
-import { SubtotalCard } from "../../../../../components/SubtotalCard";
+import { SubtotalCard } from "../../../../../components/produtos/SubtotalCard";
 import { useRouter } from "next/navigation";
-import { Button } from "@/src/components/Button";
+import { Button } from "@/src/components/layout/Button";
 
 export const CarrinhoList = () => {
   const { execute: fetchCarrinho, loading, error, carrinho } = useGetCarrinho();
