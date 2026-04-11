@@ -1,5 +1,5 @@
 type ItemPedidoType = {
-    id_item_pedido: number;
+    id_item: number;
     id_pedido: number;
     id_produto: number;
     quantidade: number;

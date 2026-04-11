@@ -61,7 +61,7 @@ export async function createProdutoAPI(
     id_categoria: number,
   }) {
   try {
-    const response = await fetchWithAuth(`${API_URL}/endereco`, {
+    const response = await fetchWithAuth(`${API_URL}/produto`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -76,7 +76,47 @@ export async function createProdutoAPI(
 
     return {
       success: true,
-      prouduto: data
+      produto: data
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: (error as Error).message || "Servidor indisponível no momento."
+    }
+  }
+}
+
+export async function updateProdutoAPI(
+  token: string,
+  id_produto: number,
+  body: {
+    nome?: string,
+    descricao?: string,
+    preco?: number,
+    estoque?: number,
+    imagem?: string,
+    destaque?: number,
+    ativo?: number,
+    id_marca?: number,
+    id_categoria?: number,
+  }) {
+  try {
+    const response = await fetchWithAuth(`${API_URL}/produto/${id_produto}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(body)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) throw new Error(data.message);
+
+    return {
+      success: true,
+      produto: data
     };
   } catch (error) {
     return {

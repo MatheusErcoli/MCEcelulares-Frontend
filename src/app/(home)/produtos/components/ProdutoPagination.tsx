@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { Pagination } from "../layout/Pagination";
+import { Pagination } from "../../../../components/layout/Pagination";
 import { useGetProdutos } from "@/src/hooks/produto/useGetProdutos";
 import { ProdutoCard } from "@/src/components/produtos/ProdutoCard";
-import { CategoriaDropdown } from "./CategoriaDropdown";
-import { MarcaDropdown } from "./MarcaDropdown";
+import { CategoriaDropdown } from "../../../../components/produtos/CategoriaDropdown";
+import { MarcaDropdown } from "../../../../components/produtos/MarcaDropdown";
 
 export const ProdutoPagination = () => {
     const searchParams = useSearchParams();

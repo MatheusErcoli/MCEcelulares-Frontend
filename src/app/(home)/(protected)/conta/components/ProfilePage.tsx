@@ -11,7 +11,7 @@ import { Button } from '@/src/components/layout/Button';
 
 export const ProfilePage = () => {
   const { execute: fetchUsuario, usuario, loading } = useGetUsuario();
-  const { execute: updateUsuario, loading: atualizando, error } = useUpdateUsuario();
+  const { execute: updateUsuario, loading: atualizando } = useUpdateUsuario();
   const { updateNome } = useAuth();
 
   const [editando, setEditando] = useState(false);
@@ -19,13 +19,10 @@ export const ProfilePage = () => {
   useEffect(() => { fetchUsuario(); }, []);
 
   const handleSubmit = async (formData: FormData) => {
-    const nome = formData.get('nome') as string;
-    const telefone = formData.get('telefone') as string;
-
-    const result = await updateUsuario({ nome, telefone });
+    const result = await updateUsuario(formData);
 
     if (result?.success) {
-      updateNome(nome);
+      updateNome(result.nome!);
       setEditando(false);
       fetchUsuario();
     }
@@ -58,9 +55,6 @@ export const ProfilePage = () => {
             <p className="text-red-500 text-sm">Erro ao carregar dados.</p>
           ) : editando ? (
             <form action={handleSubmit} className="flex flex-col gap-4">
-              {error && (
-                <p className="text-red-500 text-sm text-center animate-pulse">{error}</p>
-              )}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1">
                   <p className="text-xs text-gray-400 uppercase font-semibold">Nome</p>

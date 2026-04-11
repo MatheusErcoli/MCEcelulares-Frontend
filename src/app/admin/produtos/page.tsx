@@ -1,10 +1,11 @@
-import { ProdutoPagination } from '@/src/components/produtos/ProdutoPagination';
-import { ProdutoForm } from './components/ProdutoForm';
+import { ProdutoPaginationAdm } from './components/ProdutoPaginationAdm';
 
-export default function Produto() {
+const Produtos = () => {
     return (
         <>
-            <ProdutoPagination />
+            <ProdutoPaginationAdm />
         </>
     );
 }
+
+export default Produtos

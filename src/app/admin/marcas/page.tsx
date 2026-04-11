@@ -1,5 +1,9 @@
-import { MarcaForm } from './components/MarcaForm';
+import { MarcaPagination } from "./components/MarcaPagination";
 
-export default function Marca() {
-    return <MarcaForm />;
+const Marca =() => {
+    return (
+        <MarcaPagination />
+    );
 }
+
+export default Marca
