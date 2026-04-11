@@ -1,35 +1,30 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useGetPedidosAdm } from '@/src/hooks/pedido/useGetPedidosAdm';
 import { Pagination } from '@/src/components/layout/Pagination';
-import { PedidoCardAdmin } from './PedidoCardAdmin';
+import { PedidoCardAdm } from './PedidoCardAdm';
 
 const PAGE_SIZE = 12;
 
 const STATUS_OPTIONS = [
-  { value: '',                    label: 'Todos os status' },
+  { value: '',                     label: 'Todos os status' },
   { value: 'AGUARDANDO_PAGAMENTO', label: 'Aguardando Pagamento' },
-  { value: 'PAGO',                label: 'Pago' },
-  { value: 'ENVIADO',             label: 'Enviado' },
-  { value: 'ENTREGUE',            label: 'Entregue' },
-  { value: 'CANCELADO',           label: 'Cancelado' },
+  { value: 'PAGO',                 label: 'Pago' },
+  { value: 'ENVIADO',              label: 'Enviado' },
+  { value: 'ENTREGUE',             label: 'Entregue' },
+  { value: 'CANCELADO',            label: 'Cancelado' },
 ];
 
 export const PedidoListAdmin = () => {
-  const { execute, pedidos, loading, error } = useGetPedidosAdm();
+  const { execute, pedidos, loading, error, total } = useGetPedidosAdm();
   const [statusFilter, setStatusFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => { execute(); }, []);
+  useEffect(() => { execute(statusFilter); }, [statusFilter]);
 
-  const filtered = useMemo(() => {
-    if (!statusFilter) return pedidos;
-    return pedidos.filter((p) => p.status === statusFilter);
-  }, [pedidos, statusFilter]);
-
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-  const paginated = filtered.slice(
+  const totalPages = Math.ceil(pedidos.length / PAGE_SIZE);
+  const paginated = pedidos.slice(
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE
   );
@@ -42,16 +37,14 @@ export const PedidoListAdmin = () => {
   return (
     <div className="container mx-auto pt-5 pb-5 px-10">
 
-      {/* Cabeçalho */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="text-xl font-bold text-gray-900">Pedidos</h2>
           <p className="text-sm text-gray-400 mt-0.5">
-            {loading ? '...' : `${filtered.length} pedido(s) encontrado(s)`}
+            {loading ? '...' : `${total} pedido(s) encontrado(s)`}
           </p>
         </div>
 
-        {/* Dropdown de filtro */}
         <div className="relative">
           <select
             value={statusFilter}
@@ -78,7 +71,6 @@ export const PedidoListAdmin = () => {
         </div>
       </div>
 
-      {/* Estados */}
       {loading && (
         <p className="text-center font-medium text-gray-400 animate-pulse">
           Carregando pedidos...
@@ -98,13 +90,12 @@ export const PedidoListAdmin = () => {
         </div>
       )}
 
-      {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {paginated.map((pedido) => (
-          <PedidoCardAdmin
+          <PedidoCardAdm
             key={pedido.id_pedido}
             pedido={pedido}
-            onStatusUpdated={execute}
+            onStatusUpdated={() => execute(statusFilter)}
           />
         ))}
       </div>

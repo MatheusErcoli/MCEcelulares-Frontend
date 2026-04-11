@@ -37,8 +37,14 @@ export const PedidoCard = ({ pedido }: PedidoCardProps) => {
       )}
 
       <div className="border-t border-gray-100 pt-3 flex justify-between items-center">
-        <p className="text-xs text-gray-400">
-          {new Date(pedido.createdAt).toLocaleDateString('pt-BR')}
+        <p className="text-xs text-gray-400">{
+          new Date(pedido.data).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
         </p>
         <p className="font-bold text-purple-700">
           R$ {Number(pedido.valor_total).toFixed(2).replace('.', ',')}

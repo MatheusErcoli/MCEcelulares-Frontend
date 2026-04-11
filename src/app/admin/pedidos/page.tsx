@@ -1,4 +1,4 @@
-import { PedidoListAdmin } from "./components/PedidoListAdmin";
+import { PedidoListAdmin } from "./components/PedidoListAdm";
 
 const Pedidos = () => {
     return (

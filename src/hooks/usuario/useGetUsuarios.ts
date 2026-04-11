@@ -7,6 +7,7 @@ export function useGetUsuarios() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState(1);
+  const [total, setTotal] = useState(0);
   const { token } = useAuth();
 
   const execute = useCallback(async (page: number = 1, limit: number = 20) => {
@@ -20,6 +21,7 @@ export function useGetUsuarios() {
 
       setUsuarios(data.usuarios!);
       setTotalPages(data.totalPages!);
+      setTotal(data.total!);
       setError(null);
       return { success: true };
     } catch (error) {
@@ -30,5 +32,5 @@ export function useGetUsuarios() {
     }
   }, [token]);
 
-  return { execute, usuarios, loading, error, totalPages };
+  return { execute, usuarios, loading, error, totalPages, total };
 }

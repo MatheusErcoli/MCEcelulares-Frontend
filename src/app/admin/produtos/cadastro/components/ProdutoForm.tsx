@@ -5,10 +5,34 @@ import { InputWhite } from '@/src/components/layout/InputWhite';
 import { Icon } from '@/src/components/layout/Icon';
 import { useCreateProduto } from '@/src/hooks/produto/useCreateProduto';
 import { Button } from '@/src/components/layout/Button';
+import { useState } from 'react';
 
 export const ProdutoForm = () => {
     const router = useRouter();
     const { execute: createProduto, loading } = useCreateProduto();
+
+    const [imagemUrl, setImagemUrl] = useState<string>('')
+    const [loadingFile, setLoadingFile] = useState(false)
+    const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0]
+
+        if (!file) return
+        setLoadingFile(true)
+
+        const data = new FormData()
+        data.append("file", file)
+        data.append("upload_preset", "ml_default")
+        data.append("cloud_name", "dxahbqe6q")
+
+        const response = await fetch("https://api.cloudinary.com/v1_1/dxahbqe6q/image/upload", {
+            method: "POST",
+            body: data
+        })
+
+        const uploadedImageUrl = await response.json()
+        setImagemUrl(uploadedImageUrl.secure_url)
+        setLoadingFile(false)
+    }
 
     const handleSubmit = async (formData: FormData) => {
         const result = await createProduto(formData);
@@ -68,13 +92,20 @@ export const ProdutoForm = () => {
                     />
                 </div>
 
-                <InputWhite
-                    name="imagem"
-                    type="url"
-                    placeholder="URL da imagem"
-                    required
-                    title="Informe uma URL válida para a imagem do produto."
-                />
+                <div>
+                    {loadingFile && <p>Enviando imagem...</p>}
+                    {imagemUrl && (
+                        <img src={imagemUrl} alt="Preview" className="w-32 h-32 object-cover rounded-xl mb-2" />
+                    )}
+                    <InputWhite
+                        name="_imagem_file"
+                        type="file"
+                        placeholder="Imagem do produto"
+                        required
+                        onChange={handleFileUpload}
+                    />
+                    <input type="hidden" name="imagem" value={imagemUrl} />
+                </div>
 
                 <div className="grid grid-cols-2 gap-4">
                     <InputWhite

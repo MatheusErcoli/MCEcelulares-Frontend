@@ -14,7 +14,7 @@ type PedidoType = {
     valor_total: number;
     status: string;
     ativo: boolean;
-    createdAt: string;
+    data: Date;
     updatedAt: string;
     usuario?: UsuarioType;
     endereco?: EnderecoType;

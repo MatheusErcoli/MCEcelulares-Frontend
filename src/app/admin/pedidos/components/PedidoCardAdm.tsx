@@ -24,12 +24,12 @@ const STATUS_STYLES: Record<StatusType, string> = {
   CANCELADO: 'bg-red-100 text-red-700',
 };
 
-interface PedidoCardAdminProps {
+interface PedidoCardAdmProps {
   pedido: PedidoType;
   onStatusUpdated: () => void;
 }
 
-export const PedidoCardAdmin = ({ pedido, onStatusUpdated }: PedidoCardAdminProps) => {
+export const PedidoCardAdm = ({ pedido, onStatusUpdated }: PedidoCardAdmProps) => {
   const { token } = useAuth();
   const [updating, setUpdating] = useState(false);
   const [open, setOpen] = useState(false);
@@ -70,7 +70,7 @@ export const PedidoCardAdmin = ({ pedido, onStatusUpdated }: PedidoCardAdminProp
           <div>
             <p className="font-bold text-gray-900 text-sm">Pedido #{pedido.id_pedido}</p>
             <p className="text-xs text-gray-400">
-              {new Date(pedido.createdAt).toLocaleDateString('pt-BR', {
+              {new Date(pedido.data).toLocaleDateString('pt-BR', {
                 day: '2-digit', month: 'short', year: 'numeric',
               })}
             </p>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface ProdutoCardAdmProps {
@@ -14,12 +15,14 @@ export const ProdutoCardAdm = ({ produto }: ProdutoCardAdmProps) => {
 
       <div
         onClick={() => router.push(`/admin/produtos/edicao?id=${produto.id_produto}`)}
-        className="bg-[#E5E7EB] p-5 flex items-center justify-center relative aspect-[3/2] bg-produto-pattern bg-repeat bg-center shrink-0 cursor-pointer"
+        className="bg-[#E5E7EB] p-5 flex items-center justify-center relative h-[160px] bg-produto-pattern bg-repeat bg-center shrink-0 cursor-pointer overflow-hidden"
       >
-        <img
+        <Image
           src={produto.imagem}
           alt={produto.nome}
           className="object-contain max-h-full max-w-[200px]"
+          width={130}
+          height={0}
         />
       </div>
 

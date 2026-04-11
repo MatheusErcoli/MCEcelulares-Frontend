@@ -55,8 +55,8 @@ export async function createProdutoAPI(
     preco: number,
     estoque: number,
     imagem: string,
-    destaque: number,
-    ativo: number,
+    destaque: boolean,
+    ativo: boolean,
     id_marca: number,
     id_categoria: number,
   }) {
@@ -95,8 +95,8 @@ export async function updateProdutoAPI(
     preco?: number,
     estoque?: number,
     imagem?: string,
-    destaque?: number,
-    ativo?: number,
+    destaque?: boolean,
+    ativo?: boolean,
     id_marca?: number,
     id_categoria?: number,
   }) {

@@ -1,23 +1,25 @@
-import { useState, useCallback } from 'react';
-import { getAllPedidosAdminAPI } from '@/src/actions/pedido';
+import { getPedidosAdmAPI } from '@/src/actions/pedido';
 import { useAuth } from '@/src/contexts/AuthContext';
+import { useState, useCallback } from 'react';
 
-export const useGetPedidosAdm = () => {
+export function useGetPedidosAdm() {
+  const [pedidos, setPedidos] = useState<PedidoType[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [pedidos, setPedidos] = useState<PedidoType[]>([]);
+  const [total, setTotal] = useState(0);
   const { token } = useAuth();
 
-  const execute = useCallback(async () => {
+  const execute = useCallback(async (status?: string) => {
     setLoading(true);
     try {
-      if (!token) throw new Error('Você deve fazer login para buscar pedidos');
+      if (!token) throw new Error('Você deve fazer login para acessar esta página');
 
-      const data = await getAllPedidosAdminAPI(token);
+      const data = await getPedidosAdmAPI(token, { status });
 
       if (!data.success) throw new Error(data.error);
 
       setPedidos(data.pedidos ?? []);
+      setTotal(data.total ?? 0);
       setError(null);
       return { success: true };
     } catch (error) {
@@ -28,5 +30,5 @@ export const useGetPedidosAdm = () => {
     }
   }, [token]);
 
-  return { execute, loading, error, pedidos };
-};
+  return { execute, pedidos, loading, error, total };
+}

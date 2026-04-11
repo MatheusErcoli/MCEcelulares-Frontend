@@ -18,8 +18,8 @@ export const useCreateProduto = () => {
         preco: Number(formData.get('preco')),
         estoque: Number(formData.get('estoque')),
         imagem: formData.get('imagem') as string,
-        destaque: Number(formData.get('destaque')),
-        ativo: Number(formData.get('ativo')),
+        destaque: formData.get('destaque') === "1",
+        ativo: formData.get('ativo') === "1",
         id_marca: Number(formData.get('id_marca')),
         id_categoria: Number(formData.get('id_categoria')),
       });
