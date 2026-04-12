@@ -19,7 +19,7 @@ export const CategoriaCard = ({ id, name }: CategoriaProps) => {
         <Button
             text={name}
             onClick={handleClick}
-            className="flex gap-5 m-[7px] mt-[50px] px-[20px] flex-col font-semibold items-center justify-center w-41 h-40 rounded-[30px] shadow-sm transition-colors text-gray-700 text-3xl bg-[#E5E7EB] hover:bg-gray-300"
+            className="flex gap-5 m-[7px] mt-[50px] px-[20px] flex-col font-semibold items-center justify-center w-41 h-40 rounded-[30px] shadow-sm transition-colors text-gray-700 text-2xl bg-[#E5E7EB] hover:bg-gray-300"
         />
     );
 }

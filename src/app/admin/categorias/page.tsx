@@ -1,5 +1,9 @@
-import { CategoriaForm } from './components/CategoriaForm';
+import { CategoriaPagination } from "./components/CategoriaPagination";
 
-export default function Categoria() {
-    return <CategoriaForm />;
+const Categorias = () => {
+    return (
+        <CategoriaPagination />
+    );
 }
+
+export default Categorias;

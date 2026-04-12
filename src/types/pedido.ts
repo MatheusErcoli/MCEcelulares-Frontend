@@ -1,10 +1,9 @@
 type ItemPedidoType = {
-    id_item_pedido: number;
+    id_item: number;
     id_pedido: number;
-    id_produto: number;
+    nome_produto: string;
     quantidade: number;
     preco_unitario: number;
-    produto?: ProdutoType;
 }
 
 type PedidoType = {
@@ -14,7 +13,7 @@ type PedidoType = {
     valor_total: number;
     status: string;
     ativo: boolean;
-    createdAt: string;
+    data: Date;
     updatedAt: string;
     usuario?: UsuarioType;
     endereco?: EnderecoType;

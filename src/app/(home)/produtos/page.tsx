@@ -1,4 +1,4 @@
-import { ProdutoPagination } from "../../../components/produtos/ProdutoPagination";
+import { ProdutoPagination } from "./components/ProdutoPagination";
 
 const Produtos = () => {
     return (

@@ -1,14 +1,42 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { InputWhite } from '@/src/components/layout/InputWhite';
 import { Icon } from '@/src/components/layout/Icon';
 import { useCreateProduto } from '@/src/hooks/produto/useCreateProduto';
 import { Button } from '@/src/components/layout/Button';
+import { useState } from 'react';
+import { CategoriaDropdownAdm } from './CategoriaDropdownAdm';
+import { MarcaDropdownAdm } from './MarcaDropdownAdm';
+import { Input } from '@/src/components/layout/Input';
 
 export const ProdutoForm = () => {
     const router = useRouter();
     const { execute: createProduto, loading } = useCreateProduto();
+
+    const [imagemUrl, setImagemUrl] = useState<string>('');
+    const [loadingFile, setLoadingFile] = useState(false);
+    const [idCategoria, setIdCategoria] = useState<string>('');
+    const [idMarca, setIdMarca] = useState<string>('');
+
+    const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        setLoadingFile(true);
+
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset", "ml_default");
+        data.append("cloud_name", "dxahbqe6q");
+
+        const response = await fetch("https://api.cloudinary.com/v1_1/dxahbqe6q/image/upload", {
+            method: "POST",
+            body: data,
+        });
+
+        const uploadedImageUrl = await response.json();
+        setImagemUrl(uploadedImageUrl.secure_url);
+        setLoadingFile(false);
+    };
 
     const handleSubmit = async (formData: FormData) => {
         const result = await createProduto(formData);
@@ -26,7 +54,8 @@ export const ProdutoForm = () => {
                     Cadastrar produto
                 </h2>
 
-                <InputWhite
+                <Input
+                variant='white'
                     name="nome"
                     type="text"
                     placeholder="Nome do produto"
@@ -48,16 +77,17 @@ export const ProdutoForm = () => {
                 />
 
                 <div className="grid grid-cols-2 gap-4">
-                    <InputWhite
+                    <Input
+                    variant='white'
                         name="preco"
                         type="number"
                         placeholder="Preço (R$)"
                         required
                         min={0.01}
-                        step={0.01}
                         title="Informe um preço válido maior que zero."
                     />
-                    <InputWhite
+                    <Input
+                    variant='white'
                         name="estoque"
                         type="number"
                         placeholder="Estoque"
@@ -68,33 +98,56 @@ export const ProdutoForm = () => {
                     />
                 </div>
 
-                <InputWhite
-                    name="imagem"
-                    type="url"
-                    placeholder="URL da imagem"
-                    required
-                    title="Informe uma URL válida para a imagem do produto."
-                />
+                <div>
+                    {loadingFile && <p>Enviando imagem...</p>}
+                    {imagemUrl && (
+                        <img src={imagemUrl} alt="Preview" className="w-32 h-32 object-cover rounded-xl mb-2" />
+                    )}
+
+                    <input
+                        id="imagem-upload"
+                        name="_imagem_file"
+                        type="file"
+                        accept="image/*"
+                        required
+                        onChange={handleFileUpload}
+                        className="hidden"
+                    />
+
+                    <label
+                        htmlFor="imagem-upload"
+                        className="flex items-center gap-3 w-full rounded-[30px] bg-white px-6 py-4 text-gray-400 cursor-pointer transition-all hover:ring-2 hover:ring-[#7929c8]/50"
+                    >
+                        <Icon name="faImage" className="w-4 text-gray-400" />
+                        <span className="truncate">
+                            {imagemUrl ? 'Imagem selecionada ✓' : 'Imagem do produto'}
+                        </span>
+                    </label>
+
+                    <input type="hidden" name="imagem" value={imagemUrl} />
+                </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                    <InputWhite
-                        name="id_categoria"
-                        type="number"
-                        placeholder="ID da categoria"
-                        required
-                        min={1}
-                        step={1}
-                        title="Informe o ID da categoria."
-                    />
-                    <InputWhite
-                        name="id_marca"
-                        type="number"
-                        placeholder="ID da marca"
-                        required
-                        min={1}
-                        step={1}
-                        title="Informe o ID da marca."
-                    />
+                    <div className="flex flex-col gap-2">
+                        <p className="text-xs text-gray-500 uppercase font-semibold px-2">Categoria</p>
+                        <CategoriaDropdownAdm
+                            value={idCategoria}
+                            onChange={(val) => {
+                                setIdCategoria(val);
+                                setIdMarca('');
+                            }}
+                        />
+                        <input type="hidden" name="id_categoria" value={idCategoria} />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <p className="text-xs text-gray-500 uppercase font-semibold px-2">Marca</p>
+                        <MarcaDropdownAdm
+                            value={idMarca}
+                            onChange={setIdMarca}
+                        />
+                        <input type="hidden" name="id_marca" value={idMarca} />
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">

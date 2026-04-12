@@ -27,9 +27,9 @@ export const PedidoCard = ({ pedido }: PedidoCardProps) => {
 
       {pedido.itens?.length > 0 && (
         <div className="flex flex-col gap-1">
-          {pedido.itens.map((item: any) => (
+          {pedido.itens.map((item: ItemPedidoType) => (
             <div key={item.id_item} className="flex justify-between text-xs text-gray-600">
-              <span>{item.quantidade}x {item.produto?.nome ?? `Produto #${item.id_produto}`}</span>
+              <span>{item.quantidade}x {item.nome_produto}</span>
               <span>R$ {Number(item.preco_unitario).toFixed(2).replace('.', ',')}</span>
             </div>
           ))}
@@ -37,8 +37,14 @@ export const PedidoCard = ({ pedido }: PedidoCardProps) => {
       )}
 
       <div className="border-t border-gray-100 pt-3 flex justify-between items-center">
-        <p className="text-xs text-gray-400">
-          {new Date(pedido.createdAt).toLocaleDateString('pt-BR')}
+        <p className="text-xs text-gray-400">{
+          new Date(pedido.data).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
         </p>
         <p className="font-bold text-purple-700">
           R$ {Number(pedido.valor_total).toFixed(2).replace('.', ',')}

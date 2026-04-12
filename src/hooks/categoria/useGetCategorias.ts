@@ -6,19 +6,14 @@ export function useGetCategorias() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const execute = useCallback(async () => {
+  const execute = useCallback(async (ativo?: boolean) => {
     setLoading(true);
     try {
-      const data = await getCategoriasAPI();
-
+      const data = await getCategoriasAPI({ ativo });
       if (!data.success) throw new Error(data.error);
-
       setCategorias(data.categorias);
-
       setError(null);
-      return {
-        success: true
-      };
+      return { success: true };
     } catch (error) {
       setError((error as Error).message || "Erro ao buscar categorias");
       return { success: false };

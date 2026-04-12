@@ -27,7 +27,7 @@ export const Header = () => {
           Início <Icon name="faHouse" className="w-4" size="lg" />
         </Link>
         <Link href="/produtos" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-          Produtos <Icon name="faSearch" className="w-4" size="lg" />
+          Produtos <Icon name="faMobileScreen" className="w-4" size="lg" />
         </Link>
         {isAuthenticated && (
           <>

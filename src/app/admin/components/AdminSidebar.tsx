@@ -3,57 +3,54 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Icon } from '@/src/components/layout/Icon';
-import { AllIcons } from '@/src/components/layout/Icon';
-
-interface NavItem {
-  label: string;
-  href: string;
-  icon: keyof typeof AllIcons;
-}
-
-const navItems: NavItem[] = [
-  { label: 'Dashboard', href: '/admin', icon: 'faChartBar' },
-  { label: 'Produtos', href: '/admin/produtos', icon: 'faMobileScreen' },
-  { label: 'Categorias', href: '/admin/categorias', icon: 'faTag' },
-  { label: 'Marcas', href: '/admin/marcas', icon: 'faStar' },
-  { label: 'Pedidos', href: '/admin/pedidos', icon: 'faBox' },
-  { label: 'Usuários', href: '/admin/usuarios', icon: 'faUsers' },
-];
 
 export const AdminSidebar = () => {
   const pathname = usePathname();
 
+  const linkClass = (href: string) => {
+    const isActive = href === '/admin' ? pathname === '/admin' : pathname.startsWith(href);
+    return `flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold text-sm transition-all ${
+      isActive ? 'bg-white text-[#5714d7] shadow-md' : 'text-white/80 hover:bg-white/10 hover:text-white'
+    }`;
+  };
+
   return (
     <aside className="w-64 min-h-screen bg-linear-to-b from-[#5714d7] to-[#7929c8] flex flex-col text-white shrink-0">
-      {/* Logo / título */}
       <div className="px-6 py-7 border-b border-white/20">
         <p className="text-xs uppercase tracking-widest font-semibold text-white/60 mb-1">Painel</p>
         <h1 className="text-xl font-bold">Administração</h1>
       </div>
 
-      {/* Nav */}
       <nav className="flex flex-col gap-1 p-4 flex-1">
-        {navItems.map((item) => {
-          const isActive =
-            item.href === '/admin'
-              ? pathname === '/admin'
-              : pathname.startsWith(item.href);
+        <Link href="/admin" className={linkClass('/admin')}>
+          <Icon name="faChartBar" className="w-4" />
+          Dashboard
+        </Link>
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold text-sm transition-all
-                ${isActive
-                  ? 'bg-white text-[#5714d7] shadow-md'
-                  : 'text-white/80 hover:bg-white/10 hover:text-white'
-                }`}
-            >
-              <Icon name={item.icon} className="w-4" />
-              {item.label}
-            </Link>
-          );
-        })}
+        <Link href="/admin/produtos" className={linkClass('/admin/produtos')}>
+          <Icon name="faMobileScreen" className="w-4" />
+          Produtos
+        </Link>
+
+        <Link href="/admin/categorias" className={linkClass('/admin/categorias')}>
+          <Icon name="faTag" className="w-4" />
+          Categorias
+        </Link>
+
+        <Link href="/admin/marcas" className={linkClass('/admin/marcas')}>
+          <Icon name="faStar" className="w-4" />
+          Marcas
+        </Link>
+
+        <Link href="/admin/pedidos" className={linkClass('/admin/pedidos')}>
+          <Icon name="faBox" className="w-4" />
+          Pedidos
+        </Link>
+
+        <Link href="/admin/usuarios" className={linkClass('/admin/usuarios')}>
+          <Icon name="faUsers" className="w-4" />
+          Usuários
+        </Link>
 
         <Link
           href="/"

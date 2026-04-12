@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCreateItemCarrinho } from "../../hooks/carrinho/useCreateItemCarrinho";
 import { Button } from "../layout/Button";
+import Image from "next/image";
 
 interface ProdutoCardProps {
   produto: ProdutoType;
@@ -26,12 +27,14 @@ export const ProdutoCard = ({ produto }: ProdutoCardProps) => {
 
       <div
         onClick={() => router.push(`/produtos/detalhes?id=${produto.id_produto}`)}
-        className="bg-[#E5E7EB] p-5 flex items-center justify-center relative aspect-[3/2] bg-produto-pattern bg-repeat bg-center shrink-0 cursor-pointer"
+        className="bg-[#E5E7EB] p-5 flex items-center justify-center relative h-[160px] bg-produto-pattern bg-repeat bg-center shrink-0 cursor-pointer overflow-hidden"
       >
-        <img
+        <Image
           src={produto.imagem}
           alt={produto.nome}
           className="object-contain max-h-full max-w-[200px]"
+          width={130}
+          height={0}
         />
       </div>
 
