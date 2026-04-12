@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useGetPedidosAdm } from '@/src/hooks/pedido/useGetPedidosAdm';
 import { Pagination } from '@/src/components/layout/Pagination';
 import { PedidoCardAdm } from './PedidoCardAdm';
+import { Icon } from '@/src/components/layout/Icon';
 
 const PAGE_SIZE = 12;
 
@@ -16,7 +17,7 @@ const STATUS_OPTIONS = [
   { value: 'CANCELADO',            label: 'Cancelado' },
 ];
 
-export const PedidoListAdmin = () => {
+export const PedidoPaginationAdm = () => {
   const { execute, pedidos, loading, error, total } = useGetPedidosAdm();
   const [statusFilter, setStatusFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -83,9 +84,7 @@ export const PedidoListAdmin = () => {
 
       {!loading && !error && paginated.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-          </svg>
+          <Icon name="faBox"/>
           <p className="text-sm font-medium">Nenhum pedido encontrado.</p>
         </div>
       )}

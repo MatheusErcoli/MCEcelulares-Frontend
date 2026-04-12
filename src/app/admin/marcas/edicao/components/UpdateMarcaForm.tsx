@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useGetMarcas } from '@/src/hooks/marca/useGetMarcas';
 import { useUpdateMarca } from '@/src/hooks/marca/useUpdateMarca';
 import { Icon } from '@/src/components/layout/Icon';
-import { InputWhite } from '@/src/components/layout/InputWhite';
+import { Input } from '@/src/components/layout/Input';
 import { Button } from '@/src/components/layout/Button';
 
 export const UpdateMarcaForm = () => {
@@ -58,18 +58,32 @@ export const UpdateMarcaForm = () => {
           ) : !marca ? (
             <p className="text-red-500 text-sm">Erro ao carregar dados da marca.</p>
           ) : editando ? (
-            <form action={handleSubmit} className="flex flex-col gap-4">
-              <div className="flex flex-col gap-1">
-                <p className="text-xs text-gray-400 uppercase font-semibold">Nome</p>
-                <InputWhite
-                  name="nome"
-                  type="text"
-                  placeholder="Nome da marca"
+            <form action={handleSubmit} className="flex flex-col gap-6">
+
+              <Input
+                variant="white"
+                name="nome"
+                type="text"
+                placeholder="Nome da marca"
+                required
+                minLength={2}
+                maxLength={100}
+                title="O nome deve ter entre 2 e 100 caracteres."
+                defaultValue={marca.nome}
+              />
+
+              <div className="flex flex-col gap-2">
+                <p className="text-xs text-gray-500 uppercase font-semibold px-2">Status</p>
+                <select
+                  name="ativo"
                   required
-                  minLength={2}
-                  maxLength={100}
-                  defaultValue={marca.nome}
-                />
+                  defaultValue={marca.ativo ? '1' : '0'}
+                  className="w-full rounded-[30px] bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#7929c8]/50 border-none appearance-none cursor-pointer"
+                >
+                  <option value="" disabled>Selecione...</option>
+                  <option value="1">Ativo</option>
+                  <option value="0">Inativo</option>
+                </select>
               </div>
 
               <Button
@@ -87,6 +101,10 @@ export const UpdateMarcaForm = () => {
               <div>
                 <p className="text-xs text-gray-400 uppercase font-semibold">ID</p>
                 <p className="font-medium text-gray-900">#{marca.id_marca}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 uppercase font-semibold">Status</p>
+                <p className="font-medium text-gray-900">{marca.ativo ? 'Ativo' : 'Inativo'}</p>
               </div>
             </div>
           )}

@@ -8,27 +8,23 @@ export function useGetProdutos() {
   const [totalPages, setTotalPages] = useState(0);
   const [total, setTotal] = useState(0);
 
-  const execute = useCallback(async (page?: number, limit?: number, id_categoria?: string, id_marca?: string, destaque?: boolean) => {
+const execute = useCallback(async (page?: number, limit?: number, id_categoria?: string, id_marca?: string, destaque?: boolean, ativo?: boolean) => {
     setLoading(true);
     try {
-      const data = await getProdutosAPI({ page, limit, id_categoria, id_marca, destaque });
-
+      const data = await getProdutosAPI({ page, limit, id_categoria, id_marca, destaque, ativo });
       if (!data.success) throw new Error(data.error);
-
       setTotalPages(data.totalPages);
       setTotal(data.total);
       setProdutos(data.produtos);
       setError(null);
-      return {
-        success: true
-      };
+      return { success: true };
     } catch (error) {
       setError((error as Error).message || "Erro ao finalizar pedido");
       return { success: false };
     } finally {
       setLoading(false);
     }
-  }, []);
+}, []);
 
   return { execute, loading, error, produtos, totalPages, total };
 }

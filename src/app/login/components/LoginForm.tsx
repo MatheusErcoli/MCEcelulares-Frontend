@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLogin } from "@/src/hooks/auth/useLogin";
-import { InputGray } from "@/src/components/layout/InputGray";
 import { Button } from "@/src/components/layout/Button";
+import { Input } from "@/src/components/layout/Input";
 
 export default function LoginForm() {
   const { execute: login, loading } = useLogin();
@@ -20,7 +20,7 @@ export default function LoginForm() {
       <form action={handleLogin} className="space-y-5">
 
         <div className="space-y-5">
-          <InputGray
+          <Input
             name="email"
             type="email"
             placeholder="E-mail"
@@ -29,7 +29,7 @@ export default function LoginForm() {
             title="Digite um e-mail válido (ex: usuario@dominio.com)"
           />
 
-          <InputGray
+          <Input
             name="senha"
             type="password"
             placeholder="Senha"

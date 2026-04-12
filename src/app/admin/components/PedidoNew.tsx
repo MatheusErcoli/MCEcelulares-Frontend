@@ -34,13 +34,24 @@ export const PedidoNew = () => {
         </a>
       </div>
 
-      {loading && (
-        <p className="text-sm text-gray-400 animate-pulse">Carregando...</p>
-      )}
+            {loading && (
+                <p className="text-center font-medium text-gray-400 animate-pulse">
+                    Carregando pedidos...
+                </p>
+            )}
 
-      {error && (
-        <p className="text-sm font-semibold text-red-400">{error}</p>
-      )}
+            {error && (
+                <p className="text-center font-medium text-red-600 animate-pulse">
+                    {error}
+                </p>
+            )}
+
+            {!loading && !error && recentes.length === 0 && (
+                    <div className="flex flex-col items-center justify-center gap-3 text-gray-400">
+                      <Icon name="faBox"/>
+                      <p className="text-sm font-medium">Nenhum pedido encontrado.</p>
+                    </div>
+            )}
 
       {!loading && !error && (
         <div>

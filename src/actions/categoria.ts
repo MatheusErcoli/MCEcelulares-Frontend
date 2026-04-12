@@ -2,19 +2,18 @@ import { fetchWithAuth } from "../lib/fetchWithAuth";
 
 const API_URL = 'http://localhost:3000';
 
-export async function getCategoriasAPI() {
+export async function getCategoriasAPI(body?: { ativo?: boolean }) {
   try {
-    const response = await fetch(`${API_URL}/categoria`);
+    const params = new URLSearchParams();
+    if (body?.ativo !== undefined) params.set('ativo', String(body.ativo));
+
+    const response = await fetch(`${API_URL}/categoria?${params}`);
     const data = await response.json();
 
     if (!response.ok) throw new Error(data.message);
-
     return { success: true, categorias: data };
   } catch (error) {
-    return {
-      success: false,
-      error: (error as Error).message || "Servidor indisponível no momento."
-    }
+    return { success: false, error: (error as Error).message || "Servidor indisponível no momento." }
   }
 }
 

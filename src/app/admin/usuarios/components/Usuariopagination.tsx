@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useGetUsuarios } from '@/src/hooks/usuario/useGetUsuarios';
 import { Pagination } from '@/src/components/layout/Pagination';
 import { UsuarioCard } from './UsuarioCard';
+import { Icon } from '@/src/components/layout/Icon';
 
 const PAGE_SIZE = 20;
 
@@ -41,9 +42,10 @@ export const UsuarioPagination = () => {
             )}
 
             {!loading && !error && usuarios.length === 0 && (
-                <p className="text-center font-medium text-gray-400">
-                    Nenhum usuário encontrado.
-                </p>
+                    <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
+                      <Icon name="faUsers"/>
+                      <p className="text-sm font-medium">Nenhum usuário encontrado.</p>
+                    </div>
             )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

@@ -2,7 +2,7 @@
 
 import { Button } from "@/src/components/layout/Button";
 import { Icon } from "@/src/components/layout/Icon";
-import { InputWhite } from "@/src/components/layout/InputWhite";
+import { Input } from "@/src/components/layout/Input";
 import { useSendEmail } from "@/src/hooks/contato/useSendEmail";
 
 export const ContactFormCard = () => {
@@ -23,13 +23,13 @@ export const ContactFormCard = () => {
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <InputWhite name="nome" type="text" placeholder="Nome Completo" required={true} minLength={3} maxLength={100} title="O nome deve ter entre 3 e 100 caracteres." />
-                <InputWhite name="telefone" type="tel" placeholder="Telefone: (99) 99999-9999" required={true} pattern="\d{11}" title="O telefone deve ter 11 dígitos." />
+                <Input variant="white" name="nome" type="text" placeholder="Nome Completo" required={true} minLength={3} maxLength={100} title="O nome deve ter entre 3 e 100 caracteres." />
+                <Input variant="white" name="telefone" type="tel" placeholder="Telefone: (99) 99999-9999" required={true} pattern="\d{11}" title="O telefone deve ter 11 dígitos." />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <InputWhite name="email" type="email" placeholder="E-mail" required={true} pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Digite um e-mail válido (ex: usuario@dominio.com)" />
-                <InputWhite name="assunto" type="text" placeholder="Assunto" required={true} minLength={5} maxLength={30} title="O assunto deve ter entre 5 e 30 caracteres." />
+                <Input variant="white" name="email" type="email" placeholder="E-mail" required={true} pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Digite um e-mail válido (ex: usuario@dominio.com)" />
+                <Input variant="white" name="assunto" type="text" placeholder="Assunto" required={true} minLength={5} maxLength={30} title="O assunto deve ter entre 5 e 30 caracteres." />
             </div>
 
             <div className="flex flex-col gap-2">

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { InputWhite } from '@/src/components/layout/InputWhite';
+import { Input } from '@/src/components/layout/Input';
 import { Icon } from '@/src/components/layout/Icon';
 import { useCreateCategoria } from '@/src/hooks/categoria/useCreateCategoria';
 import { Button } from '@/src/components/layout/Button';
@@ -26,7 +26,8 @@ export const CategoriaForm = () => {
                     Cadastrar categoria
                 </h2>
 
-                <InputWhite
+                <Input
+                    variant="white"
                     name="nome"
                     type="text"
                     placeholder="Nome da categoria"
@@ -46,6 +47,20 @@ export const CategoriaForm = () => {
                     title="A descrição deve ter entre 5 e 300 caracteres."
                     className="w-full rounded-[30px] bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#7929c8]/50 border-none resize-none"
                 />
+
+                <div className="flex flex-col gap-2">
+                    <p className="text-xs text-gray-500 uppercase font-semibold px-2">Status</p>
+                    <select
+                        name="ativo"
+                        required
+                        defaultValue=""
+                        className="w-full rounded-[30px] bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#7929c8]/50 border-none appearance-none cursor-pointer"
+                    >
+                        <option value="" disabled>Selecione...</option>
+                        <option value="1">Ativo</option>
+                        <option value="0">Inativo</option>
+                    </select>
+                </div>
 
                 <Button
                     text={loading ? 'Salvando...' : 'Salvar categoria'}

@@ -116,9 +116,6 @@ const UsuarioDetalhes = () => {
                                     {end.bairro ? `${end.bairro}, ` : ''}{end.cidade} - {end.estado}
                                 </p>
                                 <p className="text-gray-400 text-xs mt-1">CEP: {end.cep}</p>
-                                {!end.ativo && (
-                                    <span className="text-xs text-red-400 font-medium">Inativo</span>
-                                )}
                             </div>
                         ))}
                     </div>

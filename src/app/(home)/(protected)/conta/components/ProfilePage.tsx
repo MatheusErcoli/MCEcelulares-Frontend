@@ -6,8 +6,8 @@ import { useUpdateUsuario } from '@/src/hooks/usuario/useUpdateUsuario';
 import { useAuth } from '@/src/contexts/AuthContext';
 import { EnderecoList } from './EnderecoList';
 import { Icon } from '@/src/components/layout/Icon';
-import { InputWhite } from '@/src/components/layout/InputWhite';
 import { Button } from '@/src/components/layout/Button';
+import { Input } from '@/src/components/layout/Input';
 
 export const ProfilePage = () => {
   const { execute: fetchUsuario, usuario, loading } = useGetUsuario();
@@ -58,11 +58,11 @@ export const ProfilePage = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1">
                   <p className="text-xs text-gray-400 uppercase font-semibold">Nome</p>
-                  <InputWhite name="nome" type="text" placeholder="Nome" required defaultValue={usuario.nome} />
+                  <Input variant='white' name="nome" type="text" placeholder="Nome" required defaultValue={usuario.nome} />
                 </div>
                 <div className="flex flex-col gap-1">
                   <p className="text-xs text-gray-400 uppercase font-semibold">Telefone</p>
-                  <InputWhite name="telefone" type="tel" placeholder="Telefone" required defaultValue={usuario.telefone} />
+                  <Input variant='white' name="telefone" type="tel" placeholder="Telefone" required defaultValue={usuario.telefone} />
                 </div>
                 <div className="flex flex-col gap-1">
                   <p className="text-xs text-gray-400 uppercase font-semibold">E-mail</p>

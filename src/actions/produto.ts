@@ -25,10 +25,10 @@ export async function getProdutoAPI(
 }
 
 export async function getProdutosAPI(
-  body: { page?: number, limit?: number, id_categoria?: string, id_marca?: string, destaque?: boolean }
+  body: { page?: number, limit?: number, id_categoria?: string, id_marca?: string, destaque?: boolean, ativo?: boolean }
 ) {
   try {
-    const response = await fetch(`${API_URL}/produto?page=${body.page}&limit=${body.limit}&id_categoria=${body.id_categoria}&id_marca=${body.id_marca}&destaque=${body.destaque}`);
+    const response = await fetch(`${API_URL}/produto?page=${body.page}&limit=${body.limit}&id_categoria=${body.id_categoria}&id_marca=${body.id_marca}&destaque=${body.destaque}&ativo=${body.ativo}`);
 
     const data = await response.json();
 

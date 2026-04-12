@@ -1,10 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { InputWhite } from '@/src/components/layout/InputWhite';
 import { Icon } from '@/src/components/layout/Icon';
 import { useCreateEndereco } from '@/src/hooks/endereco/useCreateEndereco';
 import { Button } from '@/src/components/layout/Button';
+import { Input } from '@/src/components/layout/Input';
 
 export const EnderecoForm = () => {
     const router = useRouter();
@@ -26,21 +26,21 @@ export const EnderecoForm = () => {
                     Cadastrar endereço
                 </h2>
 
-                <InputWhite name="endereco" type="text" placeholder="Rua / Avenida" required />
+                <Input variant='white' name="endereco" type="text" placeholder="Rua / Avenida" required />
 
                 <div className="grid grid-cols-2 gap-4">
-                    <InputWhite name="numero" type="text" placeholder="Número" required />
-                    <InputWhite name="complemento" type="text" placeholder="Complemento (opcional)" />
+                    <Input variant='white' name="numero" type="text" placeholder="Número" required />
+                    <Input variant='white' name="complemento" type="text" placeholder="Complemento (opcional)" />
                 </div>
 
-                <InputWhite name="bairro" type="text" placeholder="Bairro (opcional)" />
+                <Input variant='white' name="bairro" type="text" placeholder="Bairro (opcional)" />
 
                 <div className="grid grid-cols-2 gap-4">
-                    <InputWhite name="cidade" type="text" placeholder="Cidade" required />
-                    <InputWhite name="estado" type="text" placeholder="UF" required maxLength={2} />
+                    <Input variant='white' name="cidade" type="text" placeholder="Cidade" required />
+                    <Input variant='white' name="estado" type="text" placeholder="UF" required maxLength={2} />
                 </div>
 
-                <InputWhite
+                <Input variant='white'
                     name="cep"
                     type="text"
                     placeholder="CEP (somente números)"

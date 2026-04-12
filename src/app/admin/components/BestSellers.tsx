@@ -24,17 +24,28 @@ export const BestSellers = () => {
   return (
     <section className="bg-gray-200 rounded-[32px] p-8 flex flex-col gap-5">
       <h2 className="text-lg font-bold text-gray-900 flex items-center gap-3">
-        <Icon name="faStar" className="text-purple-700" />
+        <Icon name="faFire" className="text-purple-700" />
         Mais Vendidos
       </h2>
 
-      {loading && (
-        <p className="text-sm text-gray-400 animate-pulse">Carregando...</p>
-      )}
+            {loading && (
+                <p className="text-center font-medium text-gray-400 animate-pulse">
+                    Carregando produtos...
+                </p>
+            )}
 
-      {error && (
-        <p className="text-sm font-semibold text-red-400">{error}</p>
-      )}
+            {error && (
+                <p className="text-center font-medium text-red-600 animate-pulse">
+                    {error}
+                </p>
+            )}
+
+            {!loading && !error && ranking.length === 0 && (
+                    <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
+                      <Icon name="faMobileScreen"/>
+                      <p className="text-sm font-medium">Nenhuma compra encontrada.</p>
+                    </div>
+            )}
 
       {!loading && !error && (
         <div className="flex flex-col gap-3">

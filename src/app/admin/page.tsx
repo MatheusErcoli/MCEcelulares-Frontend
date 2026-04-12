@@ -9,15 +9,13 @@ import { QuickActions } from './components/QuickActions';
 
 const Admin = () => {
   return (
-  <div className="flex flex-col gap-8 w-full max-w-5xl mx-auto">
+    <div className="flex flex-col gap-8 w-full max-w-5xl mx-auto">
 
-      {/* Cabeçalho */}
       <div>
         <p className="text-xs uppercase tracking-widest font-semibold text-gray-400 mb-1">Bem-vindo</p>
         <h1 className="text-4xl font-bold text-gray-900">Dashboard</h1>
       </div>
 
-      {/* Cards de estatísticas */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <ProdutoCount />
         <PedidoCount />
@@ -25,16 +23,12 @@ const Admin = () => {
         <Revenue />
       </div>
 
-      {/* Pedidos recentes */}
       <PedidoNew />
 
-      {/* Produtos e Categorias lado a lado */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
-        {/* Produtos mais vendidos */}
         <BestSellers />
 
-        {/* Ações rápidas */}
         <QuickActions />
 
       </div>

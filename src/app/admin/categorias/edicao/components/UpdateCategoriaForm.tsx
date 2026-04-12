@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useGetCategorias } from '@/src/hooks/categoria/useGetCategorias';
 import { useUpdateCategoria } from '@/src/hooks/categoria/useUpdateCategoria';
 import { Icon } from '@/src/components/layout/Icon';
-import { InputWhite } from '@/src/components/layout/InputWhite';
+import { Input } from '@/src/components/layout/Input';
 import { Button } from '@/src/components/layout/Button';
 
 export const UpdateCategoriaForm = () => {
@@ -58,32 +58,44 @@ export const UpdateCategoriaForm = () => {
           ) : !categoria ? (
             <p className="text-red-500 text-sm">Erro ao carregar dados da categoria.</p>
           ) : editando ? (
-            <form action={handleSubmit} className="flex flex-col gap-4">
-              <div className="flex flex-col gap-1">
-                <p className="text-xs text-gray-400 uppercase font-semibold">Nome</p>
-                <InputWhite
-                  name="nome"
-                  type="text"
-                  placeholder="Nome da categoria"
-                  required
-                  minLength={2}
-                  maxLength={100}
-                  defaultValue={categoria.nome}
-                />
-              </div>
+            <form action={handleSubmit} className="flex flex-col gap-6">
 
-              <div className="flex flex-col gap-1">
-                <p className="text-xs text-gray-400 uppercase font-semibold">Descrição</p>
-                <textarea
-                  name="descricao"
+              <Input
+                variant="white"
+                name="nome"
+                type="text"
+                placeholder="Nome da categoria"
+                required
+                minLength={2}
+                maxLength={100}
+                title="O nome deve ter entre 2 e 100 caracteres."
+                defaultValue={categoria.nome}
+              />
+
+              <textarea
+                name="descricao"
+                required
+                placeholder="Descrição da categoria..."
+                rows={4}
+                minLength={5}
+                maxLength={300}
+                title="A descrição deve ter entre 5 e 300 caracteres."
+                defaultValue={categoria.descricao ?? ''}
+                className="w-full rounded-[30px] bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#7929c8]/50 border-none resize-none"
+              />
+
+              <div className="flex flex-col gap-2">
+                <p className="text-xs text-gray-500 uppercase font-semibold px-2">Status</p>
+                <select
+                  name="ativo"
                   required
-                  placeholder="Descrição da categoria..."
-                  rows={4}
-                  minLength={5}
-                  maxLength={300}
-                  defaultValue={categoria.descricao ?? ''}
-                  className="w-full rounded-[30px] bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#7929c8]/50 border-none resize-none"
-                />
+                  defaultValue={categoria.ativo ? '1' : '0'}
+                  className="w-full rounded-[30px] bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#7929c8]/50 border-none appearance-none cursor-pointer"
+                >
+                  <option value="" disabled>Selecione...</option>
+                  <option value="1">Ativo</option>
+                  <option value="0">Inativo</option>
+                </select>
               </div>
 
               <Button
@@ -101,6 +113,10 @@ export const UpdateCategoriaForm = () => {
               <div>
                 <p className="text-xs text-gray-400 uppercase font-semibold">ID</p>
                 <p className="font-medium text-gray-900">#{categoria.id_categoria}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 uppercase font-semibold">Status</p>
+                <p className="font-medium text-gray-900">{categoria.ativo ? 'Ativo' : 'Inativo'}</p>
               </div>
               <div className="sm:col-span-2">
                 <p className="text-xs text-gray-400 uppercase font-semibold">Descrição</p>

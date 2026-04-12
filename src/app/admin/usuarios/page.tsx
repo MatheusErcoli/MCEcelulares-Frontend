@@ -1,4 +1,4 @@
-import { UsuarioPagination } from "./components/Usuariopagination";
+import { UsuarioPagination } from "./components/UsuarioPagination";
 
 const Usuarios = () => {
     return (
