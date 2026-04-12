@@ -69,3 +69,23 @@ export async function updateCategoriaAPI(
     }
   }
 }
+
+export async function deleteCategoriaAPI(token: string, id_categoria: number) {
+  try {
+    const response = await fetchWithAuth(`${API_URL}/categoria/${id_categoria}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+
+    const data = response.status === 204 ? null : await response.json();
+
+    if (!response.ok) throw new Error(data?.message);
+
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: (error as Error).message || 'Servidor indisponível no momento.',
+    };
+  }
+}

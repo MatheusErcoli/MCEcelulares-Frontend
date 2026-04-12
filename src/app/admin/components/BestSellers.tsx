@@ -12,7 +12,7 @@ export const BestSellers = () => {
   const bestSellers = pedidos
     .flatMap(pedido => pedido.itens ?? [])
     .reduce((acc, item) => {
-      const nome = item.produto?.nome ?? `Produto #${item.id_produto}`;
+      const nome = item.nome_produto ?? `Produto #${item.nome_produto}`;
       acc[nome] = (acc[nome] ?? 0) + item.quantidade;
       return acc;
     }, {} as Record<string, number>);

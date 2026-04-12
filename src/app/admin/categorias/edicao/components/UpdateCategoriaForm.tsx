@@ -1,19 +1,22 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useGetCategorias } from '@/src/hooks/categoria/useGetCategorias';
 import { useUpdateCategoria } from '@/src/hooks/categoria/useUpdateCategoria';
+import { useDeleteCategoria } from '@/src/hooks/categoria/useDeleteCategoria';
 import { Icon } from '@/src/components/layout/Icon';
 import { Input } from '@/src/components/layout/Input';
 import { Button } from '@/src/components/layout/Button';
 
 export const UpdateCategoriaForm = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const id = Number(searchParams.get('id'));
 
   const { execute: fetchCategorias, categorias, loading } = useGetCategorias();
   const { execute: updateCategoria, loading: atualizando } = useUpdateCategoria();
+  const { execute: deleteCategoria, loading: excluindo } = useDeleteCategoria();
 
   const [editando, setEditando] = useState(false);
   const [categoriaLocal, setCategoriaLocal] = useState<CategoriaType | null>(null);
@@ -29,7 +32,6 @@ export const UpdateCategoriaForm = () => {
 
   const handleSubmit = async (formData: FormData) => {
     const result = await updateCategoria(id, formData);
-
     if (result?.success) {
       setCategoriaLocal({
         ...categoriaLocal!,
@@ -39,6 +41,11 @@ export const UpdateCategoriaForm = () => {
       });
       setEditando(false);
     }
+  };
+
+  const handleDelete = async () => {
+    const result = await deleteCategoria(id);
+    if (result.success) router.push('/admin/categorias');
   };
 
   return (
@@ -54,11 +61,19 @@ export const UpdateCategoriaForm = () => {
               Dados da categoria
             </h2>
             {!loading && categoriaLocal && (
-              <Button
-                icon={editando ? 'faXmark' : 'faPen'}
-                onClick={() => setEditando(!editando)}
-                className="text-purple-700 hover:opacity-75 transition-opacity"
-              />
+              <div className="flex items-center gap-3">
+                <Button
+                  icon={editando ? 'faXmark' : 'faPen'}
+                  onClick={() => setEditando(!editando)}
+                  className="text-purple-700 hover:opacity-75 transition-opacity"
+                />
+                <Button
+                  icon="faTrash"
+                  onClick={handleDelete}
+                  disabled={excluindo}
+                  className="text-[#ff5c8a] hover:opacity-75 transition-opacity disabled:opacity-50"
+                />
+              </div>
             )}
           </div>
 
@@ -68,7 +83,6 @@ export const UpdateCategoriaForm = () => {
             <p className="text-red-500 text-sm">Erro ao carregar dados da categoria.</p>
           ) : editando ? (
             <form action={handleSubmit} className="flex flex-col gap-6">
-
               <Input
                 variant="white"
                 name="nome"
@@ -80,7 +94,6 @@ export const UpdateCategoriaForm = () => {
                 title="O nome deve ter entre 2 e 100 caracteres."
                 defaultValue={categoriaLocal.nome}
               />
-
               <textarea
                 name="descricao"
                 required
@@ -92,7 +105,6 @@ export const UpdateCategoriaForm = () => {
                 defaultValue={categoriaLocal.descricao ?? ''}
                 className="w-full rounded-[30px] bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#7929c8]/50 border-none resize-none"
               />
-
               <div className="flex flex-col gap-2">
                 <p className="text-xs text-gray-500 uppercase font-semibold px-2">Status</p>
                 <select
@@ -106,7 +118,6 @@ export const UpdateCategoriaForm = () => {
                   <option value="0">Inativo</option>
                 </select>
               </div>
-
               <Button
                 text={atualizando ? 'Salvando...' : 'Salvar alterações'}
                 type="submit"

@@ -1,10 +1,10 @@
 import { updateProdutoAPI } from '@/src/actions/produto';
 import { useAuth } from '@/src/contexts/AuthContext';
 import { useState, useCallback } from 'react';
+import Swal from 'sweetalert2';
 
 export const useUpdateProduto = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const { token } = useAuth();
 
   const execute = useCallback(async (id_produto: number, formData: FormData) => {
@@ -28,15 +28,23 @@ export const useUpdateProduto = () => {
 
       if (!data.success) throw new Error(data.error);
 
-      setError(null);
+      Swal.fire({
+        icon: 'success',
+        title: 'Produto atualizado com sucesso!',
+        text: 'As alterações já estão disponíveis no sistema.',
+      });
       return { success: true };
     } catch (error) {
-      setError((error as Error).message || 'Erro ao editar produto');
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro ao atualizar produto',
+        text: (error as Error).message || 'Não foi possível atualizar a produto',
+      });
       return { success: false };
     } finally {
       setLoading(false);
     }
   }, [token]);
 
-  return { execute, loading, error };
+  return { execute, loading, };
 };

@@ -70,3 +70,23 @@ export async function updateMarcaAPI(
     }
   }
 }
+
+export async function deleteMarcaAPI(token: string, id_marca: number) {
+  try {
+    const response = await fetchWithAuth(`${API_URL}/marca/${id_marca}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+
+    const data = response.status === 204 ? null : await response.json();
+
+    if (!response.ok) throw new Error(data?.message);
+
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: (error as Error).message || 'Servidor indisponível no momento.',
+    };
+  }
+}

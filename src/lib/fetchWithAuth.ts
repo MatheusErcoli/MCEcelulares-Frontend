@@ -1,5 +1,14 @@
 export async function fetchWithAuth(url: string, options: RequestInit = {}) {
-  const res = await fetch(url, options);
+  let res: Response;
+
+  try {
+    res = await fetch(url, options);
+  } catch (err) {
+    if (err instanceof TypeError) {
+      throw new Error('Servidor indisponível no momento. Tente novamente mais tarde.');
+    }
+    throw err;
+  }
 
   if (res.status === 401) {
     localStorage.removeItem('auth_token');
