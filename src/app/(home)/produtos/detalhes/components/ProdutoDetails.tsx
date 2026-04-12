@@ -39,6 +39,8 @@ export const ProdutoDetails = () => {
         </div>
     );
 
+    const semEstoque = produto.estoque === 0;
+
     return (
         <div className="flex h-[calc(100vh-80px)]">
             <div className="w-1/2 bg-[#E5E7EB]/40 flex items-center justify-center p-12">
@@ -76,6 +78,18 @@ export const ProdutoDetails = () => {
                         R${Number(produto.preco).toFixed(2).replace('.', ',')}
                     </p>
 
+                    {!produto.ativo ? (
+                        <span className="bg-red-100 text-red-600 text-sm font-semibold px-4 py-1 rounded-full w-fit">
+                            Inativo
+                        </span>
+                    ) : semEstoque ? (
+                        <p className="text-red-500 text-sm font-semibold">Produto esgotado</p>
+                    ) : (
+                        <p className="text-gray-500 text-sm">
+                            Em estoque: <span className="text-gray-500">{produto.estoque}</span>
+                        </p>
+                    )}
+
                     {erroCarrinho && (
                         <p className="text-red-500 text-sm font-medium">{erroCarrinho}</p>
                     )}
@@ -85,7 +99,7 @@ export const ProdutoDetails = () => {
                             text={adicionando ? 'Adicionando...' : 'Adicionar ao carrinho'}
                             icon="faCartShopping"
                             onClick={handleAdd}
-                            disabled={adicionando}
+                            disabled={adicionando || semEstoque || !produto.ativo}
                         />
                     </div>
                 </div>

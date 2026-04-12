@@ -36,20 +36,18 @@ export const CategoriaPagination = () => {
                 <button
                     onClick={() => router.push('/admin/categorias/cadastro')}
                     className="
-                        flex items-center gap-2 cursor-pointer
-                        bg-white hover:bg-gray-50
-                        text-gray-800 font-medium text-sm
-                        px-5 py-2.5
-                        rounded-full
-                        border-none outline-none shadow-sm
-                        transition-colors duration-150
+        appearance-none cursor-pointer
+        bg-white hover:bg-gray-50
+        text-gray-800 font-medium text-sm
+        px-5 py-2.5
+        rounded-full
+        border border-gray-200 outline-none shadow-sm
+        transition-colors duration-150
+        disabled:cursor-not-allowed disabled:opacity-50
                     "
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <line x1="12" y1="5" x2="12" y2="19" />
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                    </svg>
                     Adicionar categoria
+                    <Icon name='faPlus' className='pl-2'/>
                 </button>
             </div>
 

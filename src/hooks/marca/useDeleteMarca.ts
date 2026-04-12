@@ -1,19 +1,19 @@
-import { deleteEnderecoAPI } from '@/src/actions/endereco';
+import { deleteMarcaAPI } from '@/src/actions/marca';
 import { useAuth } from '@/src/contexts/AuthContext';
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import Swal from 'sweetalert2';
 
-export const useDeleteEndereco = () => {
+export const useDeleteMarca = () => {
   const [loading, setLoading] = useState(false);
-  const { token } = useAuth();
+  const { token, user } = useAuth();
 
-  const execute = useCallback(async (id_endereco: number) => {
+  const execute = useCallback(async (id_marca: number) => {
     const confirm = await Swal.fire({
-      title: 'Remover endereço?',
+      title: 'Excluir marca?',
       text: 'Esta ação não poderá ser desfeita.',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Sim, remover',
+      confirmButtonText: 'Sim, excluir',
       cancelButtonText: 'Cancelar',
       confirmButtonColor: '#ff5c8a',
     });
@@ -22,29 +22,30 @@ export const useDeleteEndereco = () => {
 
     setLoading(true);
     try {
-      if (!token) throw new Error('Você deve fazer login para remover endereço');
+      if (!token || !user?.admin) throw new Error('Você deve fazer login como administrador para excluir uma marca');
 
-      const data = await deleteEnderecoAPI(token, { id_endereco });
+      const data = await deleteMarcaAPI(token, id_marca);
 
       if (!data.success) throw new Error(data.error);
 
       await Swal.fire({
         icon: 'success',
-        title: 'Endereço removido com sucesso!',
+        title: 'Marca excluída com sucesso!',
+        text: 'A marca foi removida do sistema.',
       });
 
       return { success: true };
     } catch (error) {
       Swal.fire({
         icon: 'error',
-        title: 'Erro ao remover endereço',
-        text: (error as Error).message || 'Não foi possível remover o endereço',
+        title: 'Erro ao excluir marca',
+        text: (error as Error).message || 'Não foi possível excluir a marca',
       });
       return { success: false };
     } finally {
       setLoading(false);
     }
-  }, [token]);
+  }, [token, user]);
 
   return { execute, loading };
 };

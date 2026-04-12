@@ -1,19 +1,19 @@
-import { deleteEnderecoAPI } from '@/src/actions/endereco';
+import { deleteCategoriaAPI } from '@/src/actions/categoria';
 import { useAuth } from '@/src/contexts/AuthContext';
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import Swal from 'sweetalert2';
 
-export const useDeleteEndereco = () => {
+export const useDeleteCategoria = () => {
   const [loading, setLoading] = useState(false);
-  const { token } = useAuth();
+  const { token, user } = useAuth();
 
-  const execute = useCallback(async (id_endereco: number) => {
+  const execute = useCallback(async (id_categoria: number) => {
     const confirm = await Swal.fire({
-      title: 'Remover endereço?',
+      title: 'Excluir categoria?',
       text: 'Esta ação não poderá ser desfeita.',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Sim, remover',
+      confirmButtonText: 'Sim, excluir',
       cancelButtonText: 'Cancelar',
       confirmButtonColor: '#ff5c8a',
     });
@@ -22,29 +22,30 @@ export const useDeleteEndereco = () => {
 
     setLoading(true);
     try {
-      if (!token) throw new Error('Você deve fazer login para remover endereço');
+      if (!token || !user?.admin) throw new Error('Você deve fazer login como administrador para excluir uma categoria');
 
-      const data = await deleteEnderecoAPI(token, { id_endereco });
+      const data = await deleteCategoriaAPI(token, id_categoria);
 
       if (!data.success) throw new Error(data.error);
 
       await Swal.fire({
         icon: 'success',
-        title: 'Endereço removido com sucesso!',
+        title: 'Categoria excluída com sucesso!',
+        text: 'A categoria foi removida do sistema.',
       });
 
       return { success: true };
     } catch (error) {
       Swal.fire({
         icon: 'error',
-        title: 'Erro ao remover endereço',
-        text: (error as Error).message || 'Não foi possível remover o endereço',
+        title: 'Erro ao excluir categoria',
+        text: (error as Error).message || 'Não foi possível excluir a categoria',
       });
       return { success: false };
     } finally {
       setLoading(false);
     }
-  }, [token]);
+  }, [token, user]);
 
   return { execute, loading };
 };

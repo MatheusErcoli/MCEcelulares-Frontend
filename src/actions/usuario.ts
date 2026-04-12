@@ -51,6 +51,26 @@ export async function getUsuariosAPI(
   }
 }
 
+export async function deleteUsuarioAPI(token: string, id_usuario: number) {
+  try {
+    const response = await fetchWithAuth(`${API_URL}/usuario/${id_usuario}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+
+    const data = response.status === 204 ? null : await response.json();
+
+    if (!response.ok) throw new Error(data?.message);
+
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: (error as Error).message || 'Servidor indisponível no momento.',
+    };
+  }
+}
+
 export async function updateUsuarioAPI(
   token: string,
   body: {

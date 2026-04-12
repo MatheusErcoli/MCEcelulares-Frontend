@@ -1,19 +1,22 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useGetMarcas } from '@/src/hooks/marca/useGetMarcas';
 import { useUpdateMarca } from '@/src/hooks/marca/useUpdateMarca';
+import { useDeleteMarca } from '@/src/hooks/marca/useDeleteMarca';
 import { Icon } from '@/src/components/layout/Icon';
 import { Input } from '@/src/components/layout/Input';
 import { Button } from '@/src/components/layout/Button';
 
 export const UpdateMarcaForm = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const id = Number(searchParams.get('id'));
 
   const { execute: fetchMarcas, marcas, loading } = useGetMarcas();
   const { execute: updateMarca, loading: atualizando } = useUpdateMarca();
+  const { execute: deleteMarca, loading: excluindo } = useDeleteMarca();
 
   const [editando, setEditando] = useState(false);
   const [marcaLocal, setMarcaLocal] = useState<MarcaType | null>(null);
@@ -29,7 +32,6 @@ export const UpdateMarcaForm = () => {
 
   const handleSubmit = async (formData: FormData) => {
     const result = await updateMarca(id, formData);
-
     if (result?.success) {
       setMarcaLocal({
         ...marcaLocal!,
@@ -38,6 +40,11 @@ export const UpdateMarcaForm = () => {
       });
       setEditando(false);
     }
+  };
+
+  const handleDelete = async () => {
+    const result = await deleteMarca(id);
+    if (result.success) router.push('/admin/marcas');
   };
 
   return (
@@ -53,11 +60,19 @@ export const UpdateMarcaForm = () => {
               Dados da marca
             </h2>
             {!loading && marcaLocal && (
-              <Button
-                icon={editando ? 'faXmark' : 'faPen'}
-                onClick={() => setEditando(!editando)}
-                className="text-purple-700 hover:opacity-75 transition-opacity"
-              />
+              <div className="flex items-center gap-3">
+                <Button
+                  icon={editando ? 'faXmark' : 'faPen'}
+                  onClick={() => setEditando(!editando)}
+                  className="text-purple-700 hover:opacity-75 transition-opacity"
+                />
+                <Button
+                  icon="faTrash"
+                  onClick={handleDelete}
+                  disabled={excluindo}
+                  className="text-[#ff5c8a] hover:opacity-75 transition-opacity disabled:opacity-50"
+                />
+              </div>
             )}
           </div>
 
@@ -67,7 +82,6 @@ export const UpdateMarcaForm = () => {
             <p className="text-red-500 text-sm">Erro ao carregar dados da marca.</p>
           ) : editando ? (
             <form action={handleSubmit} className="flex flex-col gap-6">
-
               <Input
                 variant="white"
                 name="nome"
@@ -79,7 +93,6 @@ export const UpdateMarcaForm = () => {
                 title="O nome deve ter entre 2 e 100 caracteres."
                 defaultValue={marcaLocal.nome}
               />
-
               <div className="flex flex-col gap-2">
                 <p className="text-xs text-gray-500 uppercase font-semibold px-2">Status</p>
                 <select
@@ -93,7 +106,6 @@ export const UpdateMarcaForm = () => {
                   <option value="0">Inativo</option>
                 </select>
               </div>
-
               <Button
                 text={atualizando ? 'Salvando...' : 'Salvar alterações'}
                 type="submit"

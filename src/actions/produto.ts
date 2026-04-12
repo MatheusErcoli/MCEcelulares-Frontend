@@ -133,3 +133,23 @@ export async function updateProdutoAPI(
     }
   }
 }
+
+export async function deleteProdutoAPI(token: string, id_produto: number) {
+  try {
+    const response = await fetchWithAuth(`${API_URL}/produto/${id_produto}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+
+    const data = response.status === 204 ? null : await response.json();
+
+    if (!response.ok) throw new Error(data?.message);
+
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: (error as Error).message || 'Servidor indisponível no momento.',
+    };
+  }
+}

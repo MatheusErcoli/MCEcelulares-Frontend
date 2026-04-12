@@ -8,10 +8,12 @@ import { EnderecoList } from './EnderecoList';
 import { Icon } from '@/src/components/layout/Icon';
 import { Button } from '@/src/components/layout/Button';
 import { Input } from '@/src/components/layout/Input';
+import { useDeleteUsuario } from '@/src/hooks/usuario/useDeleteUsuario';
 
 export const ProfilePage = () => {
   const { execute: fetchUsuario, usuario, loading } = useGetUsuario();
   const { execute: updateUsuario, loading: atualizando } = useUpdateUsuario();
+  const { execute: deleteUsuario, loading: excluindo } = useDeleteUsuario();
   const { updateNome } = useAuth();
 
   const [editando, setEditando] = useState(false);
@@ -41,11 +43,19 @@ export const ProfilePage = () => {
               Dados pessoais
             </h2>
             {!loading && usuario && (
-              <Button
-                icon={editando ? 'faXmark' : 'faPen'}
-                onClick={() => setEditando(!editando)}
-                className="text-purple-700 hover:opacity-75 transition-opacity"
-              />
+              <div className="flex items-center gap-3">
+                <Button
+                  icon={editando ? 'faXmark' : 'faPen'}
+                  onClick={() => setEditando(!editando)}
+                  className="text-purple-700 hover:opacity-75 transition-opacity"
+                />
+                <Button
+                  icon="faTrash"
+                  onClick={deleteUsuario}
+                  disabled={excluindo}
+                  className="text-[#ff5c8a] hover:opacity-75 transition-opacity disabled:opacity-50"
+                />
+              </div>
             )}
           </div>
 

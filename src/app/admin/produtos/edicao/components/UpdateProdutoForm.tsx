@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useGetProduto } from '@/src/hooks/produto/useGetProduto';
 import { useUpdateProduto } from '@/src/hooks/produto/useUpdateProduto';
+import { useDeleteProduto } from '@/src/hooks/produto/useDeleteProduto';
 import { Icon } from '@/src/components/layout/Icon';
 import { Input } from '@/src/components/layout/Input';
 import { Button } from '@/src/components/layout/Button';
@@ -12,13 +13,14 @@ import { MarcaDropdownAdm } from '../../cadastro/components/MarcaDropdownAdm';
 
 export const UpdateProdutoForm = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const id = Number(searchParams.get('id'));
 
   const { execute: fetchProduto, produto, loading } = useGetProduto();
   const { execute: updateProduto, loading: atualizando } = useUpdateProduto();
+  const { execute: deleteProduto, loading: excluindo } = useDeleteProduto();
 
   const [editando, setEditando] = useState(false);
-
   const [imagemUrl, setImagemUrl] = useState<string>('');
   const [loadingFile, setLoadingFile] = useState(false);
   const [idCategoria, setIdCategoria] = useState<string>('');
@@ -58,11 +60,15 @@ export const UpdateProdutoForm = () => {
 
   const handleSubmit = async (formData: FormData) => {
     const result = await updateProduto(id, formData);
-
     if (result?.success) {
       setEditando(false);
       fetchProduto(id);
     }
+  };
+
+  const handleDelete = async () => {
+    const result = await deleteProduto(id);
+    if (result.success) router.push('/admin/produtos');
   };
 
   return (
@@ -78,11 +84,19 @@ export const UpdateProdutoForm = () => {
               Dados do produto
             </h2>
             {!loading && produto && (
-              <Button
-                icon={editando ? 'faXmark' : 'faPen'}
-                onClick={() => setEditando(!editando)}
-                className="text-purple-700 hover:opacity-75 transition-opacity"
-              />
+              <div className="flex items-center gap-3">
+                <Button
+                  icon={editando ? 'faXmark' : 'faPen'}
+                  onClick={() => setEditando(!editando)}
+                  className="text-purple-700 hover:opacity-75 transition-opacity"
+                />
+                <Button
+                  icon="faTrash"
+                  onClick={handleDelete}
+                  disabled={excluindo}
+                  className="text-[#ff5c8a] hover:opacity-75 transition-opacity disabled:opacity-50"
+                />
+              </div>
             )}
           </div>
 
@@ -147,7 +161,6 @@ export const UpdateProdutoForm = () => {
                 {imagemUrl && (
                   <img src={imagemUrl} alt="Preview" className="w-32 h-32 object-cover rounded-xl mb-2" />
                 )}
-
                 <input
                   id="imagem-upload"
                   name="_imagem_file"
@@ -156,7 +169,6 @@ export const UpdateProdutoForm = () => {
                   onChange={handleFileUpload}
                   className="hidden"
                 />
-
                 <label
                   htmlFor="imagem-upload"
                   className="flex items-center gap-3 w-full rounded-[30px] bg-white px-6 py-4 text-gray-400 cursor-pointer transition-all hover:ring-2 hover:ring-[#7929c8]/50"
@@ -166,7 +178,6 @@ export const UpdateProdutoForm = () => {
                     {imagemUrl ? 'Imagem selecionada ✓' : 'Imagem do produto'}
                   </span>
                 </label>
-
                 <input type="hidden" name="imagem" value={imagemUrl} />
               </div>
 
@@ -175,20 +186,13 @@ export const UpdateProdutoForm = () => {
                   <p className="text-xs text-gray-500 uppercase font-semibold px-2">Categoria</p>
                   <CategoriaDropdownAdm
                     value={idCategoria}
-                    onChange={(val) => {
-                      setIdCategoria(val);
-                      setIdMarca('');
-                    }}
+                    onChange={(val) => { setIdCategoria(val); setIdMarca(''); }}
                   />
                   <input type="hidden" name="id_categoria" value={idCategoria} />
                 </div>
-
                 <div className="flex flex-col gap-2">
                   <p className="text-xs text-gray-500 uppercase font-semibold px-2">Marca</p>
-                  <MarcaDropdownAdm
-                    value={idMarca}
-                    onChange={setIdMarca}
-                  />
+                  <MarcaDropdownAdm value={idMarca} onChange={setIdMarca} />
                   <input type="hidden" name="id_marca" value={idMarca} />
                 </div>
               </div>
@@ -207,7 +211,6 @@ export const UpdateProdutoForm = () => {
                     <option value="0">Não</option>
                   </select>
                 </div>
-
                 <div className="flex flex-col gap-2">
                   <p className="text-xs text-gray-500 uppercase font-semibold px-2">Status</p>
                   <select
