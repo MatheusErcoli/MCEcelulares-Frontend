@@ -20,8 +20,8 @@ export const useUpdateProduto = () => {
         imagem: formData.get('imagem') as string,
         id_categoria: Number(formData.get('id_categoria')),
         id_marca: Number(formData.get('id_marca')),
-        destaque: Number(formData.get('destaque')),
-        ativo: Number(formData.get('ativo')),
+        destaque: formData.get('destaque') === '1',
+        ativo: formData.get('ativo') === '1',
       };
 
       const data = await updateProdutoAPI(token, id_produto, dados);

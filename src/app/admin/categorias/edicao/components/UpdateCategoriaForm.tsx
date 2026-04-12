@@ -16,19 +16,28 @@ export const UpdateCategoriaForm = () => {
   const { execute: updateCategoria, loading: atualizando } = useUpdateCategoria();
 
   const [editando, setEditando] = useState(false);
-
-  const categoria = categorias.find((c) => c.id_categoria === id) ?? null;
+  const [categoriaLocal, setCategoriaLocal] = useState<CategoriaType | null>(null);
 
   useEffect(() => {
     if (id) fetchCategorias();
   }, [id]);
 
+  useEffect(() => {
+    const found = categorias.find((c) => c.id_categoria === id) ?? null;
+    if (found) setCategoriaLocal(found);
+  }, [categorias, id]);
+
   const handleSubmit = async (formData: FormData) => {
     const result = await updateCategoria(id, formData);
 
     if (result?.success) {
+      setCategoriaLocal({
+        ...categoriaLocal!,
+        nome: formData.get('nome') as string,
+        descricao: formData.get('descricao') as string,
+        ativo: formData.get('ativo') === '1',
+      });
       setEditando(false);
-      fetchCategorias();
     }
   };
 
@@ -44,7 +53,7 @@ export const UpdateCategoriaForm = () => {
               <Icon name="faList" className="text-purple-700" />
               Dados da categoria
             </h2>
-            {!loading && categoria && (
+            {!loading && categoriaLocal && (
               <Button
                 icon={editando ? 'faXmark' : 'faPen'}
                 onClick={() => setEditando(!editando)}
@@ -55,7 +64,7 @@ export const UpdateCategoriaForm = () => {
 
           {loading ? (
             <p className="text-gray-400 animate-pulse">Carregando...</p>
-          ) : !categoria ? (
+          ) : !categoriaLocal ? (
             <p className="text-red-500 text-sm">Erro ao carregar dados da categoria.</p>
           ) : editando ? (
             <form action={handleSubmit} className="flex flex-col gap-6">
@@ -69,7 +78,7 @@ export const UpdateCategoriaForm = () => {
                 minLength={2}
                 maxLength={100}
                 title="O nome deve ter entre 2 e 100 caracteres."
-                defaultValue={categoria.nome}
+                defaultValue={categoriaLocal.nome}
               />
 
               <textarea
@@ -80,7 +89,7 @@ export const UpdateCategoriaForm = () => {
                 minLength={5}
                 maxLength={300}
                 title="A descrição deve ter entre 5 e 300 caracteres."
-                defaultValue={categoria.descricao ?? ''}
+                defaultValue={categoriaLocal.descricao ?? ''}
                 className="w-full rounded-[30px] bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#7929c8]/50 border-none resize-none"
               />
 
@@ -89,7 +98,7 @@ export const UpdateCategoriaForm = () => {
                 <select
                   name="ativo"
                   required
-                  defaultValue={categoria.ativo ? '1' : '0'}
+                  defaultValue={categoriaLocal.ativo ? '1' : '0'}
                   className="w-full rounded-[30px] bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#7929c8]/50 border-none appearance-none cursor-pointer"
                 >
                   <option value="" disabled>Selecione...</option>
@@ -108,19 +117,19 @@ export const UpdateCategoriaForm = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <p className="text-xs text-gray-400 uppercase font-semibold">Nome</p>
-                <p className="font-medium text-gray-900">{categoria.nome}</p>
+                <p className="font-medium text-gray-900">{categoriaLocal.nome}</p>
               </div>
               <div>
                 <p className="text-xs text-gray-400 uppercase font-semibold">ID</p>
-                <p className="font-medium text-gray-900">#{categoria.id_categoria}</p>
+                <p className="font-medium text-gray-900">#{categoriaLocal.id_categoria}</p>
               </div>
               <div>
                 <p className="text-xs text-gray-400 uppercase font-semibold">Status</p>
-                <p className="font-medium text-gray-900">{categoria.ativo ? 'Ativo' : 'Inativo'}</p>
+                <p className="font-medium text-gray-900">{categoriaLocal.ativo ? 'Ativo' : 'Inativo'}</p>
               </div>
               <div className="sm:col-span-2">
                 <p className="text-xs text-gray-400 uppercase font-semibold">Descrição</p>
-                <p className="font-medium text-gray-900">{categoria.descricao}</p>
+                <p className="font-medium text-gray-900">{categoriaLocal.descricao}</p>
               </div>
             </div>
           )}

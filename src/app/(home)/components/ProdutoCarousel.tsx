@@ -18,7 +18,7 @@ export const ProdutoCarousel = ({ destaque }: ProdutoCarouselProps) => {
     const { execute, produtos, loading, error } = useGetProdutos();
 
     useEffect(() => {
-        execute(undefined, undefined, undefined, undefined, destaque);
+        execute(undefined, undefined, undefined, undefined, destaque, true);
     }, []);
 
     const settings = {

@@ -14,6 +14,7 @@ export const useUpdateMarca = () => {
 
       const dados = {
         nome: formData.get('nome') as string,
+        ativo: formData.get('ativo') === '1',
       };
 
       const data = await updateMarcaAPI(token, id_marca, dados);

@@ -47,7 +47,7 @@ export async function createMarcaAPI(
 export async function updateMarcaAPI(
   token: string,
   id_marca: number,
-  body: { nome: string }
+  body: { nome: string; ativo?: boolean }
 ) {
   try {
     const response = await fetchWithAuth(`${API_URL}/marca/${id_marca}`, {

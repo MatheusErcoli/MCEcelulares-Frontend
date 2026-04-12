@@ -28,15 +28,15 @@ export const ProdutoPagination = () => {
     };
 
     useEffect(() => {
-        execute(currentPage, 20, idCategoria || undefined, idMarca || undefined);
+        execute(currentPage, 20, idCategoria || undefined, idMarca || undefined, undefined, true);
     }, [currentPage, idCategoria, idMarca]);
 
     return (
         <div className="container mx-auto pt-15 pb-5 px-30">
 
             <div className="flex justify-center items-center gap-10 mb-10">
-                <CategoriaDropdown value={idCategoria} onChange={handleCategoriaChange} />
-                <MarcaDropdown value={idMarca} onChange={handleMarcaChange} id_categoria={idCategoria} />
+                <CategoriaDropdown value={idCategoria} onChange={handleCategoriaChange} ativo={true} />
+                <MarcaDropdown value={idMarca} onChange={handleMarcaChange} id_categoria={idCategoria} ativo={true} />
             </div>
 
             {loading && (

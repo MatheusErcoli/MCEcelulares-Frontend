@@ -46,7 +46,7 @@ export async function createCategoriaAPI(
 export async function updateCategoriaAPI(
   token: string,
   id_categoria: number,
-  body: { nome: string; descricao: string }
+  body: { nome: string; descricao: string; ativo?: boolean }
 ) {
   try {
     const response = await fetchWithAuth(`${API_URL}/categoria/${id_categoria}`, {

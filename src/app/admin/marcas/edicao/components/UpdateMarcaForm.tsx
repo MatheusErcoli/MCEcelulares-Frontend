@@ -16,19 +16,27 @@ export const UpdateMarcaForm = () => {
   const { execute: updateMarca, loading: atualizando } = useUpdateMarca();
 
   const [editando, setEditando] = useState(false);
-
-  const marca = marcas.find((m) => m.id_marca === id) ?? null;
+  const [marcaLocal, setMarcaLocal] = useState<MarcaType | null>(null);
 
   useEffect(() => {
     if (id) fetchMarcas();
   }, [id]);
 
+  useEffect(() => {
+    const found = marcas.find((m) => m.id_marca === id) ?? null;
+    if (found) setMarcaLocal(found);
+  }, [marcas, id]);
+
   const handleSubmit = async (formData: FormData) => {
     const result = await updateMarca(id, formData);
 
     if (result?.success) {
+      setMarcaLocal({
+        ...marcaLocal!,
+        nome: formData.get('nome') as string,
+        ativo: formData.get('ativo') === '1',
+      });
       setEditando(false);
-      fetchMarcas();
     }
   };
 
@@ -44,7 +52,7 @@ export const UpdateMarcaForm = () => {
               <Icon name="faStar" className="text-purple-700" />
               Dados da marca
             </h2>
-            {!loading && marca && (
+            {!loading && marcaLocal && (
               <Button
                 icon={editando ? 'faXmark' : 'faPen'}
                 onClick={() => setEditando(!editando)}
@@ -55,7 +63,7 @@ export const UpdateMarcaForm = () => {
 
           {loading ? (
             <p className="text-gray-400 animate-pulse">Carregando...</p>
-          ) : !marca ? (
+          ) : !marcaLocal ? (
             <p className="text-red-500 text-sm">Erro ao carregar dados da marca.</p>
           ) : editando ? (
             <form action={handleSubmit} className="flex flex-col gap-6">
@@ -69,7 +77,7 @@ export const UpdateMarcaForm = () => {
                 minLength={2}
                 maxLength={100}
                 title="O nome deve ter entre 2 e 100 caracteres."
-                defaultValue={marca.nome}
+                defaultValue={marcaLocal.nome}
               />
 
               <div className="flex flex-col gap-2">
@@ -77,7 +85,7 @@ export const UpdateMarcaForm = () => {
                 <select
                   name="ativo"
                   required
-                  defaultValue={marca.ativo ? '1' : '0'}
+                  defaultValue={marcaLocal.ativo ? '1' : '0'}
                   className="w-full rounded-[30px] bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#7929c8]/50 border-none appearance-none cursor-pointer"
                 >
                   <option value="" disabled>Selecione...</option>
@@ -96,15 +104,15 @@ export const UpdateMarcaForm = () => {
             <div className="flex flex-col gap-4">
               <div>
                 <p className="text-xs text-gray-400 uppercase font-semibold">Nome</p>
-                <p className="font-medium text-gray-900">{marca.nome}</p>
+                <p className="font-medium text-gray-900">{marcaLocal.nome}</p>
               </div>
               <div>
                 <p className="text-xs text-gray-400 uppercase font-semibold">ID</p>
-                <p className="font-medium text-gray-900">#{marca.id_marca}</p>
+                <p className="font-medium text-gray-900">#{marcaLocal.id_marca}</p>
               </div>
               <div>
                 <p className="text-xs text-gray-400 uppercase font-semibold">Status</p>
-                <p className="font-medium text-gray-900">{marca.ativo ? 'Ativo' : 'Inativo'}</p>
+                <p className="font-medium text-gray-900">{marcaLocal.ativo ? 'Ativo' : 'Inativo'}</p>
               </div>
             </div>
           )}

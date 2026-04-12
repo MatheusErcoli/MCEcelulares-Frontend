@@ -10,6 +10,7 @@ type MarcaDropdownProps = {
     onChange: (value: string) => void;
     id_categoria?: string;
     variant?: DropdownVariant;
+    ativo?: boolean;
 }
 
 const variantStyles: Record<DropdownVariant, string> = {
@@ -39,11 +40,11 @@ const variantStyles: Record<DropdownVariant, string> = {
     `,
 };
 
-export const MarcaDropdown = ({ value, onChange, id_categoria, variant = "gray" }: MarcaDropdownProps) => {
+export const MarcaDropdown = ({ value, onChange, id_categoria, variant = "gray", ativo }: MarcaDropdownProps) => {
     const { execute, marcas, loading, error } = useGetMarcas();
 
     useEffect(() => {
-        execute(id_categoria ? Number(id_categoria) : undefined);
+        execute(id_categoria ? Number(id_categoria) : undefined, ativo);
     }, [id_categoria]);
 
     if (error) return null;

@@ -15,6 +15,7 @@ export const useUpdateCategoria = () => {
       const dados = {
         nome: formData.get('nome') as string,
         descricao: formData.get('descricao') as string,
+        ativo: formData.get('ativo') === '1',
       };
 
       const data = await updateCategoriaAPI(token, id_categoria, dados);

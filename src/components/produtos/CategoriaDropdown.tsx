@@ -9,6 +9,7 @@ type CategoriaDropdownProps = {
     value: string;
     onChange: (value: string) => void;
     variant?: DropdownVariant;
+    ativo?: boolean;
 }
 
 const variantStyles: Record<DropdownVariant, string> = {
@@ -38,11 +39,11 @@ const variantStyles: Record<DropdownVariant, string> = {
     `,
 };
 
-export const CategoriaDropdown = ({ value, onChange, variant = "gray" }: CategoriaDropdownProps) => {
+export const CategoriaDropdown = ({ value, onChange, variant = "gray", ativo }: CategoriaDropdownProps) => {
     const { execute, categorias, loading, error } = useGetCategorias();
 
     useEffect(() => {
-        execute();
+        execute(ativo);
     }, []);
 
     if (error) return null;

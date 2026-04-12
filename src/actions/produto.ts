@@ -28,7 +28,15 @@ export async function getProdutosAPI(
   body: { page?: number, limit?: number, id_categoria?: string, id_marca?: string, destaque?: boolean, ativo?: boolean }
 ) {
   try {
-    const response = await fetch(`${API_URL}/produto?page=${body.page}&limit=${body.limit}&id_categoria=${body.id_categoria}&id_marca=${body.id_marca}&destaque=${body.destaque}&ativo=${body.ativo}`);
+    const params = new URLSearchParams();
+    if (body.page !== undefined) params.set('page', String(body.page));
+    if (body.limit !== undefined) params.set('limit', String(body.limit));
+    if (body.id_categoria !== undefined) params.set('id_categoria', body.id_categoria);
+    if (body.id_marca !== undefined) params.set('id_marca', body.id_marca);
+    if (body.destaque !== undefined) params.set('destaque', String(body.destaque));
+    if (body.ativo !== undefined) params.set('ativo', String(body.ativo));
+
+    const response = await fetch(`${API_URL}/produto?${params}`);
 
     const data = await response.json();
 

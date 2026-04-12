@@ -1,10 +1,9 @@
 type ItemPedidoType = {
     id_item: number;
     id_pedido: number;
-    id_produto: number;
+    nome_produto: string;
     quantidade: number;
     preco_unitario: number;
-    produto?: ProdutoType;
 }
 
 type PedidoType = {

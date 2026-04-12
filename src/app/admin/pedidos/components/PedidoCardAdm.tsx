@@ -133,8 +133,8 @@ export const PedidoCardAdm = ({ pedido, onStatusUpdated }: PedidoCardAdmProps) =
       {pedido.itens?.length > 0 && (
         <div className="bg-gray-50 rounded-xl px-4 py-3 flex flex-col gap-1.5">
           {pedido.itens.map((item: ItemPedidoType) => (
-            <div key={item.id_item ?? item.id_produto} className="flex justify-between text-xs text-gray-600">
-              <span>{item.quantidade}× {item.produto?.nome ?? `Produto #${item.id_produto}`}</span>
+            <div key={item.id_item} className="flex justify-between text-xs text-gray-600">
+              <span>{item.quantidade}× {item.nome_produto}</span>
               <span className="font-medium">
                 R$ {Number(item.preco_unitario).toFixed(2).replace('.', ',')}
               </span>
