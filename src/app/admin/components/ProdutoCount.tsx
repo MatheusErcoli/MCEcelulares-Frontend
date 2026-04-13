@@ -8,7 +8,7 @@ const ProdutoCount = () => {
   const { execute, total, loading, error } = useGetProdutos();
 
   useEffect(() => {
-    execute(1, 1); // page=1, limit=1 — só precisamos do `total` da paginação
+    execute(1);
   }, [execute]);
 
   return (

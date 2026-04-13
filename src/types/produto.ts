@@ -1,9 +1,9 @@
 type ProdutoType = {
   id_produto: number;
   nome: string;
-  descricao: string;
+  descricao: string | null;
   preco: number;
-  imagem: string;
+  imagem: string | null; 
   estoque: number;
   destaque: boolean;
   ativo: boolean;

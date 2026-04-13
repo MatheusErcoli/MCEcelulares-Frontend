@@ -3,6 +3,7 @@
 import { Button } from "@/src/components/layout/Button";
 import { useDeleteItemCarrinho } from "@/src/hooks/carrinho/useDeleteItemCarrinho";
 import { useUpdateItemCarrinho } from "@/src/hooks/carrinho/useUpdateItemCarrinho";
+import Image from "next/image";
 
 interface CartItemCardProps {
     item: ItemCarrinhoType;
@@ -10,18 +11,20 @@ interface CartItemCardProps {
 }
 
 export const ItemCarrinhoCard = ({ item, onUpdate }: CartItemCardProps) => {
-    const { execute: update, loading: alterando} = useUpdateItemCarrinho();
-    const { execute: remove, loading: removendo} = useDeleteItemCarrinho();
+    const { execute: update, loading: alterando } = useUpdateItemCarrinho();
+    const { execute: remove, loading: removendo } = useDeleteItemCarrinho();
 
     return (
         <div className="bg-white p-4 rounded-[50px] text-xl flex items-center justify-between shadow-sm border border-gray-100 max-w-4xl">
 
             <div className="flex items-center gap-6">
                 <div className="w-24 h-24 flex items-center justify-center overflow-hidden">
-                    <img
-                        src={item.produto.imagem}
+                    <Image
+                        src={item.produto.imagem ?? 'https://placehold.co/200x200/e5e7eb/9ca3af/png?text=Sem+imagem'}
                         alt={item.produto.nome}
                         className="w-full h-full object-contain"
+                        width={100}
+                        height={0}
                     />
                 </div>
 
@@ -51,7 +54,7 @@ export const ItemCarrinhoCard = ({ item, onUpdate }: CartItemCardProps) => {
                 </div>
 
                 <div className="font-bold text-[#5714d7]">
-                    R${Number(item.produto.preco).toFixed(2).replace('.', ',')}
+                    {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(item.produto.preco))}
                 </div>
                 <Button
                     icon="faTrash"

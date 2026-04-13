@@ -5,7 +5,7 @@ import { ProdutoNew } from "./components/ProdutoNew";
 export default async function Home() {
     return (
         <>
-            <CategoriaList />
+            <CategoriaList/>
             <ProdutoDestaque title="Destaques" />
             <ProdutoNew title="Novos produtos" />
         </>

@@ -22,7 +22,7 @@ export const MarcaDropdownAdm = ({ value, onChange, id_categoria }: MarcaDropdow
         <select
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            required                                      // +
+            required
             disabled={loading || marcas.length === 0}
             className="
                 appearance-none cursor-pointer
@@ -36,7 +36,7 @@ export const MarcaDropdownAdm = ({ value, onChange, id_categoria }: MarcaDropdow
                 transition-colors duration-150
                 disabled:cursor-not-allowed disabled:opacity-50"
         >
-            <option value="" hidden>                       {/* + value="" */}
+            <option value="" hidden>
                 {loading ? 'Carregando...' : 'Todas as marcas'}
             </option>
             {marcas.map((m) => (

@@ -14,7 +14,6 @@ type PedidoType = {
     status: string;
     ativo: boolean;
     data: Date;
-    updatedAt: string;
     usuario?: UsuarioType;
     endereco?: EnderecoType;
     itens: ItemPedidoType[];

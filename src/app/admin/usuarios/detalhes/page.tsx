@@ -46,7 +46,6 @@ const UsuarioDetalhes = () => {
     return (
         <div className="container mx-auto pt-8 pb-10 px-10 max-w-3xl">
 
-            {/* Header do perfil */}
             <div className="flex items-center gap-5 mb-8 relative">
                 <button
                     type="button"
@@ -89,7 +88,6 @@ const UsuarioDetalhes = () => {
                 </div>
             </div>
 
-            {/* Informações pessoais */}
             <div className="
                 bg-white border border-gray-200 rounded-2xl
                 shadow-sm px-6 py-5 mb-6
@@ -105,7 +103,6 @@ const UsuarioDetalhes = () => {
                 </div>
             </div>
 
-            {/* Endereços */}
             {usuario.enderecos && usuario.enderecos.length > 0 && (
                 <div className="
                     bg-white border border-gray-200 rounded-2xl

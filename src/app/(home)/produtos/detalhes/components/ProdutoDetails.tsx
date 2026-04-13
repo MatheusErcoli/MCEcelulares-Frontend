@@ -6,6 +6,7 @@ import { useAuth } from '@/src/contexts/AuthContext';
 import { useGetProduto } from '@/src/hooks/produto/useGetProduto';
 import { useCreateItemCarrinho } from '@/src/hooks/carrinho/useCreateItemCarrinho';
 import { Button } from '@/src/components/layout/Button';
+import Image from 'next/image';
 
 export const ProdutoDetails = () => {
     const searchParams = useSearchParams();
@@ -23,7 +24,7 @@ export const ProdutoDetails = () => {
     const handleAdd = async () => {
         if (!isAuthenticated) return router.push('/login');
 
-        const res = await adicionarAoCarrinho(produto!.id_produto, produto!.preco);
+        const res = await adicionarAoCarrinho(produto!.id_produto);
         if (res.success) router.push('/carrinho');
     };
 
@@ -44,10 +45,12 @@ export const ProdutoDetails = () => {
     return (
         <div className="flex h-[calc(100vh-80px)]">
             <div className="w-1/2 bg-[#E5E7EB]/40 flex items-center justify-center p-12">
-                <img
-                    src={produto.imagem}
+                <Image
+                    src={produto.imagem ?? "https://placehold.co/200x200/e5e7eb/9ca3af/png?text=Sem+imagem"}
                     alt={produto.nome}
                     className="object-contain max-h-full max-w-full"
+                    width={500}
+                    height={0}
                 />
             </div>
 

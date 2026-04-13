@@ -6,8 +6,6 @@ import { Pagination } from '@/src/components/layout/Pagination';
 import { PedidoCardAdm } from './PedidoCardAdm';
 import { Icon } from '@/src/components/layout/Icon';
 
-const PAGE_SIZE = 12;
-
 const STATUS_OPTIONS = [
   { value: '',                     label: 'Todos os status' },
   { value: 'AGUARDANDO_PAGAMENTO', label: 'Aguardando Pagamento' },
@@ -18,17 +16,11 @@ const STATUS_OPTIONS = [
 ];
 
 export const PedidoPaginationAdm = () => {
-  const { execute, pedidos, loading, error, total } = useGetPedidosAdm();
+  const { execute, pedidos, loading, error, total, totalPages } = useGetPedidosAdm();
   const [statusFilter, setStatusFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => { execute(statusFilter); }, [statusFilter]);
-
-  const totalPages = Math.ceil(pedidos.length / PAGE_SIZE);
-  const paginated = pedidos.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE
-  );
+  useEffect(() => { execute(currentPage, statusFilter); }, [currentPage, statusFilter]);
 
   const handleStatusChange = (value: string) => {
     setStatusFilter(value);
@@ -82,7 +74,7 @@ export const PedidoPaginationAdm = () => {
         <p className="text-center font-medium text-red-500">{error}</p>
       )}
 
-      {!loading && !error && paginated.length === 0 && (
+      {!loading && !error && pedidos.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
           <Icon name="faBox"/>
           <p className="text-sm font-medium">Nenhum pedido encontrado.</p>
@@ -90,11 +82,11 @@ export const PedidoPaginationAdm = () => {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {paginated.map((pedido) => (
+        {pedidos.map((pedido) => (
           <PedidoCardAdm
             key={pedido.id_pedido}
             pedido={pedido}
-            onStatusUpdated={() => execute(statusFilter)}
+            onStatusUpdated={() => execute(currentPage, statusFilter)}
           />
         ))}
       </div>

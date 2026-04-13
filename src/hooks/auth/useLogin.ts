@@ -10,10 +10,7 @@ export const useLogin = () => {
   const execute = useCallback(async (formData: FormData) => {
     setLoading(true);
     try {
-      const email = formData.get("email") as string;
-      const senha = formData.get("senha") as string;
-
-      const data = await loginAPI({ email, senha });
+      const data = await loginAPI(formData);
 
       if (!data.success) throw new Error(data.error);
 

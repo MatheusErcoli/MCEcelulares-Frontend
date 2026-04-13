@@ -6,19 +6,13 @@ import { Pagination } from '@/src/components/layout/Pagination';
 import { UsuarioCard } from './UsuarioCard';
 import { Icon } from '@/src/components/layout/Icon';
 
-const PAGE_SIZE = 20;
-
 export const UsuarioPagination = () => {
     const { execute, usuarios, loading, error, totalPages } = useGetUsuarios();
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
-        execute(currentPage, PAGE_SIZE);
+        execute(currentPage);
     }, [currentPage]);
-
-    const handlePageChange = (page: number) => {
-        setCurrentPage(page);
-    };
 
     return (
         <div className="container mx-auto pt-5 pb-5 px-10">
@@ -42,10 +36,10 @@ export const UsuarioPagination = () => {
             )}
 
             {!loading && !error && usuarios.length === 0 && (
-                    <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
-                      <Icon name="faUsers"/>
-                      <p className="text-sm font-medium">Nenhum usuário encontrado.</p>
-                    </div>
+                <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
+                    <Icon name="faUsers"/>
+                    <p className="text-sm font-medium">Nenhum usuário encontrado.</p>
+                </div>
             )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -54,11 +48,7 @@ export const UsuarioPagination = () => {
                 ))}
             </div>
 
-            <Pagination
-                totalPages={totalPages}
-                currentPage={currentPage}
-                setCurrentPage={handlePageChange}
-            />
+            <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
         </div>
     );
 };

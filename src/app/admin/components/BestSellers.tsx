@@ -1,18 +1,15 @@
 'use client';
 
-import { useEffect } from 'react';
 import { Icon } from '@/src/components/layout/Icon';
-import { useGetPedidosAdm } from '@/src/hooks/pedido/useGetPedidosAdm';
+import { usePedidosAdm } from '@/src/contexts/PedidosAdmContext';
 
 export const BestSellers = () => {
-  const { execute, pedidos, loading, error } = useGetPedidosAdm();
-
-  useEffect(() => { execute(); }, [execute]);
+  const { pedidos, loading, error } = usePedidosAdm();
 
   const bestSellers = pedidos
     .flatMap(pedido => pedido.itens ?? [])
     .reduce((acc, item) => {
-      const nome = item.nome_produto ?? `Produto #${item.nome_produto}`;
+      const nome = item.nome_produto ?? `Produto #${item.id_item}`;
       acc[nome] = (acc[nome] ?? 0) + item.quantidade;
       return acc;
     }, {} as Record<string, number>);
@@ -28,24 +25,24 @@ export const BestSellers = () => {
         Mais Vendidos
       </h2>
 
-            {loading && (
-                <p className="text-center font-medium text-gray-400 animate-pulse">
-                    Carregando produtos...
-                </p>
-            )}
+      {loading && (
+        <p className="text-center font-medium text-gray-400 animate-pulse">
+          Carregando produtos...
+        </p>
+      )}
 
-            {error && (
-                <p className="text-center font-medium text-red-600 animate-pulse">
-                    {error}
-                </p>
-            )}
+      {error && (
+        <p className="text-center font-medium text-red-600 animate-pulse">
+          {error}
+        </p>
+      )}
 
-            {!loading && !error && ranking.length === 0 && (
-                    <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
-                      <Icon name="faMobileScreen"/>
-                      <p className="text-sm font-medium">Nenhuma compra encontrada.</p>
-                    </div>
-            )}
+      {!loading && !error && ranking.length === 0 && (
+        <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
+          <Icon name="faMobileScreen" />
+          <p className="text-sm font-medium">Nenhuma compra encontrada.</p>
+        </div>
+      )}
 
       {!loading && !error && (
         <div className="flex flex-col gap-3">

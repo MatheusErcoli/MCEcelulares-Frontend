@@ -10,12 +10,9 @@ export const useCreateCategoria = () => {
   const execute = useCallback(async (formData: FormData) => {
     setLoading(true);
     try {
-      if (!token || !user?.admin) {throw new Error('Você deve fazer login como admnistrador para cadastrar uma categoria');}
-      
-      const data = await createCategoriaAPI(token, {
-        nome: formData.get('nome') as string,
-        descricao: formData.get('descricao') as string,
-      });
+      if (!token || !user?.admin) throw new Error('Você deve fazer login como admnistrador para cadastrar uma categoria');
+
+      const data = await createCategoriaAPI(token, formData);
 
       if (!data.success) throw new Error(data.error);
 

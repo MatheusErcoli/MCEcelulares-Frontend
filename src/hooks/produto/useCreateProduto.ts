@@ -10,19 +10,9 @@ export const useCreateProduto = () => {
   const execute = useCallback(async (formData: FormData) => {
     setLoading(true);
     try {
-      if (!token || !user?.admin) {throw new Error('Você deve fazer login como admnistrador para cadastrar um produto');}
+      if (!token || !user?.admin) throw new Error('Você deve fazer login como admnistrador para cadastrar um produto');
 
-      const data = await createProdutoAPI(token, {
-        nome: formData.get('nome') as string,
-        descricao: formData.get('descricao') as string,
-        preco: Number(formData.get('preco')),
-        estoque: Number(formData.get('estoque')),
-        imagem: formData.get('imagem') as string,
-        destaque: formData.get('destaque') === "1",
-        ativo: formData.get('ativo') === "1",
-        id_marca: Number(formData.get('id_marca')),
-        id_categoria: Number(formData.get('id_categoria')),
-      });
+      const data = await createProdutoAPI(token, formData);
 
       if (!data.success) throw new Error(data.error);
 

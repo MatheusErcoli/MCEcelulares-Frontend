@@ -1,5 +1,10 @@
-export async function loginAPI(body: { email: string; senha: string }) {
+export async function loginAPI(formData: FormData) {
   try {
+    const body = {
+      email: formData.get('email') as string,
+      senha: formData.get('senha') as string,
+    };
+
     const response = await fetch("http://localhost:3000/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -7,7 +12,6 @@ export async function loginAPI(body: { email: string; senha: string }) {
     });
 
     const data = await response.json();
-
     if (!response.ok) throw new Error(data.message);
 
     return {
@@ -15,7 +19,7 @@ export async function loginAPI(body: { email: string; senha: string }) {
       id_usuario: data.id_usuario as number,
       nome: data.nome,
       token: data.token as string,
-      admin: data.admin as boolean
+      admin: data.admin as boolean,
     };
   } catch (error) {
     return {
@@ -25,14 +29,16 @@ export async function loginAPI(body: { email: string; senha: string }) {
   }
 }
 
-export async function signupAPI(body: {
-  nome: string;
-  email: string;
-  senha: string;
-  cpf: string;
-  telefone: string;
-}) {
+export async function signupAPI(formData: FormData) {
   try {
+    const body = {
+      nome: formData.get('nome') as string,
+      email: formData.get('email') as string,
+      senha: formData.get('senha') as string,
+      cpf: formData.get('cpf') as string,
+      telefone: formData.get('telefone') as string,
+    };
+
     const response = await fetch("http://localhost:3000/usuario", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,7 +46,6 @@ export async function signupAPI(body: {
     });
 
     const data = await response.json();
-
     if (!response.ok) throw new Error(data.message);
 
     return { success: true };

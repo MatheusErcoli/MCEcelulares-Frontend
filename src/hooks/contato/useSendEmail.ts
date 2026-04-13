@@ -27,6 +27,8 @@ export const useSendEmail = () => {
                 title: "Erro ao enviar",
                 text: (error as Error).message || "Não foi possível enviar email.",
             });
+
+            return { success: false, error: (error as Error).message };
         } finally {
             setLoading(false);
         }

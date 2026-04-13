@@ -1,13 +1,15 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useGetPedidos } from '@/src/hooks/pedido/useGetPedidos';
 import { PedidoCard } from './PedidoCard';
+import { Pagination } from '@/src/components/layout/Pagination';
 
-export const PedidoList = () => {
-  const { execute: fetchPedidos, loading, error, pedidos } = useGetPedidos();
+export const PedidoPagination = () => {
+  const { execute: fetchPedidos, loading, error, pedidos, totalPages } = useGetPedidos();
+  const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => { fetchPedidos(); }, []);
+  useEffect(() => { fetchPedidos(currentPage); }, [currentPage]);
 
   if (loading) {
     return <p className="text-gray-400 animate-pulse text-sm">Carregando pedidos...</p>;
@@ -30,6 +32,7 @@ export const PedidoList = () => {
       {pedidos.map((pedido) => (
         <PedidoCard key={pedido.id_pedido} pedido={pedido} />
       ))}
+      <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
 };

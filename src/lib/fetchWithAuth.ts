@@ -11,11 +11,7 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
   }
 
   if (res.status === 401) {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('id_usuario');
-    localStorage.removeItem('nome_usuario');
-    localStorage.removeItem('admin');
-    window.location.href = '/login';
+    window.dispatchEvent(new Event('auth:logout'));
   }
 
   return res;

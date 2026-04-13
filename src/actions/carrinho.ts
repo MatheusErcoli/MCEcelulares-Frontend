@@ -37,7 +37,7 @@ export async function getCarrinhoAPI(
       method: 'GET',
       headers: { 'Authorization': `Bearer ${token}` }
     });
-    const data = await response.json();
+    const data = response.status === 204 ? null : await response.json();
 
     if (!response.ok) throw new Error("Carrinho não encontrado");
 
@@ -49,13 +49,14 @@ export async function getCarrinhoAPI(
     return {
       success: false,
       error: (error as Error).message || "Servidor indisponível no momento."
-    }
+    };
   }
 }
 
 export async function createItemCarrinhoAPI(
   token: string,
-  body: { id_carrinho: number, id_produto: number, preco_unitario: number }
+  body: { id_carrinho: number; id_produto: number }
+  // preco_unitario removido — o servidor busca do produto diretamente
 ) {
   try {
     const response = await fetchWithAuth(`${API_URL}/itemcarrinho`, {
@@ -76,18 +77,17 @@ export async function createItemCarrinhoAPI(
       id_produto: data.id_produto,
       preco_unitario: data.preco_unitario
     };
-
   } catch (error) {
     return {
       success: false,
       error: (error as Error).message || "Servidor indisponível no momento."
-    }
+    };
   }
 }
 
 export async function updateItemCarrinhoAPI(
   token: string,
-  body: { id_item_carrinho: number, quantidade: number }
+  body: { id_item_carrinho: number; quantidade: number }
 ) {
   try {
     const response = await fetchWithAuth(`${API_URL}/itemcarrinho/${body.id_item_carrinho}`, {
@@ -96,8 +96,11 @@ export async function updateItemCarrinhoAPI(
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({quantidade: body.quantidade})
+      body: JSON.stringify({ quantidade: body.quantidade })
     });
+
+    if (response.status === 204) return { success: true };
+
     const data = await response.json();
 
     if (!response.ok) throw new Error(data.message);
@@ -107,12 +110,11 @@ export async function updateItemCarrinhoAPI(
       id_produto: data.id_produto,
       preco_unitario: data.preco_unitario
     };
-
   } catch (error) {
     return {
       success: false,
       error: (error as Error).message || "Servidor indisponível no momento."
-    }
+    };
   }
 }
 
@@ -130,13 +132,11 @@ export async function deleteItemCarrinhoAPI(
 
     if (!response.ok) throw new Error(data.message);
 
-    return {
-      success: true
-    };
+    return { success: true };
   } catch (error) {
     return {
       success: false,
       error: (error as Error).message || "Servidor indisponível no momento."
-    }
+    };
   }
 }

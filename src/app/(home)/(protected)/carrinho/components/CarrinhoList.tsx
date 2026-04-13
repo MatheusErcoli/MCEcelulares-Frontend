@@ -17,7 +17,7 @@ export const CarrinhoList = () => {
 
   useEffect(() => { fetchCarrinho() }, []);
 
-  if (loading && !carrinho) {
+  if (loading && carrinho.length === 0) {
     return <p className="text-center text-gray-500 py-10">Carregando sua sacola...</p>;
   }
 

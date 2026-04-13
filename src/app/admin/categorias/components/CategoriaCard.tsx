@@ -2,13 +2,8 @@
 
 import Link from 'next/link';
 
-type Categoria = {
-    id_categoria: number;
-    nome: string;
-};
-
 type CategoriaCardProps = {
-    categoria: Categoria;
+    categoria: CategoriaType;
 };
 
 export const CategoriaCard = ({ categoria }: CategoriaCardProps) => {

@@ -16,16 +16,12 @@ export const EnderecoSelector = () => {
   const { execute: fetchCarrinho, carrinho } = useGetCarrinho();
   const { execute: createPedido, loading: loadingPedido, error: errorPedido } = useCreatePedido();
 
-  useEffect(() => { fetchEndereco(); }, []);
-  useEffect(() => { fetchCarrinho(); }, []);
-
-  const valorTotal = carrinho.reduce(
-    (sum, item) => sum + (item.preco_unitario ?? 0) * (item.quantidade ?? 1),
-    0
-  );
+  useEffect(() => { fetchEndereco(); }, [fetchEndereco]);
+  useEffect(() => { fetchCarrinho(); }, [fetchCarrinho]);
 
   const handleClick = async (id_endereco: number) => {
-    const result = await createPedido(id_endereco, valorTotal);
+    // valor_total não é mais enviado — calculado server-side
+    const result = await createPedido(id_endereco);
     if (result?.success) router.push('/pedidos');
   };
 

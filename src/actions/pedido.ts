@@ -4,7 +4,8 @@ const API_URL = 'http://localhost:3000';
 
 export async function createPedidoAPI(
   token: string,
-  body: { id_endereco: number; valor_total: number }
+  body: { id_endereco: number }
+  // valor_total removido — calculado server-side
 ) {
   try {
     const response = await fetchWithAuth(`${API_URL}/pedido`, {
@@ -26,9 +27,13 @@ export async function createPedidoAPI(
   }
 }
 
-export async function getPedidosAPI(token: string, id_usuario: number) {
+export async function getPedidosAPI(token: string, id_usuario: number, page: number = 1) {
   try {
-    const response = await fetchWithAuth(`${API_URL}/pedido?limit=50&id_usuario=${id_usuario}`, {
+    const params = new URLSearchParams();
+    params.set('page', String(page));
+    params.set('id_usuario', String(id_usuario));
+
+    const response = await fetchWithAuth(`${API_URL}/pedido?${params}`, {
       headers: { 'Authorization': `Bearer ${token}` },
     });
 
@@ -39,25 +44,28 @@ export async function getPedidosAPI(token: string, id_usuario: number) {
     return {
       success: true,
       pedidos: data.data,
-      total: data.total,
+      total: data.total as number,
+      totalPages: data.totalPages as number,
     };
   } catch (error) {
     return {
       success: false,
       error: (error as Error).message || "Servidor indisponível no momento."
-    }
+    };
   }
 }
 
 export async function getPedidosAdmAPI(
   token: string,
-  params: { page?: number; limit?: number; status?: string } = {}
+  params: { page?: number; status?: string } = {}
 ) {
   try {
-    const { page = 1, limit = 200, status = '' } = params;
-    const url = `${API_URL}/pedido?page=${page}&limit=${limit}${status ? `&status=${status}` : ''}`;
+    const { page = 1, status = '' } = params;
+    const urlParams = new URLSearchParams();
+    urlParams.set('page', String(page));
+    if (status) urlParams.set('status', status);
 
-    const response = await fetchWithAuth(url, {
+    const response = await fetchWithAuth(`${API_URL}/pedido?${urlParams}`, {
       headers: { 'Authorization': `Bearer ${token}` },
     });
     const data = await response.json();

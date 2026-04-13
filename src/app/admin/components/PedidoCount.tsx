@@ -1,37 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Icon } from '@/src/components/layout/Icon';
-import { useAuth } from '@/src/contexts/AuthContext';
-import { getPedidosAPI } from '@/src/actions/pedido';
+import { usePedidosAdm } from '@/src/contexts/PedidosAdmContext';
 
 const PedidoCount = () => {
-  const { token } = useAuth();
-  const [total, setTotal] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!token) return;
-
-    const fetchCount = async () => {
-      setLoading(true);
-      try {
-        const data = await getPedidosAPI(token);
-
-        if (!data.success) throw new Error(data.error);
-
-        setTotal(data.total);
-        setError(null);
-      } catch (err) {
-        setError((err as Error).message || 'Erro ao carregar');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCount();
-  }, [token]);
+  const { total, loading, error } = usePedidosAdm();
 
   return (
     <div className="bg-white rounded-[24px] p-6 flex flex-col gap-3 border border-gray-100 shadow-sm">
@@ -50,7 +23,7 @@ const PedidoCount = () => {
         <p className="text-sm font-semibold text-red-400">Erro ao carregar</p>
       )}
 
-      {!loading && !error && total !== null && (
+      {!loading && !error && (
         <p className="text-3xl font-bold text-gray-900">{total}</p>
       )}
 

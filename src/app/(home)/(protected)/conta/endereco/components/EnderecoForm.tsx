@@ -59,12 +59,12 @@ export const EnderecoForm = () => {
                 <Input variant='white'
                     name="cep"
                     type="text"
-                    placeholder="CEP (somente números)"
+                    placeholder="CEP (ex: 12345-678)"
                     required
                     mask="00000-000"
                     minLength={9}
-                    pattern="\d{9}"
-                    title="CEP deve conter 8 números"
+                    pattern="\d{5}-\d{3}"
+                    title="CEP deve estar no formato 12345-678"
                 />
 
                 <Button
