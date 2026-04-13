@@ -1,12 +1,25 @@
 'use client';
 
+import { useState } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import { Icon } from '@/src/components/layout/Icon';
+import { gerarPixPayload } from '@/src/lib/pixPayload';
 
 interface PedidoCardProps {
   pedido: PedidoType;
 }
 
 export const PedidoCard = ({ pedido }: PedidoCardProps) => {
+  const [mostrarPix, setMostrarPix] = useState(false);
+
+  const pixPayload = gerarPixPayload({
+    chave: '51150c5e-2f44-43d9-bdb6-3340f48a074b',
+    nome: 'MCE Celulares',
+    cidade: 'Campo Mourao',
+    valor: Number(pedido.valor_total),
+    txid: String(pedido.id_pedido),
+  });
+
   return (
     <div className="bg-white rounded-[24px] p-5 flex flex-col gap-3 border border-gray-100 shadow-sm">
       <div className="flex items-center justify-between">
@@ -37,8 +50,8 @@ export const PedidoCard = ({ pedido }: PedidoCardProps) => {
       )}
 
       <div className="border-t border-gray-100 pt-3 flex justify-between items-center">
-        <p className="text-xs text-gray-400">{
-          new Date(pedido.data).toLocaleDateString('pt-BR', {
+        <p className="text-xs text-gray-400">
+          {new Date(pedido.data).toLocaleDateString('pt-BR', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric',
@@ -50,6 +63,24 @@ export const PedidoCard = ({ pedido }: PedidoCardProps) => {
           R$ {Number(pedido.valor_total).toFixed(2).replace('.', ',')}
         </p>
       </div>
+
+      <button
+        onClick={() => setMostrarPix(v => !v)}
+        className="flex items-center justify-center gap-2 text-xs font-semibold text-purple-700 bg-purple-50 hover:bg-purple-100 transition-colors rounded-xl py-2"
+      >
+        <Icon name="faQrcode" className="text-purple-700" />
+        {mostrarPix ? 'Fechar PIX' : 'Pagar com PIX'}
+      </button>
+
+      {mostrarPix && (
+        <div className="flex flex-col items-center gap-2 pt-2 border-t border-gray-100">
+          <QRCodeSVG value={pixPayload} size={180} />
+          <p className="text-xs text-gray-500 font-medium">
+            R$ {Number(pedido.valor_total).toFixed(2).replace('.', ',')}
+          </p>
+          <p className="text-xs text-gray-400">Escaneie o QR Code para pagar via PIX</p>
+        </div>
+      )}
     </div>
   );
 };

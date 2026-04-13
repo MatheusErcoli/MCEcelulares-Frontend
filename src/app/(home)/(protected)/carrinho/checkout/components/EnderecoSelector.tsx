@@ -14,13 +14,12 @@ export const EnderecoSelector = () => {
   const router = useRouter();
   const { execute: fetchEndereco, loading: loadingEndereco, enderecos } = useGetEnderecos();
   const { execute: fetchCarrinho, carrinho } = useGetCarrinho();
-  const { execute: createPedido, loading: loadingPedido, error: errorPedido } = useCreatePedido();
+  const { execute: createPedido, loading: loadingPedido } = useCreatePedido();
 
   useEffect(() => { fetchEndereco(); }, [fetchEndereco]);
   useEffect(() => { fetchCarrinho(); }, [fetchCarrinho]);
 
   const handleClick = async (id_endereco: number) => {
-    // valor_total não é mais enviado — calculado server-side
     const result = await createPedido(id_endereco);
     if (result?.success) router.push('/pedidos');
   };
@@ -53,12 +52,6 @@ export const EnderecoSelector = () => {
             />
           </Link>
         </div>
-
-        {errorPedido && (
-          <div className="bg-red-50 border border-red-200 rounded-[16px] p-3">
-            <p className="text-red-600 text-sm">{errorPedido}</p>
-          </div>
-        )}
 
         {enderecos.length === 0 ? (
           <div className="rounded-[24px] p-4 border-2 border-dashed border-gray-200 text-center">

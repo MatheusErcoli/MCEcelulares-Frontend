@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:3000';
 
 export async function getProdutoAPI(body: { id_produto: number }) {
   try {
-    const response = await fetch(`${API_URL}/produto/${body.id_produto}`);
+    const response = await fetchWithAuth(`${API_URL}/produto/${body.id_produto}`);
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
 
@@ -29,7 +29,7 @@ export async function getProdutosAPI(body: {
     if (body.destaque !== undefined) params.set('destaque', String(body.destaque));
     if (body.ativo !== undefined) params.set('ativo', String(body.ativo));
     
-    const response = await fetch(`${API_URL}/produto?${params}`);
+    const response = await fetchWithAuth(`${API_URL}/produto?${params}`);
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
 
