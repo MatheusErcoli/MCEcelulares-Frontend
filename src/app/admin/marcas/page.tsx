@@ -1,8 +1,8 @@
-import { MarcaPagination } from "./components/MarcaPagination";
+import { MarcaList } from "./components/MarcaList";
 
 const Marca =() => {
     return (
-        <MarcaPagination />
+        <MarcaList />
     );
 }
 

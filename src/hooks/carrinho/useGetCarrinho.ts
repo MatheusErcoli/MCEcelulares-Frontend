@@ -16,8 +16,7 @@ export const useGetCarrinho = () => {
       const data = await getCarrinhoAPI(token, { id_usuario: user.id });
 
       if (!data.success) throw new Error(data.error);
-
-      setCarrinho(data.carrinho.itens);
+      setCarrinho(data.carrinho?.itens ?? []);
 
       setError(null);
       return { success: true };

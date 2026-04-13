@@ -28,7 +28,7 @@ export const ProdutoPagination = () => {
     };
 
     useEffect(() => {
-        execute(currentPage, 20, idCategoria || undefined, idMarca || undefined, undefined, true);
+        execute(currentPage, idCategoria || undefined, idMarca || undefined, undefined, true);
     }, [currentPage, idCategoria, idMarca]);
 
     return (
@@ -52,10 +52,10 @@ export const ProdutoPagination = () => {
             )}
 
             {!loading && !error && produtos.length === 0 && (
-                    <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
-                      <Icon name="faMobileScreen"/>
-                      <p className="text-sm font-medium">Nenhuma produto encontrado.</p>
-                    </div>
+                <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
+                    <Icon name="faMobileScreen"/>
+                    <p className="text-sm font-medium">Nenhuma produto encontrado.</p>
+                </div>
             )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -64,11 +64,7 @@ export const ProdutoPagination = () => {
                 ))}
             </div>
 
-            <Pagination
-                totalPages={totalPages}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-            />
+            <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
         </div>
     );
 };

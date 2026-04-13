@@ -8,13 +8,7 @@ export function useSignup() {
   const execute = useCallback(async (formData: FormData) => {
     setLoading(true);
     try {
-      const data = await signupAPI({
-        nome: formData.get("nome") as string,
-        email: formData.get("email") as string,
-        senha: formData.get("senha") as string,
-        cpf: formData.get("cpf") as string,
-        telefone: formData.get("telefone") as string,
-      });
+      const data = await signupAPI(formData);
 
       if (!data.success) throw new Error(data.error);
 
@@ -27,8 +21,8 @@ export function useSignup() {
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Erro ao entrar",
-        text: (error as Error).message || "Erro ao fazer login",
+        title: "Erro ao cadastrar",
+        text: (error as Error).message || "Erro ao criar conta",
       });
       return { success: false };
     } finally {

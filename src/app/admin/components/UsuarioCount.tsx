@@ -8,7 +8,7 @@ const UsuarioCount = () => {
   const { execute, total, loading, error } = useGetUsuarios();
 
   useEffect(() => {
-    execute(1, 1);
+    execute(1);
   }, [execute]);
 
   return (

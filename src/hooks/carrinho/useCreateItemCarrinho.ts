@@ -7,7 +7,7 @@ export const useCreateItemCarrinho = () => {
   const [error, setError] = useState<string | null>(null);
   const { token, user } = useAuth();
 
-  const execute = useCallback(async (id_produto: number, preco_unitario: number) => {
+  const execute = useCallback(async (id_produto: number) => {
     setLoading(true);
     try {
       if (!token || !user) throw new Error('Você deve fazer login para adicionar itens ao carrinho');
@@ -21,11 +21,9 @@ export const useCreateItemCarrinho = () => {
       const dataItemCarrinho = await createItemCarrinhoAPI(token, {
         id_carrinho: dataCarrinho.id_carrinho,
         id_produto,
-        preco_unitario,
       });
 
       if (!dataItemCarrinho.success) throw new Error(dataItemCarrinho.error);
-
 
       setError(null);
       return { success: true };

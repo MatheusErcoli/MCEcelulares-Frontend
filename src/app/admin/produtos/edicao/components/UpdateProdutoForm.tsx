@@ -10,6 +10,7 @@ import { Input } from '@/src/components/layout/Input';
 import { Button } from '@/src/components/layout/Button';
 import { CategoriaDropdownAdm } from '../../cadastro/components/CategoriaDropdownAdm';
 import { MarcaDropdownAdm } from '../../cadastro/components/MarcaDropdownAdm';
+import Image from 'next/image';
 
 export const UpdateProdutoForm = () => {
   const searchParams = useSearchParams();
@@ -96,6 +97,20 @@ export const UpdateProdutoForm = () => {
                   disabled={excluindo}
                   className="text-[#ff5c8a] hover:opacity-75 transition-opacity disabled:opacity-50"
                 />
+                <button
+                  type="button"
+                  onClick={() => router.back()}
+                  className="flex flex-row-reverse items-center gap-2 text-purple-700 transition-all hover:opacity-80"
+                >
+                  <div className="flex h-5 w-5 m-0 items-center justify-center">
+                    <Icon
+                      name="faRightFromBracket"
+                      className="text-purple-700"
+                      size="lg"
+                    />
+                  </div>
+                  <span className="text-md font-medium">Voltar</span>
+                </button>
               </div>
             )}
           </div>
@@ -116,7 +131,7 @@ export const UpdateProdutoForm = () => {
                 minLength={2}
                 maxLength={150}
                 title="O nome deve ter entre 2 e 150 caracteres."
-                defaultValue={produto.nome}
+                defaultValue={produto.nome ?? ''}
               />
 
               <textarea
@@ -127,7 +142,7 @@ export const UpdateProdutoForm = () => {
                 minLength={5}
                 maxLength={500}
                 title="A descrição deve ter entre 5 e 500 caracteres."
-                defaultValue={produto.descricao}
+                defaultValue={produto.descricao ?? ''}
                 className="w-full rounded-[30px] bg-white px-6 py-4 text-gray-700 outline-none transition-all focus:ring-2 focus:ring-[#7929c8]/50 border-none resize-none"
               />
 
@@ -141,7 +156,7 @@ export const UpdateProdutoForm = () => {
                   min={0.01}
                   step={0.01}
                   title="Informe um preço válido maior que zero."
-                  defaultValue={produto.preco}
+                  defaultValue={produto.preco ?? 0}
                 />
                 <Input
                   variant="white"
@@ -152,7 +167,7 @@ export const UpdateProdutoForm = () => {
                   min={0}
                   step={1}
                   title="Informe a quantidade em estoque."
-                  defaultValue={produto.estoque}
+                  defaultValue={produto.estoque ?? 0}
                 />
               </div>
 
@@ -272,9 +287,11 @@ export const UpdateProdutoForm = () => {
               </div>
               <div className="sm:col-span-2">
                 <p className="text-xs text-gray-400 uppercase font-semibold">Imagem</p>
-                <img
-                  src={produto.imagem}
-                  alt={produto.nome}
+                <Image
+                  src={produto.imagem ?? "https://placehold.co/200x200/e5e7eb/9ca3af/png?text=Sem+imagem"}
+                  alt={produto.nome ?? 'Produto'}
+                  width={128}
+                  height={128}
                   className="mt-2 h-32 object-contain rounded-2xl bg-white p-2"
                 />
               </div>

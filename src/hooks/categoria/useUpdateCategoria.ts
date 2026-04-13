@@ -12,13 +12,7 @@ export const useUpdateCategoria = () => {
     try {
       if (!token || !user?.admin) throw new Error('Você deve fazer login como administrador para atualizar uma categoria');
 
-      const dados = {
-        nome: formData.get('nome') as string,
-        descricao: formData.get('descricao') as string,
-        ativo: formData.get('ativo') === '1',
-      };
-
-      const data = await updateCategoriaAPI(token, id_categoria, dados);
+      const data = await updateCategoriaAPI(token, id_categoria, formData);
 
       if (!data.success) throw new Error(data.error);
 

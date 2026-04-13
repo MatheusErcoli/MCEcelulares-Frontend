@@ -10,12 +10,12 @@ export function useGetUsuarios() {
   const [total, setTotal] = useState(0);
   const { token } = useAuth();
 
-  const execute = useCallback(async (page: number = 1, limit: number = 20) => {
+  const execute = useCallback(async (page: number = 1) => {
     setLoading(true);
     try {
       if (!token) throw new Error('Você deve fazer login para acessar esta página');
 
-      const data = await getUsuariosAPI(token, { page, limit });
+      const data = await getUsuariosAPI(token, page);
 
       if (!data.success) throw new Error(data.error);
 

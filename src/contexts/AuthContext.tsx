@@ -30,6 +30,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
 
+  const logout = useCallback(() => {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('id_usuario');
+    localStorage.removeItem('nome_usuario');
+    localStorage.removeItem('admin');
+
+    setToken(null);
+    setUser(null);
+    setIsAuthenticated(false);
+  }, []);
+
   useEffect(() => {
     const savedToken = localStorage.getItem('auth_token');
     const savedUserId = localStorage.getItem('id_usuario');
@@ -45,6 +56,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setIsLoading(false);
   }, []);
 
+  // Fix #6: escuta o evento disparado por fetchWithAuth quando recebe 401,
+  // garantindo que o logout passe pelo contexto React (estado + localStorage).
+  useEffect(() => {
+    const handleAuthLogout = () => {
+      logout();
+      window.location.href = '/login';
+    };
+
+    window.addEventListener('auth:logout', handleAuthLogout);
+    return () => window.removeEventListener('auth:logout', handleAuthLogout);
+  }, [logout]);
+
   const login = useCallback((token: string, id: number, nome: string, admin: boolean) => {
     localStorage.setItem('auth_token', token);
     localStorage.setItem('id_usuario', String(id));
@@ -54,17 +77,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setToken(token);
     setUser({ id, nome, admin });
     setIsAuthenticated(true);
-  }, []);
-
-  const logout = useCallback(() => {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('id_usuario');
-    localStorage.removeItem('nome_usuario');
-    localStorage.removeItem('admin');
-
-    setToken(null);
-    setUser(null);
-    setIsAuthenticated(false);
   }, []);
 
   const updateNome = useCallback((nome: string) => {

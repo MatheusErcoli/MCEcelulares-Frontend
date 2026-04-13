@@ -1,8 +1,8 @@
-import { CategoriaPagination } from "./components/CategoriaPagination";
+import { CategoriaList } from "./components/CategoriaList";
 
 const Categorias = () => {
     return (
-        <CategoriaPagination />
+        <CategoriaList />
     );
 }
 

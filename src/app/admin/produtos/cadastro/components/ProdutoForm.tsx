@@ -47,15 +47,29 @@ export const ProdutoForm = () => {
         <div className="min-h-screen flex items-center justify-center px-4">
             <form
                 action={handleSubmit}
-                className="bg-gray-200 text-zinc-950 p-10 rounded-[40px] shadow-xl flex flex-col gap-6 w-full max-w-lg"
+                className="bg-gray-200 text-zinc-950 p-10 rounded-[40px] shadow-xl flex flex-col gap-6 w-full max-w-lg relative"
             >
+                <button
+                    type="button"
+                    onClick={() => router.back()}
+                    className="absolute right-6 top-4 z-50 flex flex-row-reverse items-center gap-1 text-purple-700 transition-all hover:opacity-80"
+                >
+                    <div className="flex h-5 w-5 m-0 items-center justify-center">
+                        <Icon
+                            name="faRightFromBracket"
+                            className="text-purple-700"
+                            size="lg"
+                        />
+                    </div>
+                    <span className="text-md font-medium">Voltar</span>
+                </button>
                 <h2 className="text-3xl font-bold text-zinc-900 mb-2 flex items-center gap-3">
                     <Icon name="faBox" className="w-8" />
                     Cadastrar produto
                 </h2>
 
                 <Input
-                variant='white'
+                    variant='white'
                     name="nome"
                     type="text"
                     placeholder="Nome do produto"
@@ -78,7 +92,7 @@ export const ProdutoForm = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                     <Input
-                    variant='white'
+                        variant='white'
                         name="preco"
                         type="number"
                         placeholder="Preço (R$)"
@@ -87,7 +101,7 @@ export const ProdutoForm = () => {
                         title="Informe um preço válido maior que zero."
                     />
                     <Input
-                    variant='white'
+                        variant='white'
                         name="estoque"
                         type="number"
                         placeholder="Estoque"

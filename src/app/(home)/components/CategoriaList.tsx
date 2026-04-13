@@ -8,8 +8,8 @@ export const CategoriaList = () => {
     const { execute, categorias, error } = useGetCategorias();
 
     useEffect(() => {
-        execute();
-    }, []);
+        execute(true);
+    }, [execute]);
 
     if (error) return null;
 

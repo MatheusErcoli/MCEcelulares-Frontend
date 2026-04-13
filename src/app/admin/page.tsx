@@ -6,6 +6,7 @@ import Revenue from './components/Revenue';
 import { PedidoNew } from './components/PedidoNew';
 import { BestSellers } from './components/BestSellers';
 import { QuickActions } from './components/QuickActions';
+import { PedidosAdmProvider } from '@/src/contexts/PedidosAdmContext';
 
 const Admin = () => {
   return (
@@ -16,22 +17,22 @@ const Admin = () => {
         <h1 className="text-4xl font-bold text-gray-900">Dashboard</h1>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <ProdutoCount />
-        <PedidoCount />
-        <UsuarioCount />
-        <Revenue />
-      </div>
+      <PedidosAdmProvider>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <ProdutoCount />
+          <PedidoCount />
+          <UsuarioCount />
+          <Revenue />
+        </div>
 
-      <PedidoNew />
+        <PedidoNew />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <BestSellers />
+          <QuickActions />
+        </div>
+      </PedidosAdmProvider>
 
-        <BestSellers />
-
-        <QuickActions />
-
-      </div>
     </div>
   );
 };

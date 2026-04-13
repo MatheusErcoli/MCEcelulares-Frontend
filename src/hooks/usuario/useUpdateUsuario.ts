@@ -12,14 +12,11 @@ export const useUpdateUsuario = () => {
     try {
       if (!token || !user) throw new Error('Você deve fazer login para atualizar sua conta');
 
-      const dados = {
-        nome: formData.get('nome') as string,
-        telefone: formData.get('telefone') as string,
-      };
-
-      const data = await updateUsuarioAPI(token, { id_usuario: user.id, dados });
+      const data = await updateUsuarioAPI(token, user.id, formData);
 
       if (!data.success) throw new Error(data.error);
+
+      const nome = formData.get('nome') as string;
 
       Swal.fire({
         icon: 'success',
@@ -27,7 +24,7 @@ export const useUpdateUsuario = () => {
         text: 'Suas informações foram salvas.',
       });
 
-      return { success: true, nome: dados.nome };
+      return { success: true, nome };
     } catch (error) {
       Swal.fire({
         icon: 'error',

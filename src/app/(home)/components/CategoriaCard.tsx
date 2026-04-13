@@ -12,7 +12,7 @@ export const CategoriaCard = ({ id, name }: CategoriaProps) => {
     const router = useRouter();
 
     const handleClick = () => {
-            router.push(`produtos?id_categoria=${id}`);
+            router.push(`/produtos?id_categoria=${id}`);
     };
 
     return (

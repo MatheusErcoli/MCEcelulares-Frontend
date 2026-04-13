@@ -1,14 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/src/contexts/AuthContext';
 import { getUsuarioAPI } from '@/src/actions/usuario';
+import { Icon } from '@/src/components/layout/Icon'; 
 
 const UsuarioDetalhes = () => {
     const searchParams = useSearchParams();
     const id = searchParams.get('id');
     const { token } = useAuth();
+    const router = useRouter();
 
     const [usuario, setUsuario] = useState<UsuarioType | null>(null);
     const [loading, setLoading] = useState(true);
@@ -44,8 +46,23 @@ const UsuarioDetalhes = () => {
     return (
         <div className="container mx-auto pt-8 pb-10 px-10 max-w-3xl">
 
-            {/* Header do perfil */}
-            <div className="flex items-center gap-5 mb-8">
+            <div className="flex items-center gap-5 mb-8 relative">
+                <button
+                    type="button"
+                    onClick={() => router.back()}
+                    className="absolute right-6 top-4 z-50 flex flex-row-reverse items-center gap-1 text-purple-700 transition-all hover:opacity-80"
+                >
+                    <div className="flex h-5 w-5 m-0 items-center justify-center">
+                        <Icon
+                            name="faRightFromBracket"
+                            className="text-purple-700"
+                            size="lg"
+                        />
+                    </div>
+                    <span className="text-md font-medium">Voltar</span>
+                </button>
+                <span className="absolute right-6 top-12 text-gray-400 text-sm font-mono">#{usuario.id_usuario}</span>
+
                 <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
                     <span className="text-gray-500 font-bold text-2xl">
                         {usuario.nome.charAt(0).toUpperCase()}
@@ -55,26 +72,22 @@ const UsuarioDetalhes = () => {
                     <h1 className="text-xl font-bold text-gray-800">{usuario.nome}</h1>
                     <p className="text-gray-500 text-sm">{usuario.email}</p>
                     <div className="flex gap-2 mt-1">
-                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                            usuario.admin
+                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${usuario.admin
                                 ? 'bg-purple-100 text-purple-700'
                                 : 'bg-gray-100 text-gray-500'
-                        }`}>
+                            }`}>
                             {usuario.admin ? 'Administrador' : 'Cliente'}
                         </span>
-                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                            usuario.ativo
+                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${usuario.ativo
                                 ? 'bg-green-100 text-green-700'
                                 : 'bg-red-100 text-red-600'
-                        }`}>
+                            }`}>
                             {usuario.ativo ? 'Ativo' : 'Inativo'}
                         </span>
                     </div>
                 </div>
-                <span className="ml-auto text-gray-400 text-sm font-mono">#{usuario.id_usuario}</span>
             </div>
 
-            {/* Informações pessoais */}
             <div className="
                 bg-white border border-gray-200 rounded-2xl
                 shadow-sm px-6 py-5 mb-6
@@ -90,7 +103,6 @@ const UsuarioDetalhes = () => {
                 </div>
             </div>
 
-            {/* Endereços */}
             {usuario.enderecos && usuario.enderecos.length > 0 && (
                 <div className="
                     bg-white border border-gray-200 rounded-2xl

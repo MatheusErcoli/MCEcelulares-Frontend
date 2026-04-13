@@ -17,6 +17,15 @@ const ratelimit = new Ratelimit({
   limiter: Ratelimit.slidingWindow(2, "10 m"),
 });
 
+function escapeHtml(value: unknown): string {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+}
+
 export const sendEmailAction = async (formData: FormData) => {
     const headerList = await headers();
     const ip = headerList.get("x-forwarded-for") ?? "127.0.0.1";
@@ -30,21 +39,21 @@ export const sendEmailAction = async (formData: FormData) => {
         console.error("Erro no Upstash (Rate Limit):", e);
     }
 
-    const nome = formData.get("nome");
-    const telefone = formData.get("telefone");
-    const email = formData.get("email");
-    const assunto = formData.get("assunto");
-    const mensagem = formData.get("mensagem");
+    const nome     = escapeHtml(formData.get("nome"));
+    const telefone = escapeHtml(formData.get("telefone"));
+    const email    = escapeHtml(formData.get("email"));
+    const assunto  = escapeHtml(formData.get("assunto"));
+    const mensagem = escapeHtml(formData.get("mensagem"));
 
     try {
         await resend.emails.send({
-            from: "Contato Site <onboarding@resend.dev>", 
-            to: "rafaelfrossard076@gmail.com", //
+            from: "Contato Site <onboarding@resend.dev>",
+            to: process.env.CONTACT_EMAIL as string,
             subject: `Novo Contato: ${assunto} - ${nome}`,
-            replyTo: email as string,
+            replyTo: formData.get("email") as string,
             html: `
                 <div style="font-family: sans-serif; line-height: 1.6; color: #333;">
-                    <h2 style="color: #7929c8;">Novo contacto através do site MCe Celulares</h2>
+                    <h2 style="color: #7929c8;">Novo contato através do site MCe Celulares</h2>
                     <p><strong>Nome:</strong> ${nome}</p>
                     <p><strong>Telefone:</strong> ${telefone}</p>
                     <p><strong>E-mail:</strong> ${email}</p>
@@ -58,7 +67,7 @@ export const sendEmailAction = async (formData: FormData) => {
 
         return { success: true };
     } catch (error) {
-        console.log("ERRO REAL NO RESEND:", error);
+        console.error("Erro ao enviar e-mail via Resend:", error);
         return { success: false, error: "Falha ao enviar o e-mail." };
     }
 };

@@ -38,7 +38,7 @@ export const ProdutoPaginationAdm = () => {
 
     useEffect(() => {
         execute(
-            currentPage, 20,
+            currentPage,
             idCategoria || undefined,
             idMarca || undefined,
             undefined,

@@ -1,15 +1,12 @@
 'use client';
 
-import { useEffect } from 'react';
 import { Icon } from '@/src/components/layout/Icon';
-import { useGetPedidosAdm } from '@/src/hooks/pedido/useGetPedidosAdm';
+import { usePedidosAdm } from '@/src/contexts/PedidosAdmContext';
 
 const STATUS_PAGOS = ['PAGO', 'ENVIADO', 'ENTREGUE'];
 
 const Revenue = () => {
-    const { execute, pedidos, loading, error } = useGetPedidosAdm();
-
-    useEffect(() => { execute(); }, [execute]);
+    const { pedidos, loading, error } = usePedidosAdm();
 
     const receita = pedidos
         .filter(pedido => STATUS_PAGOS.includes(pedido.status))
@@ -34,7 +31,7 @@ const Revenue = () => {
 
             {!loading && !error && (
                 <p className="text-3xl font-bold text-gray-900">
-                    R$ {receita.toFixed(2).replace('.', ',')}
+                    {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(receita)}
                 </p>
             )}
 

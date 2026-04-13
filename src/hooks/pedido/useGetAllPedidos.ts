@@ -2,7 +2,7 @@ import { getPedidosAdmAPI } from '@/src/actions/pedido';
 import { useAuth } from '@/src/contexts/AuthContext';
 import { useState, useCallback } from 'react';
 
-export function useGetPedidosAdm() {
+export function useGetAllPedidos() {
   const [pedidos, setPedidos] = useState<PedidoType[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -10,18 +10,26 @@ export function useGetPedidosAdm() {
   const [totalPages, setTotalPages] = useState(1);
   const { token } = useAuth();
 
-  const execute = useCallback(async (page: number = 1, status?: string) => {
+  const execute = useCallback(async (status?: string) => {
     setLoading(true);
     try {
       if (!token) throw new Error('Você deve fazer login para acessar esta página');
 
-      const data = await getPedidosAdmAPI(token, { page, status });
+      const primeira = await getPedidosAdmAPI(token, { page: 1, status });
+      if (!primeira.success) throw new Error(primeira.error);
 
-      if (!data.success) throw new Error(data.error);
+      const totalPaginas = primeira.totalPages ?? 1;
+      const todos = [...(primeira.pedidos ?? [])];
 
-      setPedidos(data.pedidos ?? []);
-      setTotal(data.total ?? 0);
-      setTotalPages(data.totalPages ?? 1);
+      for (let page = 2; page <= totalPaginas; page++) {
+        const data = await getPedidosAdmAPI(token, { page, status });
+        if (!data.success) throw new Error(data.error);
+        todos.push(...(data.pedidos ?? []));
+      }
+
+      setPedidos(todos);
+      setTotal(primeira.total ?? 0);
+      setTotalPages(totalPaginas);
       setError(null);
       return { success: true };
     } catch (error) {

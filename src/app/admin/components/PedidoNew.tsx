@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
 import { Icon } from '@/src/components/layout/Icon';
-import { useGetPedidosAdm } from '@/src/hooks/pedido/useGetPedidosAdm';
+import { usePedidosAdm } from '@/src/contexts/PedidosAdmContext';
 
 const STATUS_LABELS: Record<string, string> = {
   AGUARDANDO_PAGAMENTO: 'Aguardando Pagamento',
@@ -13,9 +12,7 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 export const PedidoNew = () => {
-  const { execute, pedidos, loading, error } = useGetPedidosAdm();
-
-  useEffect(() => { execute(); }, [execute]);
+  const { pedidos, loading, error } = usePedidosAdm();
 
   const recentes = pedidos.slice(0, 4);
 
@@ -34,24 +31,24 @@ export const PedidoNew = () => {
         </a>
       </div>
 
-            {loading && (
-                <p className="text-center font-medium text-gray-400 animate-pulse">
-                    Carregando pedidos...
-                </p>
-            )}
+      {loading && (
+        <p className="text-center font-medium text-gray-400 animate-pulse">
+          Carregando pedidos...
+        </p>
+      )}
 
-            {error && (
-                <p className="text-center font-medium text-red-600 animate-pulse">
-                    {error}
-                </p>
-            )}
+      {error && (
+        <p className="text-center font-medium text-red-600 animate-pulse">
+          {error}
+        </p>
+      )}
 
-            {!loading && !error && recentes.length === 0 && (
-                    <div className="flex flex-col items-center justify-center gap-3 text-gray-400">
-                      <Icon name="faBox"/>
-                      <p className="text-sm font-medium">Nenhum pedido encontrado.</p>
-                    </div>
-            )}
+      {!loading && !error && recentes.length === 0 && (
+        <div className="flex flex-col items-center justify-center gap-3 text-gray-400">
+          <Icon name="faBox" />
+          <p className="text-sm font-medium">Nenhum pedido encontrado.</p>
+        </div>
+      )}
 
       {!loading && !error && (
         <div>
@@ -73,7 +70,7 @@ export const PedidoNew = () => {
                   {STATUS_LABELS[pedido.status] ?? pedido.status}
                 </span>
                 <p className="text-sm font-bold text-purple-700">
-                  R$ {Number(pedido.valor_total).toFixed(2).replace('.', ',')}
+                  {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(pedido.valor_total))}
                 </p>
               </div>
             </div>

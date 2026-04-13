@@ -1,7 +1,7 @@
 'use client';
 
 import { Icon } from '@/src/components/layout/Icon';
-import { PedidoList } from './components/PedidoList';
+import { PedidoPagination } from './components/PedidoPagination';
 
 const Pedidos = () => {
   return (
@@ -16,7 +16,7 @@ const Pedidos = () => {
             Histórico de pedidos
           </h2>
 
-          <PedidoList />
+          <PedidoPagination />
         </section>
 
       </div>

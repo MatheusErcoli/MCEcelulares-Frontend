@@ -12,12 +12,7 @@ export const useUpdateMarca = () => {
     try {
       if (!token || !user?.admin) throw new Error('Você deve fazer login como administrador para atualizar uma marca');
 
-      const dados = {
-        nome: formData.get('nome') as string,
-        ativo: formData.get('ativo') === '1',
-      };
-
-      const data = await updateMarcaAPI(token, id_marca, dados);
+      const data = await updateMarcaAPI(token, id_marca, formData);
 
       if (!data.success) throw new Error(data.error);
 
