@@ -40,7 +40,7 @@ export const ProdutoDetails = () => {
         </div>
     );
 
-    const semEstoque = produto.estoque === 0;
+    const semEstoque = produto.estoque <= 0;
 
     return (
         <div className="flex h-[calc(100vh-80px)]">

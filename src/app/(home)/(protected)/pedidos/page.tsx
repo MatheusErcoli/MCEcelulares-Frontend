@@ -1,7 +1,7 @@
 'use client';
 
 import { Icon } from '@/src/components/layout/Icon';
-import { PedidoPagination } from './components/PedidoList';
+import { PedidoPagination } from './components/PedidoPagination';
 
 const Pedidos = () => {
   return (

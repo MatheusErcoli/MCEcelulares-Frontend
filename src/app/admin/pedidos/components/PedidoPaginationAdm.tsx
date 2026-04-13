@@ -20,7 +20,7 @@ export const PedidoPaginationAdm = () => {
   const [statusFilter, setStatusFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => { execute(currentPage, statusFilter); }, [currentPage, statusFilter]);
+  useEffect(() => { execute(currentPage, statusFilter); }, [currentPage, statusFilter, execute]);
 
   const handleStatusChange = (value: string) => {
     setStatusFilter(value);

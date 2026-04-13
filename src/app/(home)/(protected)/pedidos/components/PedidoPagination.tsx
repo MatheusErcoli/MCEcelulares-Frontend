@@ -9,7 +9,7 @@ export const PedidoPagination = () => {
   const { execute: fetchPedidos, loading, error, pedidos, totalPages } = useGetPedidos();
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => { fetchPedidos(currentPage); }, [currentPage]);
+  useEffect(() => { fetchPedidos(currentPage); }, [currentPage, fetchPedidos]);
 
   if (loading) {
     return <p className="text-gray-400 animate-pulse text-sm">Carregando pedidos...</p>;

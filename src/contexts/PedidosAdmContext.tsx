@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, ReactNode } from 'react';
 import { useGetPedidosAdm } from '@/src/hooks/pedido/useGetPedidosAdm';
+import { useGetAllPedidos } from '../hooks/pedido/useGetAllPedidos';
 
 interface PedidosAdmContextType {
     pedidos: PedidoType[];
@@ -13,7 +14,7 @@ interface PedidosAdmContextType {
 const PedidosAdmContext = createContext<PedidosAdmContextType | null>(null);
 
 export const PedidosAdmProvider = ({ children }: { children: ReactNode }) => {
-    const { execute, pedidos, total, loading, error } = useGetPedidosAdm();
+    const { execute, pedidos, total, loading, error } = useGetAllPedidos();
 
     useEffect(() => {
         execute();

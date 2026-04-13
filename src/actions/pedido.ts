@@ -5,7 +5,6 @@ const API_URL = 'http://localhost:3000';
 export async function createPedidoAPI(
   token: string,
   body: { id_endereco: number }
-  // valor_total removido — calculado server-side
 ) {
   try {
     const response = await fetchWithAuth(`${API_URL}/pedido`, {
@@ -55,13 +54,12 @@ export async function getPedidosAPI(token: string, id_usuario: number, page: num
   }
 }
 
-export async function getPedidosAdmAPI(
-  token: string,
-  params: { page?: number; status?: string } = {}
-) {
+export async function getPedidosAdmAPI(token: string, params: { page?: number; limit?: number; status?: string } = {}) {
   try {
-    const { page = 1, status = '' } = params;
+    const { page = 1, limit = 20, status = '' } = params;
+
     const urlParams = new URLSearchParams();
+    urlParams.set('limit', String(limit));
     urlParams.set('page', String(page));
     if (status) urlParams.set('status', status);
 
