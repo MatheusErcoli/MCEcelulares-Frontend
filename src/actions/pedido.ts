@@ -26,16 +26,16 @@ export async function createPedidoAPI(
   }
 }
 
-export async function getPedidosAPI(token: string) {
+export async function getPedidosAPI(token: string, id_usuario: number) {
   try {
-  const response = await fetchWithAuth(`${API_URL}/pedido?limit=50`, {
-    headers: { 'Authorization': `Bearer ${token}` },
-  });
+    const response = await fetchWithAuth(`${API_URL}/pedido?limit=50&id_usuario=${id_usuario}`, {
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
 
-  const data = await response.json();
+    const data = await response.json();
 
-  if (!response.ok) throw new Error(data.message);
-  
+    if (!response.ok) throw new Error(data.message);
+
     return {
       success: true,
       pedidos: data.data,

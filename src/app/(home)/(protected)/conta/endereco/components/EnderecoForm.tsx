@@ -5,6 +5,7 @@ import { Icon } from '@/src/components/layout/Icon';
 import { useCreateEndereco } from '@/src/hooks/endereco/useCreateEndereco';
 import { Button } from '@/src/components/layout/Button';
 import { Input } from '@/src/components/layout/Input';
+import Link from 'next/link';
 
 export const EnderecoForm = () => {
     const router = useRouter();
@@ -19,8 +20,23 @@ export const EnderecoForm = () => {
         <div className="min-h-screen flex items-center justify-center px-4">
             <form
                 action={handleSubmit}
-                className="bg-gray-200 text-zinc-950 p-10 rounded-[40px] shadow-xl flex flex-col gap-6 w-full max-w-lg"
+                className="bg-gray-200 text-zinc-950 p-10 rounded-[40px] shadow-xl flex flex-col gap-6 w-full max-w-lg relative"
             >
+                <button
+                    type="button"
+                    onClick={() => router.back()}
+                    className="absolute right-6 top-4 z-50 flex flex-row-reverse items-center gap-1 text-purple-700 transition-all hover:opacity-80"
+                >
+                    <div className="flex h-5 w-5 m-0 items-center justify-center">
+                        <Icon
+                            name="faRightFromBracket"
+                            className="text-purple-700"
+                            size="lg"
+                        />
+                    </div>
+                    <span className="text-md font-medium">Voltar</span>
+                </button>
+
                 <h2 className="text-3xl font-bold text-zinc-900 mb-2 flex items-center gap-3">
                     <Icon name="faLocationDot" className="w-8" />
                     Cadastrar endereço

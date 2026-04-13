@@ -72,6 +72,20 @@ export const UpdateMarcaForm = () => {
                   disabled={excluindo}
                   className="text-[#ff5c8a] hover:opacity-75 transition-opacity disabled:opacity-50"
                 />
+                <button
+                  type="button"
+                  onClick={() => router.back()}
+                  className="flex flex-row-reverse items-center gap-2 text-purple-700 transition-all hover:opacity-80"
+                >
+                  <div className="flex h-5 w-5 m-0 items-center justify-center">
+                    <Icon
+                      name="faRightFromBracket"
+                      className="text-purple-700"
+                      size="lg"
+                    />
+                  </div>
+                  <span className="text-md font-medium">Voltar</span>
+                </button>
               </div>
             )}
           </div>

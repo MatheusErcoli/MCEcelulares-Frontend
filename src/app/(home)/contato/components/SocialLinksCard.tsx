@@ -16,7 +16,7 @@ export const SocialLinksCard = () => {
             </div>
 
             <div className="w-full flex flex-col gap-6">
-                <Link href="https://wa.me/5545999457149" target="_blank" className="w-full">
+                <Link href="https://wa.me/554599457149" target="_blank" className="w-full">
                     <Button
                         text="WhatsApp"
                         icon="faWhatsapp"
@@ -24,7 +24,7 @@ export const SocialLinksCard = () => {
                     />
                 </Link>
 
-                <Link href="https://instagram.com/seu_perfil" target="_blank" className="w-full">
+                <Link href="https://www.instagram.com/mcecelulares" target="_blank" className="w-full">
                     <Button
                         text="Instagram"
                         icon="faInstagram"

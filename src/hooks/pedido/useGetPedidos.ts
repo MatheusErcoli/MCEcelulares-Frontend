@@ -13,7 +13,7 @@ export const useGetPedidos = () => {
     try {
       if (!token || !user) throw new Error('Você deve fazer login para buscar pedidos');
 
-      const data = await getPedidosAPI(token);
+      const data = await getPedidosAPI(token, user.id);
 
       if (!data.success) throw new Error(data.error);
 
