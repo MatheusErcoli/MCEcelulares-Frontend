@@ -1,13 +1,12 @@
 import { createPedidoAPI } from '@/src/actions/pedido';
 import { useAuth } from '@/src/contexts/AuthContext';
 import { useState, useCallback } from 'react';
+import Swal from 'sweetalert2';
 
 export const useCreatePedido = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const { token, user } = useAuth();
 
-  // valor_total removido — o servidor calcula a partir dos itens reais do carrinho
   const execute = useCallback(async (id_endereco: number) => {
     setLoading(true);
     try {
@@ -17,15 +16,24 @@ export const useCreatePedido = () => {
 
       if (!data.success) throw new Error(data.error);
 
-      setError(null);
+      Swal.fire({
+        icon: 'success',
+        title: 'Pedido realizado com sucesso!',
+        text: 'Seu pedido foi confirmado e está sendo processado.',
+      });
+
       return { success: true };
     } catch (error) {
-      setError((error as Error).message || 'Erro ao criar pedido');
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro ao realizar pedido',
+        text: (error as Error).message || 'Não foi possível concluir o pedido',
+      });
       return { success: false };
     } finally {
       setLoading(false);
     }
   }, [token, user]);
 
-  return { execute, loading, error };
+  return { execute, loading };
 };

@@ -8,7 +8,7 @@ export async function getMarcasAPI(body: { id_categoria?: number; ativo?: boolea
     if (body.id_categoria) params.set('id_categoria', String(body.id_categoria));
     if (body.ativo !== undefined) params.set('ativo', String(body.ativo));
 
-    const response = await fetch(`${API_URL}/marca?${params}`);
+    const response = await fetchWithAuth(`${API_URL}/marca?${params}`);
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
 
@@ -20,10 +20,10 @@ export async function getMarcasAPI(body: { id_categoria?: number; ativo?: boolea
 
 export async function createMarcaAPI(token: string, formData: FormData) {
   try {
-const body = {
-  nome: formData.get('nome') as string,
-  ativo: formData.get('ativo') === '1',
-};
+    const body = {
+      nome: formData.get('nome') as string,
+      ativo: formData.get('ativo') === '1',
+    };
 
     const response = await fetchWithAuth(`${API_URL}/marca`, {
       method: 'POST',

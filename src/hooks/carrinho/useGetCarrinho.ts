@@ -13,7 +13,7 @@ export const useGetCarrinho = () => {
     try {
       if (!token || !user) throw new Error('Você deve fazer login para usar o carrinho');
 
-      const data = await getCarrinhoAPI(token, { id_usuario: user.id });
+      const data = await getCarrinhoAPI(token);
 
       if (!data.success) throw new Error(data.error);
       setCarrinho(data.carrinho?.itens ?? []);

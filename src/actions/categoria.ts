@@ -7,7 +7,7 @@ export async function getCategoriasAPI(body?: { ativo?: boolean }) {
     const params = new URLSearchParams();
     if (body?.ativo !== undefined) params.set('ativo', String(body.ativo));
 
-    const response = await fetch(`${API_URL}/categoria?${params}`);
+    const response = await fetchWithAuth(`${API_URL}/categoria?${params}`);
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
 
@@ -19,11 +19,11 @@ export async function getCategoriasAPI(body?: { ativo?: boolean }) {
 
 export async function createCategoriaAPI(token: string, formData: FormData) {
   try {
-const body = {
-  nome: formData.get('nome') as string,
-  descricao: formData.get('descricao') as string,
-  ativo: formData.get('ativo') === '1',
-};
+    const body = {
+      nome: formData.get('nome') as string,
+      descricao: formData.get('descricao') as string,
+      ativo: formData.get('ativo') === '1',
+    };
 
     const response = await fetchWithAuth(`${API_URL}/categoria`, {
       method: 'POST',
