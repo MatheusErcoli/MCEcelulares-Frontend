@@ -28,12 +28,9 @@ export async function createCarrinhoAPI(token: string) {
   }
 }
 
-export async function getCarrinhoAPI(
-  token: string,
-  body: { id_usuario: number }
-) {
+export async function getCarrinhoAPI(token: string) {
   try {
-    const response = await fetchWithAuth(`${API_URL}/carrinho/${body.id_usuario}`, {
+    const response = await fetchWithAuth(`${API_URL}/carrinho/me`, {
       method: 'GET',
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -56,7 +53,6 @@ export async function getCarrinhoAPI(
 export async function createItemCarrinhoAPI(
   token: string,
   body: { id_carrinho: number; id_produto: number }
-  // preco_unitario removido — o servidor busca do produto diretamente
 ) {
   try {
     const response = await fetchWithAuth(`${API_URL}/itemcarrinho`, {

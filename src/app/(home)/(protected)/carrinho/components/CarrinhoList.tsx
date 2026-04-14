@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/src/components/layout/Button";
 
 export const CarrinhoList = () => {
-  const { execute: fetchCarrinho, loading, error, carrinho } = useGetCarrinho();
+  const { execute: fetchCarrinho, loading, carrinho } = useGetCarrinho();
   const router = useRouter();
 
   const handleClick = () => {

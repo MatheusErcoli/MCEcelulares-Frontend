@@ -56,8 +56,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setIsLoading(false);
   }, []);
 
-  // Fix #6: escuta o evento disparado por fetchWithAuth quando recebe 401,
-  // garantindo que o logout passe pelo contexto React (estado + localStorage).
   useEffect(() => {
     const handleAuthLogout = () => {
       logout();
