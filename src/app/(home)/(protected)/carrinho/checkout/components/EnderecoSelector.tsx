@@ -16,8 +16,8 @@ export const EnderecoSelector = () => {
   const { execute: fetchCarrinho, carrinho } = useGetCarrinho();
   const { execute: createPedido, loading: loadingPedido } = useCreatePedido();
 
-  useEffect(() => { fetchEndereco(); }, [fetchEndereco]);
-  useEffect(() => { fetchCarrinho(); }, [fetchCarrinho]);
+  useEffect(() => { fetchEndereco(); }, []);
+  useEffect(() => { fetchCarrinho(); }, []);
 
   const handleClick = async (id_endereco: number) => {
     const result = await createPedido(id_endereco);
