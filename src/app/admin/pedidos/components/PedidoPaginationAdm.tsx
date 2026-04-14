@@ -18,12 +18,28 @@ const STATUS_OPTIONS = [
 export const PedidoPaginationAdm = () => {
   const { execute, pedidos, loading, error, total, totalPages } = useGetPedidosAdm();
   const [statusFilter, setStatusFilter] = useState('');
+  const [idUsuarioInput, setIdUsuarioInput] = useState('');
+  const [idUsuarioFilter, setIdUsuarioFilter] = useState<number | undefined>(undefined);
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => { execute(currentPage, statusFilter); }, [currentPage, statusFilter, execute]);
+  useEffect(() => {
+    execute(currentPage, statusFilter || undefined, idUsuarioFilter);
+  }, [currentPage, statusFilter, idUsuarioFilter, execute]);
 
   const handleStatusChange = (value: string) => {
     setStatusFilter(value);
+    setCurrentPage(1);
+  };
+
+  const handleIdUsuarioSearch = () => {
+    const parsed = idUsuarioInput.trim() ? Number(idUsuarioInput) : undefined;
+    setIdUsuarioFilter(parsed);
+    setCurrentPage(1);
+  };
+
+  const handleIdUsuarioClear = () => {
+    setIdUsuarioInput('');
+    setIdUsuarioFilter(undefined);
     setCurrentPage(1);
   };
 
@@ -38,29 +54,74 @@ export const PedidoPaginationAdm = () => {
           </p>
         </div>
 
-        <div className="relative">
-          <select
-            value={statusFilter}
-            onChange={(e) => handleStatusChange(e.target.value)}
-            className="
-              appearance-none cursor-pointer
-              bg-white border border-gray-200 hover:border-gray-300
-              text-gray-700 text-sm font-medium
-              pl-4 pr-9 py-2.5
-              rounded-full shadow-sm
-              outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400
-              transition-all duration-150
-            "
-          >
-            {STATUS_OPTIONS.map((opt) => (
-              <option key={opt.value} value={opt.value}>{opt.label}</option>
-            ))}
-          </select>
-          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </span>
+        <div className="flex items-center gap-3">
+          {/* Filtro por ID de usuário */}
+          <div className="flex items-center gap-1.5">
+            <input
+              type="number"
+              min={1}
+              placeholder="ID do usuário"
+              value={idUsuarioInput}
+              onChange={(e) => setIdUsuarioInput(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleIdUsuarioSearch()}
+              className="
+                w-36 text-sm text-gray-700
+                bg-white border border-gray-200 hover:border-gray-300
+                pl-3 pr-3 py-2.5 rounded-full shadow-sm
+                outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400
+                transition-all duration-150
+                [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+              "
+            />
+            <button
+              onClick={handleIdUsuarioSearch}
+              className="
+                bg-purple-500 hover:bg-purple-600 text-white
+                text-sm font-medium px-3 py-2.5 rounded-full shadow-sm
+                transition-all duration-150
+              "
+            >
+              Buscar
+            </button>
+            {idUsuarioFilter && (
+              <button
+                onClick={handleIdUsuarioClear}
+                className="
+                  bg-gray-100 hover:bg-gray-200 text-gray-600
+                  text-sm font-medium px-3 py-2.5 rounded-full shadow-sm
+                  transition-all duration-150
+                "
+              >
+                Limpar
+              </button>
+            )}
+          </div>
+
+          {/* Filtro por status */}
+          <div className="relative">
+            <select
+              value={statusFilter}
+              onChange={(e) => handleStatusChange(e.target.value)}
+              className="
+                appearance-none cursor-pointer
+                bg-white border border-gray-200 hover:border-gray-300
+                text-gray-700 text-sm font-medium
+                pl-4 pr-9 py-2.5
+                rounded-full shadow-sm
+                outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400
+                transition-all duration-150
+              "
+            >
+              {STATUS_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
+            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </span>
+          </div>
         </div>
       </div>
 
@@ -86,7 +147,7 @@ export const PedidoPaginationAdm = () => {
           <PedidoCardAdm
             key={pedido.id_pedido}
             pedido={pedido}
-            onStatusUpdated={() => execute(currentPage, statusFilter)}
+            onStatusUpdated={() => execute(currentPage, statusFilter || undefined, idUsuarioFilter)}
           />
         ))}
       </div>

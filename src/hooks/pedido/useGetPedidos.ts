@@ -8,12 +8,12 @@ export const useGetPedidos = () => {
   const [pedidos, setPedidos] = useState<PedidoType[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [total, setTotal] = useState(0);
-  const { token } = useAuth();
+  const { token, user } = useAuth();
 
   const execute = useCallback(async (page: number = 1) => {
     setLoading(true);
     try {
-      const data = await getPedidosAPI(token!, { page });
+      const data = await getPedidosAPI(token!, { page, id_usuario: user!.id });
       if (!data.success) throw new Error(data.error);
       setPedidos(data.pedidos ?? []);
       setTotalPages(data.totalPages ?? 1);
@@ -26,7 +26,7 @@ export const useGetPedidos = () => {
     } finally {
       setLoading(false);
     }
-  }, [token]);
+  }, [token, user]);
 
   return { execute, loading, error, pedidos, totalPages, total };
 };

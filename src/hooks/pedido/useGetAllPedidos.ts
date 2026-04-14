@@ -10,17 +10,17 @@ export function useGetAllPedidos() {
   const [totalPages, setTotalPages] = useState(1);
   const { token } = useAuth();
 
-  const execute = useCallback(async (status?: string) => {
+  const execute = useCallback(async (status?: string, id_usuario?: number) => {
     setLoading(true);
     try {
-      const primeira = await getPedidosAPI(token!, { page: 1, status });
+      const primeira = await getPedidosAPI(token!, { page: 1, status, id_usuario });
       if (!primeira.success) throw new Error(primeira.error);
 
       const totalPaginas = primeira.totalPages ?? 1;
       const todos = [...(primeira.pedidos ?? [])];
 
       for (let page = 2; page <= totalPaginas; page++) {
-        const data = await getPedidosAPI(token!, { page, status });
+        const data = await getPedidosAPI(token!, { page, status, id_usuario });
         if (!data.success) throw new Error(data.error);
         todos.push(...(data.pedidos ?? []));
       }

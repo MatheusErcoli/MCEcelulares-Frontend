@@ -17,11 +17,15 @@ export async function createPedidoAPI(token: string, body: { id_endereco: number
   }
 }
 
-export async function getPedidosAPI(token: string, params: { page: number; limit?: number; status?: string } = { page: 1 }) {
+export async function getPedidosAPI(
+  token: string,
+  params: { page: number; limit?: number; status?: string; id_usuario?: number } = { page: 1 }
+) {
   try {
-    const { page, limit = 20, status } = params;
+    const { page, limit = 20, status, id_usuario } = params;
     let url = `${API_URL}/pedido?page=${page}&limit=${limit}`;
     if (status) url += `&status=${status}`;
+    if (id_usuario) url += `&id_usuario=${id_usuario}`;
 
     const response = await fetchWithAuth(url, {
       headers: { 'Authorization': `Bearer ${token}` },

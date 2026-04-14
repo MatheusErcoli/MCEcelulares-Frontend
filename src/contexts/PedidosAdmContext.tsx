@@ -1,7 +1,6 @@
 'use client';
 
 import { createContext, useContext, useEffect, ReactNode } from 'react';
-import { useGetPedidosAdm } from '@/src/hooks/pedido/useGetPedidosAdm';
 import { useGetAllPedidos } from '../hooks/pedido/useGetAllPedidos';
 
 interface PedidosAdmContextType {
@@ -9,6 +8,7 @@ interface PedidosAdmContextType {
     total: number;
     loading: boolean;
     error: string | null;
+    refetch: (status?: string, id_usuario?: number) => Promise<{ success: boolean }>;
 }
 
 const PedidosAdmContext = createContext<PedidosAdmContextType | null>(null);
@@ -21,7 +21,7 @@ export const PedidosAdmProvider = ({ children }: { children: ReactNode }) => {
     }, [execute]);
 
     return (
-        <PedidosAdmContext.Provider value={{ pedidos, total, loading, error }}>
+        <PedidosAdmContext.Provider value={{ pedidos, total, loading, error, refetch: execute }}>
             {children}
         </PedidosAdmContext.Provider>
     );

@@ -10,10 +10,10 @@ export function useGetPedidosAdm() {
   const [totalPages, setTotalPages] = useState(1);
   const { token } = useAuth();
 
-  const execute = useCallback(async (page: number = 1, status?: string) => {
+  const execute = useCallback(async (page: number = 1, status?: string, id_usuario?: number) => {
     setLoading(true);
     try {
-      const data = await getPedidosAPI(token!, { page, status });
+      const data = await getPedidosAPI(token!, { page, status, id_usuario });
 
       if (!data.success) throw new Error(data.error);
 
