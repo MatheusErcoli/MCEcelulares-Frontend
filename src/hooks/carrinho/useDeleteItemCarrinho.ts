@@ -10,9 +10,7 @@ export const useDeleteItemCarrinho = () => {
   const execute = useCallback(async (id_item_carrinho: number) => {
     setLoading(true);
     try {
-      if (!token) throw new Error('Você deve fazer login para remover itens do carrinho');
-
-      const data = await deleteItemCarrinhoAPI(token, { id_item_carrinho });
+      const data = await deleteItemCarrinhoAPI(token!, { id_item_carrinho });
 
       if (!data.success) throw new Error(data.error);
 

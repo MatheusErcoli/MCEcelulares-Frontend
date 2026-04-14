@@ -5,14 +5,12 @@ import Swal from 'sweetalert2';
 
 export const useCreateEndereco = () => {
   const [loading, setLoading] = useState(false);
-  const { token, user } = useAuth();
+  const { token } = useAuth();
 
   const execute = useCallback(async (formData: FormData) => {
     setLoading(true);
     try {
-      if (!token || !user) throw new Error('Você deve fazer login para cadastrar endereço');
-
-      const data = await createEnderecoAPI(token, formData);
+      const data = await createEnderecoAPI(token!, formData);
 
       if (!data.success) throw new Error(data.error);
 
@@ -32,7 +30,7 @@ export const useCreateEndereco = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user]);
+  }, [token]);
 
   return { execute, loading };
 };

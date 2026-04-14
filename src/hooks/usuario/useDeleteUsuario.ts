@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 export const useDeleteUsuario = () => {
   const [loading, setLoading] = useState(false);
-  const { token, user, logout } = useAuth();
+  const { token, logout } = useAuth();
 
   const execute = useCallback(async () => {
     const confirm = await Swal.fire({
@@ -22,18 +22,14 @@ export const useDeleteUsuario = () => {
 
     setLoading(true);
     try {
-      if (!token || !user) throw new Error('Você deve fazer login para excluir sua conta');
-
-      const data = await deleteUsuarioAPI(token, user.id);
-
+      if (!token) throw new Error('Você deve fazer login para excluir sua conta');
+      const data = await deleteUsuarioAPI(token);
       if (!data.success) throw new Error(data.error);
-
       await Swal.fire({
         icon: 'success',
         title: 'Conta excluída com sucesso!',
         text: 'Seus dados foram removidos do sistema.',
       });
-
       logout();
       return { success: true };
     } catch (error) {
@@ -46,7 +42,7 @@ export const useDeleteUsuario = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user, logout]);
+  }, [token, logout]);
 
   return { execute, loading };
 };

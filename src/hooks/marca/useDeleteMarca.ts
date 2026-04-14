@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 export const useDeleteMarca = () => {
   const [loading, setLoading] = useState(false);
-  const { token, user } = useAuth();
+  const { token } = useAuth();
 
   const execute = useCallback(async (id_marca: number) => {
     const confirm = await Swal.fire({
@@ -22,9 +22,7 @@ export const useDeleteMarca = () => {
 
     setLoading(true);
     try {
-      if (!token || !user?.admin) throw new Error('Você deve fazer login como administrador para excluir uma marca');
-
-      const data = await deleteMarcaAPI(token, id_marca);
+      const data = await deleteMarcaAPI(token!, id_marca);
 
       if (!data.success) throw new Error(data.error);
 
@@ -45,7 +43,7 @@ export const useDeleteMarca = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user]);
+  }, [token]);
 
   return { execute, loading };
 };

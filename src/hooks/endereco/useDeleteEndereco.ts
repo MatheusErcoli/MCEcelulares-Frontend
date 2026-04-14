@@ -22,9 +22,7 @@ export const useDeleteEndereco = () => {
 
     setLoading(true);
     try {
-      if (!token) throw new Error('Você deve fazer login para remover endereço');
-
-      const data = await deleteEnderecoAPI(token, { id_endereco });
+      const data = await deleteEnderecoAPI(token!, { id_endereco });
 
       if (!data.success) throw new Error(data.error);
 

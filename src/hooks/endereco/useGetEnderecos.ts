@@ -11,9 +11,7 @@ export const useGetEnderecos = () => {
   const execute = useCallback(async () => {
     setLoading(true);
     try {
-      if (!token || !user) throw new Error('Você deve fazer login para buscar endereços');
-
-      const data = await getEnderecosAPI(token, { id_usuario: user.id });
+      const data = await getEnderecosAPI(token!, { id_usuario: user!.id });
 
       if (!data.success) throw new Error(data.error);
 

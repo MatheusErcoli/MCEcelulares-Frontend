@@ -6,17 +6,14 @@ export const useGetUsuario = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [usuario, setUsuario] = useState<UsuarioType | null>(null);
-  const { token, user } = useAuth();
+  const { token } = useAuth();
 
   const execute = useCallback(async () => {
     setLoading(true);
     try {
-      if (!token || !user) throw new Error('Você deve fazer login para acessar sua conta');
-
-      const data = await getUsuarioAPI(token, { id_usuario: user.id });
-
+      if (!token) throw new Error('Você deve fazer login para acessar sua conta');
+      const data = await getUsuarioAPI(token);
       if (!data.success) throw new Error(data.error);
-
       setUsuario(data.usuario);
       setError(null);
       return { success: true };
@@ -26,7 +23,7 @@ export const useGetUsuario = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user]);
+  }, [token]);
 
   return { execute, loading, error, usuario };
 };

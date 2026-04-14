@@ -5,14 +5,12 @@ import Swal from 'sweetalert2';
 
 export const useCreatePedido = () => {
   const [loading, setLoading] = useState(false);
-  const { token, user } = useAuth();
+  const { token } = useAuth();
 
   const execute = useCallback(async (id_endereco: number) => {
     setLoading(true);
     try {
-      if (!token || !user) throw new Error('Você deve fazer login para fazer pedidos');
-
-      const data = await createPedidoAPI(token, { id_endereco });
+      const data = await createPedidoAPI(token!, { id_endereco });
 
       if (!data.success) throw new Error(data.error);
 
@@ -33,7 +31,7 @@ export const useCreatePedido = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user]);
+  }, [token]);
 
   return { execute, loading };
 };

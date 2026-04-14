@@ -1,4 +1,4 @@
-import { getPedidosAdmAPI } from '@/src/actions/pedido';
+import { getPedidosAPI } from '@/src/actions/pedido';
 import { useAuth } from '@/src/contexts/AuthContext';
 import { useState, useCallback } from 'react';
 
@@ -13,16 +13,14 @@ export function useGetAllPedidos() {
   const execute = useCallback(async (status?: string) => {
     setLoading(true);
     try {
-      if (!token) throw new Error('Você deve fazer login para acessar esta página');
-
-      const primeira = await getPedidosAdmAPI(token, { page: 1, status });
+      const primeira = await getPedidosAPI(token!, { page: 1, status });
       if (!primeira.success) throw new Error(primeira.error);
 
       const totalPaginas = primeira.totalPages ?? 1;
       const todos = [...(primeira.pedidos ?? [])];
 
       for (let page = 2; page <= totalPaginas; page++) {
-        const data = await getPedidosAdmAPI(token, { page, status });
+        const data = await getPedidosAPI(token!, { page, status });
         if (!data.success) throw new Error(data.error);
         todos.push(...(data.pedidos ?? []));
       }
