@@ -55,7 +55,6 @@ export const PedidoPaginationAdm = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Filtro por ID de usuário */}
           <div className="flex items-center gap-1.5">
             <input
               type="number"
@@ -76,7 +75,7 @@ export const PedidoPaginationAdm = () => {
             <button
               onClick={handleIdUsuarioSearch}
               className="
-                bg-purple-500 hover:bg-purple-600 text-white
+                bg-purple-700 hover:bg-purple-600 text-white
                 text-sm font-medium px-3 py-2.5 rounded-full shadow-sm
                 transition-all duration-150
               "
@@ -97,7 +96,6 @@ export const PedidoPaginationAdm = () => {
             )}
           </div>
 
-          {/* Filtro por status */}
           <div className="relative">
             <select
               value={statusFilter}
