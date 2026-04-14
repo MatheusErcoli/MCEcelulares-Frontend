@@ -1,4 +1,4 @@
-import { getPedidosAdmAPI } from '@/src/actions/pedido';
+import { getPedidosAPI } from '@/src/actions/pedido';
 import { useAuth } from '@/src/contexts/AuthContext';
 import { useState, useCallback } from 'react';
 
@@ -13,9 +13,7 @@ export function useGetPedidosAdm() {
   const execute = useCallback(async (page: number = 1, status?: string) => {
     setLoading(true);
     try {
-      if (!token) throw new Error('Você deve fazer login para acessar esta página');
-
-      const data = await getPedidosAdmAPI(token, { page, status });
+      const data = await getPedidosAPI(token!, { page, status });
 
       if (!data.success) throw new Error(data.error);
 

@@ -10,9 +10,7 @@ export const useCreateMarca = () => {
   const execute = useCallback(async (formData: FormData) => {
     setLoading(true);
     try {
-      if (!token || !user?.admin) throw new Error('Você deve fazer login como admnistrador para cadastrar uma marca');
-
-      const data = await createMarcaAPI(token, formData);
+      const data = await createMarcaAPI(token!, formData);
 
       if (!data.success) throw new Error(data.error);
 

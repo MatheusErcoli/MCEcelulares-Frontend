@@ -14,14 +14,11 @@ export function useGetUsuarios() {
     setLoading(true);
     try {
       if (!token) throw new Error('Você deve fazer login para acessar esta página');
-
       const data = await getUsuariosAPI(token, page);
-
       if (!data.success) throw new Error(data.error);
-
-      setUsuarios(data.usuarios!);
-      setTotalPages(data.totalPages!);
-      setTotal(data.total!);
+      setUsuarios(data.usuarios);
+      setTotalPages(data.totalPages);
+      setTotal(data.total);
       setError(null);
       return { success: true };
     } catch (error) {

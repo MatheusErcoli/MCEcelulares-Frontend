@@ -5,14 +5,12 @@ import Swal from 'sweetalert2';
 
 export const useUpdateCategoria = () => {
   const [loading, setLoading] = useState(false);
-  const { token, user } = useAuth();
+  const { token } = useAuth();
 
   const execute = useCallback(async (id_categoria: number, formData: FormData) => {
     setLoading(true);
     try {
-      if (!token || !user?.admin) throw new Error('Você deve fazer login como administrador para atualizar uma categoria');
-
-      const data = await updateCategoriaAPI(token, id_categoria, formData);
+      const data = await updateCategoriaAPI(token!, id_categoria, formData);
 
       if (!data.success) throw new Error(data.error);
 
@@ -33,7 +31,7 @@ export const useUpdateCategoria = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user]);
+  }, [token]);
 
   return { execute, loading };
 };

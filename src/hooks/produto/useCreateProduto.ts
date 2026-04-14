@@ -5,14 +5,12 @@ import Swal from 'sweetalert2';
 
 export const useCreateProduto = () => {
   const [loading, setLoading] = useState(false);
-  const { token, user } = useAuth();
+  const { token } = useAuth();
 
   const execute = useCallback(async (formData: FormData) => {
     setLoading(true);
     try {
-      if (!token || !user?.admin) throw new Error('Você deve fazer login como admnistrador para cadastrar um produto');
-
-      const data = await createProdutoAPI(token, formData);
+      const data = await createProdutoAPI(token!, formData);
 
       if (!data.success) throw new Error(data.error);
 
@@ -33,7 +31,7 @@ export const useCreateProduto = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user]);
+  }, [token]);
 
   return { execute, loading };
 };

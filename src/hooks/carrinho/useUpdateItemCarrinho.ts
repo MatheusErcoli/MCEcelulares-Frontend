@@ -1,5 +1,6 @@
 import { updateItemCarrinhoAPI } from '@/src/actions/carrinho';
 import { useAuth } from '@/src/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 import { useState, useCallback } from 'react';
 
 export const useUpdateItemCarrinho = () => {
@@ -10,9 +11,7 @@ export const useUpdateItemCarrinho = () => {
   const execute = useCallback(async (id_item_carrinho: number, quantidade: number) => {
     setLoading(true);
     try {
-      if (!token) throw new Error('Você deve fazer login para alterar itens do carrinho');
-
-      const data = await updateItemCarrinhoAPI(token, { id_item_carrinho, quantidade });
+      const data = await updateItemCarrinhoAPI(token!, { id_item_carrinho, quantidade });
 
       if (!data.success) throw new Error(data.error);
 

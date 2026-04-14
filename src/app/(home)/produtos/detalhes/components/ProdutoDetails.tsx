@@ -13,7 +13,6 @@ export const ProdutoDetails = () => {
     const router = useRouter();
     const id = Number(searchParams.get('id'));
 
-    const { isAuthenticated } = useAuth();
     const { execute: buscarProduto, produto, loading, error } = useGetProduto();
     const { execute: adicionarAoCarrinho, loading: adicionando, error: erroCarrinho } = useCreateItemCarrinho();
 
@@ -22,7 +21,6 @@ export const ProdutoDetails = () => {
     }, [id]);
 
     const handleAdd = async () => {
-        if (!isAuthenticated) return router.push('/login');
 
         const res = await adicionarAoCarrinho(produto!.id_produto);
         if (res.success) router.push('/carrinho');

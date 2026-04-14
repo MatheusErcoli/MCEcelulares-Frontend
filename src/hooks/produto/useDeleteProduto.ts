@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 export const useDeleteProduto = () => {
   const [loading, setLoading] = useState(false);
-  const { token, user } = useAuth();
+  const { token } = useAuth();
 
   const execute = useCallback(async (id_produto: number) => {
     const confirm = await Swal.fire({
@@ -22,9 +22,7 @@ export const useDeleteProduto = () => {
 
     setLoading(true);
     try {
-      if (!token || !user?.admin) throw new Error('Você deve fazer login como administrador para excluir um produto');
-
-      const data = await deleteProdutoAPI(token, id_produto);
+      const data = await deleteProdutoAPI(token!, id_produto);
 
       if (!data.success) throw new Error(data.error);
 
@@ -45,7 +43,7 @@ export const useDeleteProduto = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user]);
+  }, [token]);
 
   return { execute, loading };
 };

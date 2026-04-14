@@ -5,14 +5,12 @@ import Swal from 'sweetalert2';
 
 export const useUpdateProduto = () => {
   const [loading, setLoading] = useState(false);
-  const { token, user } = useAuth();
+  const { token } = useAuth();
 
   const execute = useCallback(async (id_produto: number, formData: FormData) => {
     setLoading(true);
     try {
-      if (!token || !user?.admin) throw new Error('Você deve fazer login como administrador para atualizar um produto');
-
-      const data = await updateProdutoAPI(token, id_produto, formData);
+      const data = await updateProdutoAPI(token!, id_produto, formData);
 
       if (!data.success) throw new Error(data.error);
 
@@ -32,7 +30,7 @@ export const useUpdateProduto = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user]);
+  }, [token]);
 
   return { execute, loading };
 };

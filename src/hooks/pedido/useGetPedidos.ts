@@ -8,18 +8,14 @@ export const useGetPedidos = () => {
   const [pedidos, setPedidos] = useState<PedidoType[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [total, setTotal] = useState(0);
-  const { token, user } = useAuth();
+  const { token } = useAuth();
 
   const execute = useCallback(async (page: number = 1) => {
     setLoading(true);
     try {
-      if (!token || !user) throw new Error('Você deve fazer login para buscar pedidos');
-
-      const data = await getPedidosAPI(token, user.id, page);
-
+      const data = await getPedidosAPI(token!, { page });
       if (!data.success) throw new Error(data.error);
-
-      setPedidos(data.pedidos);
+      setPedidos(data.pedidos ?? []);
       setTotalPages(data.totalPages ?? 1);
       setTotal(data.total ?? 0);
       setError(null);
@@ -30,7 +26,7 @@ export const useGetPedidos = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user]);
+  }, [token]);
 
   return { execute, loading, error, pedidos, totalPages, total };
 };
