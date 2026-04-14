@@ -29,7 +29,7 @@ export const ProdutoPagination = () => {
 
     useEffect(() => {
         execute(currentPage, idCategoria || undefined, idMarca || undefined, undefined, true);
-    }, [currentPage, idCategoria, idMarca]);
+    }, [currentPage, idCategoria, idMarca, execute]);
 
     return (
         <div className="container mx-auto pt-15 pb-5 px-30">

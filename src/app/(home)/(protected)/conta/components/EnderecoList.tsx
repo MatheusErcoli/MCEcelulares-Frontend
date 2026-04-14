@@ -11,7 +11,7 @@ export const EnderecoList = () => {
   const { execute: fetchEndereco, loading: loadingEndereco, enderecos } = useGetEnderecos();
   const { execute: deleteEndereco, loading: removendo } = useDeleteEndereco();
 
-  useEffect(() => { fetchEndereco(); }, []);
+  useEffect(() => { fetchEndereco(); }, [fetchEndereco]);
 
   const handleDelete = async (id_endereco: number) => {
     const result = await deleteEndereco(id_endereco);

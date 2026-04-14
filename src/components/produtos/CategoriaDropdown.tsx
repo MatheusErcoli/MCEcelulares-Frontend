@@ -44,7 +44,7 @@ export const CategoriaDropdown = ({ value, onChange, variant = "gray", ativo }: 
 
     useEffect(() => {
         execute(ativo);
-    }, []);
+    }, [execute, ativo]);
 
     if (error) return null;
 

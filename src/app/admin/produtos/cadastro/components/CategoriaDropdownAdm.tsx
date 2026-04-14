@@ -13,7 +13,7 @@ export const CategoriaDropdownAdm = ({ value, onChange }: CategoriaDropdownAdmPr
 
     useEffect(() => {
         execute();
-    }, []);
+    }, [execute]);
 
     if (error) return null;
 
@@ -21,7 +21,7 @@ export const CategoriaDropdownAdm = ({ value, onChange }: CategoriaDropdownAdmPr
         <select
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            required                                      // +
+            required
             disabled={loading || categorias.length === 0}
             className="
                 appearance-none cursor-pointer
@@ -35,7 +35,7 @@ export const CategoriaDropdownAdm = ({ value, onChange }: CategoriaDropdownAdmPr
                 transition-colors duration-150
                 disabled:cursor-not-allowed disabled:opacity-50"
         >
-            <option value="" hidden>                       {/* + value="" */}
+            <option value="" hidden>
                 {loading ? 'Carregando...' : 'Todas as categorias'}
             </option>
             {categorias.map((c) => (

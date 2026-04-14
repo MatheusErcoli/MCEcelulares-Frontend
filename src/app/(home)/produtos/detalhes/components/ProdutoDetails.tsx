@@ -18,7 +18,7 @@ export const ProdutoDetails = () => {
 
     useEffect(() => {
         buscarProduto(id);
-    }, [id]);
+    }, [id,buscarProduto]);
 
     const handleAdd = async () => {
 

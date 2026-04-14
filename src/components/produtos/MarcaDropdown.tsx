@@ -45,7 +45,7 @@ export const MarcaDropdown = ({ value, onChange, id_categoria, variant = "gray",
 
     useEffect(() => {
         execute(id_categoria ? Number(id_categoria) : undefined, ativo);
-    }, [id_categoria]);
+    }, [id_categoria, ativo, execute]);
 
     if (error) return null;
 

@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 export const useCreateMarca = () => {
   const [loading, setLoading] = useState(false);
-  const { token, user } = useAuth();
+  const { token } = useAuth();
 
   const execute = useCallback(async (formData: FormData) => {
     setLoading(true);
@@ -31,7 +31,7 @@ export const useCreateMarca = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user]);
+  }, [token]);
 
   return { execute, loading };
 };

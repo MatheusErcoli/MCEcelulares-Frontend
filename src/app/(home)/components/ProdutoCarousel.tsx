@@ -19,7 +19,7 @@ export const ProdutoCarousel = ({ destaque }: ProdutoCarouselProps) => {
 
     useEffect(() => {
         execute(undefined, undefined, undefined, destaque, true);
-    }, []);
+    }, [execute, destaque]);
 
     const settings = {
         dots: true,
