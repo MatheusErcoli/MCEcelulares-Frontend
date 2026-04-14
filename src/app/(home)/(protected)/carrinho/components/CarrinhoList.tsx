@@ -15,7 +15,7 @@ export const CarrinhoList = () => {
     router.push("/carrinho/checkout");
   };
 
-  useEffect(() => { fetchCarrinho() }, []);
+  useEffect(() => { fetchCarrinho() }, [fetchCarrinho]);
 
   if (loading && carrinho.length === 0) {
     return <p className="text-center text-gray-500 py-10">Carregando sua sacola...</p>;

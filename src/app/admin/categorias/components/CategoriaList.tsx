@@ -18,7 +18,7 @@ export const CategoriaList = () => {
 
     useEffect(() => {
         execute(ativo === '' ? undefined : ativo === 'true');
-    }, [ativo]);
+    }, [ativo, execute]);
 
     return (
         <div className="container mx-auto pt-5 pb-5 px-10">

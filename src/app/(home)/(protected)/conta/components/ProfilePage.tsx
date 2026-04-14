@@ -18,7 +18,7 @@ export const ProfilePage = () => {
 
   const [editando, setEditando] = useState(false);
 
-  useEffect(() => { fetchUsuario(); }, []);
+  useEffect(() => { fetchUsuario(); }, [fetchUsuario]);
 
   const handleSubmit = async (formData: FormData) => {
     const result = await updateUsuario(formData);

@@ -27,7 +27,7 @@ export const MarcaList = () => {
             idCategoria ? Number(idCategoria) : undefined,
             ativo === '' ? undefined : ativo === 'true'
         );
-    }, [idCategoria, ativo]);
+    }, [idCategoria, ativo, execute]);
 
     return (
         <div className="container mx-auto pt-5 pb-5 px-10">

@@ -6,7 +6,7 @@ export const useGetCarrinho = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [carrinho, setCarrinho] = useState<ItemCarrinhoType[]>([]);
-  const { token, user } = useAuth();
+  const { token } = useAuth();
 
   const execute = useCallback(async () => {
     setLoading(true);
@@ -24,7 +24,7 @@ export const useGetCarrinho = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user]);
+  }, [token]);
 
   return { execute, loading, error, carrinho };
 };

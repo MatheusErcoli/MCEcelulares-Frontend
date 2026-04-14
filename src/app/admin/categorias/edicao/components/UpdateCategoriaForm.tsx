@@ -23,7 +23,7 @@ export const UpdateCategoriaForm = () => {
 
   useEffect(() => {
     if (id) fetchCategorias();
-  }, [id]);
+  }, [id,fetchCategorias]);
 
   useEffect(() => {
     const found = categorias.find((c) => c.id_categoria === id) ?? null;

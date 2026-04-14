@@ -23,7 +23,7 @@ export const UpdateMarcaForm = () => {
 
   useEffect(() => {
     if (id) fetchMarcas();
-  }, [id]);
+  }, [id,fetchMarcas]);
 
   useEffect(() => {
     const found = marcas.find((m) => m.id_marca === id) ?? null;

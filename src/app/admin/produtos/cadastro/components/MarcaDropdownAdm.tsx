@@ -14,7 +14,7 @@ export const MarcaDropdownAdm = ({ value, onChange, id_categoria }: MarcaDropdow
 
     useEffect(() => {
         execute(id_categoria ? Number(id_categoria) : undefined);
-    }, [id_categoria]);
+    }, [id_categoria,execute]);
 
     if (error) return null;
 

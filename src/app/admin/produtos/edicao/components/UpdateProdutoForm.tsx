@@ -29,7 +29,7 @@ export const UpdateProdutoForm = () => {
 
   useEffect(() => {
     if (id) fetchProduto(id);
-  }, [id]);
+  }, [id,fetchProduto]);
 
   useEffect(() => {
     if (editando && produto) {
@@ -37,7 +37,7 @@ export const UpdateProdutoForm = () => {
       setIdCategoria(String(produto.id_categoria ?? ''));
       setIdMarca(String(produto.id_marca ?? ''));
     }
-  }, [editando]);
+  }, [editando, produto]);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
